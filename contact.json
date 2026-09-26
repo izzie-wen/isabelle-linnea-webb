@@ -1,0 +1,64 @@
+{
+  "hero": {
+    "title": "Kontakt",
+    "subtitle": "Jag blir alltid glad av att höra från er.",
+    "body": "Här kan du ställa frågor, dela tankar, skriva om samarbeten eller bara säga hej. Jag läser alla meddelanden och försöker svara så snart jag kan.",
+    "image": "/assets/images/contact-hero.jpg"
+  },
+  "reasons": [
+    {
+      "title": "Förfrågningar om böcker",
+      "text": "Frågor om berättelser, karaktärer, världen eller skrivprocessen."
+    },
+    {
+      "title": "Samarbeten",
+      "text": "Intervjuer, event, bloggar eller andra samarbeten."
+    },
+    {
+      "title": "Skolor & bibliotek",
+      "text": "Författarbesök, samtal, föreläsningar och workshops."
+    },
+    {
+      "title": "Övrigt",
+      "text": "Andra frågor eller meddelanden som inte passar in i ovanstående."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Kommer du ha fler böcker i Rienriten-serien?",
+      "a": "Jag delar information om kommande projekt när de är redo. Följ gärna nyhetsbrevet och bloggen för uppdateringar."
+    },
+    {
+      "q": "När kommer nästa bok?",
+      "a": "När ett datum finns publicerar jag det här på webbplatsen och i nyhetsbrevet."
+    },
+    {
+      "q": "Kan man köpa signerade exemplar?",
+      "a": "Information om signerade exemplar läggs ut här när det är aktuellt."
+    },
+    {
+      "q": "Tar du emot recensionsexemplar?",
+      "a": "Skriv gärna via kontaktformuläret och berätta vilken kanal eller publikation du representerar."
+    },
+    {
+      "q": "Kan man boka ett författarbesök?",
+      "a": "Ja, skicka en förfrågan via formuläret med datum, plats och typ av evenemang."
+    },
+    {
+      "q": "Vilka åldrar passar dina böcker för?",
+      "a": "Åldersrekommendationer anges på respektive boksida eller novellsida."
+    },
+    {
+      "q": "Var hittar jag dina böcker?",
+      "a": "Aktuella köp- och biblioteksuppgifter kommer att finnas på boksidan."
+    },
+    {
+      "q": "Får jag använda bilder från dina böcker?",
+      "a": "Kontakta mig först så kan vi reda ut användning och rättigheter."
+    },
+    {
+      "q": "Hur kan jag hålla mig uppdaterad?",
+      "a": "Prenumerera på nyhetsbrevet eller följ länkarna till mina sociala kanaler."
+    }
+  ]
+}

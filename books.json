@@ -1,0 +1,39 @@
+{
+  "hero": {
+    "title": "Böcker",
+    "subtitle": "Berättelser som tar dig längre.",
+    "body": "Här samlar jag längre verk och projekt. Sidan kan uppdateras när nya böcker eller projekt är redo att presenteras.",
+    "image": "/assets/images/books-hero.jpg"
+  },
+  "featured": {
+    "title": "Rienriten",
+    "kicker": "Kommande roman",
+    "tagline": "Vissa band skrivs i blod. Vissa arv skrivs i ben.",
+    "description": "En berättelse om familj, hemligheter och en värld där gamla sanningar väntar under ytan. Mer information kommer när projektet är redo att presenteras.",
+    "genre": "Fantasy / Roman",
+    "status": "Mer information kommer snart",
+    "image": "/assets/images/rienriten-cover.jpg"
+  },
+  "other": [
+    {
+      "title": "Skogens skuggor",
+      "genre": "Fantasy / Roman",
+      "description": "En berättelse om mod, tillhörighet och de dolda krafter som vakar i skogens djup.",
+      "image": "/assets/images/insp-myth.jpg"
+    },
+    {
+      "title": "Rienriten",
+      "genre": "Fantasy / Roman",
+      "description": "En resa genom en splittrad värld där gamla myter och nya hot möts.",
+      "image": "/assets/images/rienriten-cover.jpg"
+    },
+    {
+      "title": "Stjärnfall",
+      "genre": "Fantasy / Roman",
+      "description": "När himlen förändras, förändras allt. En berättelse om öde, val och stjärnor som aldrig vakar.",
+      "image": "/assets/images/insp-world.jpg"
+    }
+  ],
+  "newsletter_title": "Vill du veta när nästa projekt släpps?",
+  "newsletter_body": "Prenumerera på nyheter och få uppdateringar direkt i din inkorg."
+}
