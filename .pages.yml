@@ -1,0 +1,317 @@
+media:
+  input: assets/uploads
+  output: /assets/uploads
+
+content:
+  - name: site
+    label: Webbplatsinställningar
+    type: file
+    path: content/site.json
+    format: json
+    fields:
+      - { name: author_name, label: Författarnamn, type: string, required: true }
+      - { name: tagline, label: Rad under namnet, type: string }
+      - { name: email, label: E-post, type: string }
+      - { name: instagram, label: Instagram-länk, type: string }
+      - { name: facebook, label: Facebook-länk, type: string }
+      - { name: youtube, label: YouTube-länk, type: string }
+      - { name: pinterest, label: Pinterest-länk, type: string }
+      - { name: copyright, label: Copyright-text, type: string }
+      - { name: footer_tagline, label: Text i sidfoten, type: string }
+
+  - name: pages
+    label: Sidor
+    type: group
+    items:
+      - name: home
+        label: Framsida
+        type: file
+        path: content/home.json
+        format: json
+        fields:
+          - name: hero
+            label: Banner
+            type: object
+            fields:
+              - { name: eyebrow, label: Liten rubrik, type: string }
+              - { name: title, label: Huvudrubrik, type: string }
+              - { name: subtitle, label: Kursiv underrubrik, type: string }
+              - { name: body, label: Text, type: text }
+              - { name: image, label: Bannerbild, type: image }
+          - name: about
+            label: Om författaren
+            type: object
+            fields:
+              - { name: title, label: Rubrik, type: string }
+              - { name: body, label: Text, type: text }
+              - { name: quote, label: Citat, type: text }
+              - { name: image, label: Bild, type: image }
+          - name: world
+            label: Världen-sektion
+            type: object
+            fields:
+              - { name: title, label: Rubrik, type: string }
+              - { name: body, label: Text, type: text }
+              - { name: image, label: Bild, type: image }
+          - name: newsletter
+            label: Nyhetsbrev
+            type: object
+            fields:
+              - { name: title, label: Rubrik, type: string }
+              - { name: body, label: Text, type: text }
+              - { name: note, label: Liten text under formuläret, type: string }
+
+      - name: about
+        label: Om mig
+        type: file
+        path: content/about.json
+        format: json
+        fields:
+          - name: hero
+            label: Intro
+            type: object
+            fields:
+              - { name: title, label: Rubrik, type: string }
+              - { name: subtitle, label: Underrubrik, type: string }
+              - { name: body, label: Text, type: text }
+              - { name: image, label: Porträtt, type: image }
+          - name: path
+            label: Min väg hit
+            type: object
+            fields:
+              - { name: title, label: Rubrik, type: string }
+              - { name: paragraphs, label: Stycken, type: text, list: true }
+              - { name: image, label: Bild, type: image }
+          - name: facts
+            label: Snabba fakta
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{label}"
+            fields:
+              - { name: label, label: Rubrik, type: string }
+              - { name: value, label: Text, type: text }
+          - name: process
+            label: Min skrivprocess
+            type: object
+            fields:
+              - { name: title, label: Rubrik, type: string }
+              - { name: body, label: Text, type: text }
+              - { name: image, label: Bild, type: image }
+          - name: inspiration
+            label: Inspiration
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{title}"
+            fields:
+              - { name: title, label: Rubrik, type: string }
+              - { name: text, label: Text, type: text }
+              - { name: image, label: Bild, type: image }
+          - { name: quote, label: Slutcitat, type: text }
+
+      - name: books
+        label: Böcker
+        type: file
+        path: content/books.json
+        format: json
+        fields:
+          - name: hero
+            label: Banner
+            type: object
+            fields:
+              - { name: title, label: Rubrik, type: string }
+              - { name: subtitle, label: Underrubrik, type: string }
+              - { name: body, label: Text, type: text }
+              - { name: image, label: Bild, type: image }
+          - name: featured
+            label: Huvudbok
+            type: object
+            fields:
+              - { name: title, label: Titel, type: string }
+              - { name: kicker, label: Liten rubrik, type: string }
+              - { name: tagline, label: Tagline, type: string }
+              - { name: description, label: Beskrivning, type: text }
+              - { name: genre, label: Genre, type: string }
+              - { name: status, label: Status, type: string }
+              - { name: image, label: Omslag, type: image }
+          - name: other
+            label: Andra verk
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{title}"
+            fields:
+              - { name: title, label: Titel, type: string }
+              - { name: genre, label: Genre, type: string }
+              - { name: description, label: Beskrivning, type: text }
+              - { name: image, label: Bild, type: image }
+          - { name: newsletter_title, label: Nyhetsbrev rubrik, type: string }
+          - { name: newsletter_body, label: Nyhetsbrev text, type: text }
+
+      - name: writers
+        label: För författare
+        type: file
+        path: content/writers.json
+        format: json
+        fields:
+          - name: hero
+            label: Banner
+            type: object
+            fields:
+              - { name: eyebrow, label: Liten rubrik, type: string }
+              - { name: title, label: Rubrik, type: string }
+              - { name: body, label: Text, type: text }
+              - { name: image, label: Bild, type: image }
+          - { name: youtube_intro, label: YouTube-intro, type: text }
+          - name: videos
+            label: YouTube-videor
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{title}"
+            fields:
+              - { name: title, label: Titel, type: string }
+              - { name: subtitle, label: Underrubrik, type: string }
+              - { name: image, label: Bild, type: image }
+              - { name: url, label: YouTube-länk, type: string }
+          - { name: printables_intro, label: Printables-intro, type: text }
+          - name: printables
+            label: Printables
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{title}"
+            fields:
+              - { name: title, label: Titel, type: string }
+              - { name: image, label: Bild, type: image }
+              - name: file
+                label: Nedladdningsfil
+                type: file
+                options:
+                  categories: [document]
+                  extensions: [pdf, docx, zip]
+                  rename: true
+          - { name: guide_steps, label: Skrivguide steg, type: string, list: true }
+          - { name: newsletter_title, label: Nyhetsbrev rubrik, type: string }
+          - { name: newsletter_body, label: Nyhetsbrev text, type: text }
+
+      - name: other
+        label: Annat
+        type: file
+        path: content/other.json
+        format: json
+        fields:
+          - name: hero
+            label: Banner
+            type: object
+            fields:
+              - { name: eyebrow, label: Liten rubrik, type: string }
+              - { name: title, label: Rubrik, type: string }
+              - { name: body, label: Text, type: text }
+              - { name: image, label: Bild, type: image }
+          - name: cards
+            label: Kort
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{title}"
+            fields:
+              - { name: title, label: Rubrik, type: string }
+              - { name: text, label: Text, type: text }
+              - { name: image, label: Bild, type: image }
+              - { name: label, label: Knapptext, type: string }
+              - { name: url, label: Länk, type: string }
+          - { name: newsletter_title, label: Nyhetsbrev rubrik, type: string }
+          - { name: newsletter_body, label: Nyhetsbrev text, type: text }
+
+      - name: contact
+        label: Kontakt
+        type: file
+        path: content/contact.json
+        format: json
+        fields:
+          - name: hero
+            label: Banner
+            type: object
+            fields:
+              - { name: title, label: Rubrik, type: string }
+              - { name: subtitle, label: Underrubrik, type: string }
+              - { name: body, label: Text, type: text }
+              - { name: image, label: Bild, type: image }
+          - name: reasons
+            label: Kontaktorsaker
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{title}"
+            fields:
+              - { name: title, label: Rubrik, type: string }
+              - { name: text, label: Text, type: text }
+          - name: faqs
+            label: Vanliga frågor
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{q}"
+            fields:
+              - { name: q, label: Fråga, type: string }
+              - { name: a, label: Svar, type: text }
+
+  - name: stories
+    label: Noveller
+    type: collection
+    path: content/stories
+    format: json
+    filename: "{primary}.json"
+    view:
+      primary: title
+      fields: [title, genre, year]
+      sort: [title, genre, year]
+    fields:
+      - { name: slug, label: URL-namn, type: string, required: true, pattern: "^[a-z0-9-]+$" }
+      - { name: title, label: Titel, type: string, required: true }
+      - name: genre
+        label: Genre
+        type: select
+        options:
+          values: [Science fiction, Fantasy, Vardagsliv, Skräck, Feelgood]
+      - { name: excerpt, label: Kort beskrivning, type: text }
+      - { name: image, label: Kortbild, type: image }
+      - { name: hero, label: Bannerbild, type: image }
+      - { name: read_time, label: Lästid, type: string }
+      - { name: word_count, label: Ordantal, type: string }
+      - { name: year, label: År, type: string }
+      - { name: themes, label: Teman, type: string }
+      - { name: quote, label: Citat, type: text }
+      - { name: body, label: Novelltext, type: text, required: true }
+
+  - name: posts
+    label: Blogginlägg
+    type: collection
+    path: content/posts
+    format: json
+    filename: "{primary}.json"
+    view:
+      primary: title
+      fields: [title, category, date]
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: slug, label: URL-namn, type: string, required: true, pattern: "^[a-z0-9-]+$" }
+      - { name: title, label: Titel, type: string, required: true }
+      - { name: category, label: Kategori, type: string }
+      - { name: date, label: Datum, type: date }
+      - { name: excerpt, label: Kort beskrivning, type: text }
+      - { name: image, label: Bild, type: image }
+      - { name: body, label: Inläggstext, type: text }

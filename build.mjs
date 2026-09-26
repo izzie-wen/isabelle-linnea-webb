@@ -1,0 +1,158 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const root = __dirname;
+const contentDir = path.join(root, 'content');
+const dist = path.join(root, 'dist');
+
+const readJSON = (p) => JSON.parse(fs.readFileSync(path.join(contentDir,p),'utf8'));
+const readCollection = (dir) => fs.readdirSync(path.join(contentDir,dir)).filter(f=>f.endsWith('.json')).map(f=>readJSON(path.join(dir,f)));
+const esc = (s='') => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const paras = (s='') => String(s).split(/\n\s*\n/).filter(Boolean).map(p=>`<p>${esc(p)}</p>`).join('\n');
+const img = (src, alt='', cls='') => `<img src="${esc(src)}" alt="${esc(alt)}"${cls?` class="${cls}"`:''}>`;
+const formatDate = (iso) => new Intl.DateTimeFormat('sv-SE',{day:'numeric',month:'short',year:'numeric'}).format(new Date(iso+'T12:00:00'));
+
+const site = readJSON('site.json');
+const home = readJSON('home.json');
+const about = readJSON('about.json');
+const books = readJSON('books.json');
+const writers = readJSON('writers.json');
+const other = readJSON('other.json');
+const contact = readJSON('contact.json');
+const stories = readCollection('stories').sort((a,b)=>a.title.localeCompare(b.title,'sv'));
+const posts = readCollection('posts').sort((a,b)=>b.date.localeCompare(a.date));
+
+function nav(active='') {
+  const items=[
+    ['Hem','/index.html','home'],['Om mig','/om-mig.html','about'],['Böcker','/books.html','books'],['Noveller','/noveller.html','stories'],['Världen','/index.html#varlden','world'],['Nyheter','/blog.html','blog'],['För författare','/for-forfattare.html','writers'],['Annat','/annat.html','other'],['Kontakt','/contact.html','contact']
+  ];
+  return items.map(([label,href,key])=>`<a href="${href}"${active===key?' class="active" aria-current="page"':''}>${esc(label)}</a>`).join('');
+}
+
+function layout({title,description='',active='',body,scripts=''}){
+return `<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="${esc(description)}">
+<title>${esc(title)} | ${esc(site.author_name)}</title>
+<link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Hoppa till innehållet</a>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/index.html"><strong>${esc(site.author_name).toUpperCase()}</strong><small>${esc(site.tagline)}</small></a>
+    <nav class="main-nav" data-main-nav aria-label="Huvudmeny">${nav(active)}</nav>
+    <div class="socials" aria-label="Sociala medier">
+      <a href="${esc(site.instagram)}" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+      <a href="${esc(site.facebook)}" target="_blank" rel="noopener" aria-label="Facebook">f</a>
+      <a href="${esc(site.youtube)}" target="_blank" rel="noopener" aria-label="YouTube">▶</a>
+    </div>
+    <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false">Meny</button>
+  </div>
+</header>
+<main id="main">${body}</main>
+${footer()}
+<script src="/assets/js/site.js" defer></script>
+${scripts}
+</body></html>`;
+}
+
+function footer(){ return `<footer class="site-footer"><div class="container footer-inner"><div class="footer-brand"><strong>${esc(site.author_name).toUpperCase()}</strong><small>${esc(site.tagline)}</small><div class="copyright">${esc(site.copyright)}</div></div><nav class="footer-nav" aria-label="Sidfot">${nav('')}</nav><div class="footer-quote">${esc(site.footer_tagline)}</div></div></footer>`; }
+function newsletterForm(name,title,bodyText,note=''){return `<section class="newsletter-box"><p class="eyebrow">${esc(title)}</p><p>${esc(bodyText)}</p><form class="form-row" name="${esc(name)}" method="POST" data-netlify="true" data-local-success="Tack! Din anmälan är registrerad."><input type="hidden" name="form-name" value="${esc(name)}"><label class="visually-hidden" for="${esc(name)}-email">Din e-postadress</label><input id="${esc(name)}-email" type="email" name="email" placeholder="Din e-postadress" required><button class="btn primary" type="submit">Prenumerera</button></form>${note?`<p class="form-note">${esc(note)}</p>`:''}</section>`;}
+
+function homePage(){
+ const latest=posts.slice(0,3);
+ return layout({title:'Hem',description:'Berättelser, noveller, blogg och skrivliv av Isabelle Linnea.',active:'home',body:`
+<section class="hero-split">
+  <div class="hero-copy"><p class="eyebrow">${esc(home.hero.eyebrow)}</p><h1>${esc(home.hero.title)}</h1><p class="lead">${esc(home.hero.subtitle)}</p><div class="rule"></div><p class="body">${esc(home.hero.body)}</p><div class="hero-actions"><a class="btn primary" href="/noveller.html">Läs noveller</a><a class="btn" href="/blog.html">Besök bloggen</a><a class="link-arrow" href="/om-mig.html">Om mig</a></div></div>
+  <div class="hero-media" style="background-image:url('${esc(home.hero.image)}')"></div>
+</section>
+<section class="section paper"><div class="container home-about"><div>${img(home.about.image,'Porträtt av '+site.author_name)}</div><div><p class="eyebrow">Om författaren</p><h2 class="section-title">${esc(home.about.title)}</h2><div class="rule"></div><p>${esc(home.about.body)}</p><a class="btn" href="/om-mig.html">Läs mer om mig</a></div><blockquote class="quote-block">“${esc(home.about.quote)}”<strong>${esc(site.author_name)}</strong></blockquote></div></section>
+<section id="varlden" class="world-banner" style="background-image:url('${esc(home.world.image)}')"><div class="container"><div class="copy"><h2>${esc(home.world.title)}</h2><p>${esc(home.world.body)}</p><a class="btn" href="/annat.html" style="color:white;border-color:#d7bd8e">Utforska</a></div></div></section>
+<section class="section paper"><div class="container blog-news-grid"><div><p class="eyebrow">Senaste från bloggen</p><div class="post-grid">${latest.map(p=>postCard(p)).join('')}</div></div>${newsletterForm('newsletter-home',home.newsletter.title,home.newsletter.body,home.newsletter.note)}</div></section>`});
+}
+
+function postCard(p){return `<article class="card"><a href="/blog/${esc(p.slug)}.html"><div class="card-media">${img(p.image,p.title)}</div><div class="card-body"><div class="meta">${esc(p.category)} · ${esc(formatDate(p.date))}</div><h3>${esc(p.title)}</h3><p>${esc(p.excerpt)}</p><span class="link-arrow">Läs mer</span></div></a></article>`;}
+function storyCard(s){return `<article class="card story-card" data-story-genre="${esc(s.genre)}"><a href="/noveller/${esc(s.slug)}.html"><div class="card-media">${img(s.image,s.title)}<span class="genre-badge">${esc(s.genre)}</span></div><div class="card-body"><h3>${esc(s.title)}</h3><p>${esc(s.excerpt)}</p><span class="link-arrow">Läs mer</span></div></a></article>`;}
+
+function aboutPage(){return layout({title:'Om mig',description:'Om '+site.author_name+', hennes skrivande, inspiration och process.',active:'about',body:`
+<section class="about-hero"><div class="image" style="background-image:url('${esc(about.hero.image)}')"></div><div class="copy"><p class="eyebrow">Om mig</p><h1>${esc(about.hero.title)}</h1><div class="rule"></div><p class="section-subtitle">${esc(about.hero.subtitle)}</p><p>${esc(about.hero.body)}</p></div></section>
+<section class="section paper"><div class="container about-layout"><div><p class="eyebrow">Min väg hit</p><h2 class="section-title">${esc(about.path.title)}</h2><div class="rule"></div>${about.path.paragraphs.map(p=>`<p>${esc(p)}</p>`).join('')}<a class="btn" href="/books.html">Mina böcker</a></div><div>${img(about.path.image,'Natur och inspiration')}</div><aside class="facts"><p class="eyebrow">Snabba fakta</p>${about.facts.map(f=>`<div class="fact"><strong>${esc(f.label)}</strong><span>${esc(f.value)}</span></div>`).join('')}</aside></div></section>
+<section class="section paper-alt"><div class="container process-grid"><div><p class="eyebrow">Min skrivprocess</p><h2 class="section-title">${esc(about.process.title)}</h2><div class="rule"></div><p>${esc(about.process.body)}</p><a class="btn" href="/for-forfattare.html">Mer om skrivprocessen</a></div><div>${img(about.process.image,'Skrivprocess')}</div></div></section>
+<section class="section paper"><div class="container"><p class="eyebrow">Inspiration</p><div class="four-col">${about.inspiration.map(i=>`<article class="inspiration-card">${img(i.image,i.title)}<div class="overlay"><h3>${esc(i.title)}</h3><p>${esc(i.text)}</p></div></article>`).join('')}</div></div></section>
+<section class="section dark"><div class="container" style="text-align:center;max-width:850px"><p class="section-subtitle" style="color:#fff;font-size:1.7rem">“${esc(about.quote)}”</p><p class="eyebrow" style="color:#e9ddcb">${esc(site.author_name)}</p></div></section>`});}
+
+function booksPage(){return layout({title:'Böcker',description:'Böcker och längre verk av '+site.author_name+'.',active:'books',body:`
+<section class="banner-hero" style="background-image:url('${esc(books.hero.image)}')"><div class="container"><div class="copy"><p class="eyebrow" style="color:#f0e4d4">Böcker</p><h1>${esc(books.hero.title)}</h1><p class="section-subtitle" style="color:#fff">${esc(books.hero.subtitle)}</p><p>${esc(books.hero.body)}</p></div></div></section>
+<section class="section paper"><div class="container feature-book"><div>${img(books.featured.image,books.featured.title,'book-cover')}</div><div class="copy"><p class="eyebrow">${esc(books.featured.kicker)}</p><h2>${esc(books.featured.title)}</h2><p class="section-subtitle">${esc(books.featured.tagline)}</p><div class="rule"></div><p>${esc(books.featured.description)}</p><p><strong>${esc(books.featured.genre)}</strong><br>${esc(books.featured.status)}</p><a class="btn primary" href="/contact.html">Fråga om projektet</a></div><blockquote class="feature-quote">“Berättelser växer fram i sin egen takt. Här kan du följa vad som händer längs vägen.”</blockquote></div></section>
+<section class="section paper-alt"><div class="container"><p class="eyebrow">Andra verk</p><div class="three-col">${books.other.map(b=>`<article class="card book-card"><div class="card-media">${img(b.image,b.title)}</div><div class="card-body"><div class="meta">${esc(b.genre)}</div><h3>${esc(b.title)}</h3><p>${esc(b.description)}</p><a class="btn small" href="/contact.html">Läs mer</a></div></article>`).join('')}</div></div></section>
+<section class="section dark"><div class="container">${newsletterForm('newsletter-books',books.newsletter_title,books.newsletter_body)}</div></section>`});}
+
+function novelsPage(){
+ const genres=['Alla',...new Set(stories.map(s=>s.genre))];
+ return layout({title:'Noveller',description:'Noveller av '+site.author_name+' i flera genrer.',active:'stories',body:`
+<section class="novels-hero" style="background-image:url('/assets/images/novels-hero.jpg')"><div class="container"><div class="copy"><p class="eyebrow">Noveller</p><h1>Noveller</h1><p class="section-subtitle">Stora världar ryms ibland i små berättelser.</p><p>Här samlar jag mina noveller – berättelser om människors liv, stora frågor och det oväntade som kan förändra allt.</p></div></div></section>
+<section class="section paper"><div class="container"><p class="eyebrow">Utforska noveller</p><div class="filters" role="group" aria-label="Filtrera noveller">${genres.map((g,i)=>`<button class="filter-btn${i===0?' active':''}" type="button" data-filter="${esc(g)}">${esc(g)}</button>`).join('')}</div><div class="story-grid">${stories.map(storyCard).join('')}</div><div class="empty-state" data-empty-state>Inga noveller finns i den här kategorin ännu.</div></div></section>`});
+}
+
+function storyPage(s){
+ const related=stories.filter(x=>x.slug!==s.slug && x.genre===s.genre).slice(0,2);
+ return layout({title:s.title,description:s.excerpt,active:'stories',body:`
+<section class="story-hero" style="background-image:url('${esc(s.hero)}')"><div class="container"><div class="meta">${esc(s.genre)}</div><h1>${esc(s.title)}</h1><p style="font-size:1.25rem">En novell av ${esc(site.author_name)}</p><div class="story-meta"><span>${esc(s.read_time)} lästid</span><span>${esc(s.word_count)}</span><button type="button" data-copy-link class="btn small" style="color:#fff;border-color:#c9ab75">Kopiera länk</button></div></div></section>
+<section class="section paper"><div class="container story-layout"><article><p class="story-intro">${esc(s.excerpt)}</p><div class="rule"></div><div class="story-text">${paras(s.body)}</div></article><aside class="story-side"><section class="info-card"><h2>Om novellen</h2><dl class="details"><dt>Titel</dt><dd>${esc(s.title)}</dd><dt>Genre</dt><dd>${esc(s.genre)}</dd><dt>Längd</dt><dd>${esc(s.word_count)} (${esc(s.read_time)})</dd><dt>Publicerad</dt><dd>${esc(s.year)}</dd><dt>Teman</dt><dd>${esc(s.themes)}</dd></dl></section><blockquote class="info-card" style="font-size:1.15rem;font-style:italic;text-align:center">“${esc(s.quote)}”<br><small>– ${esc(site.author_name)}</small></blockquote>${related.length?`<section class="info-card"><h2>Fler i samma genre</h2>${related.map(r=>`<a class="related-mini" href="/noveller/${esc(r.slug)}.html">${img(r.image,r.title)}<span><strong>${esc(r.title)}</strong><br><small>${esc(r.excerpt)}</small></span></a>`).join('<hr>')}</section>`:''}</aside></div></section>`});
+}
+
+function blogPage(){
+ const cats=['Alla',...new Set(posts.map(p=>p.category))];
+ return layout({title:'Bloggen',description:'Blogg om skrivande, inspiration och berättelser av '+site.author_name+'.',active:'blog',body:`
+<section class="blog-hero" style="background-image:url('${esc(home.hero.image)}')"><div class="container"><div class="copy"><p class="eyebrow">Nyheter & blogg</p><h1>Bloggen</h1><p class="section-subtitle">Tankar, inspiration och inblickar bakom berättelserna.</p><p>Här delar jag med mig av skrivprocessen, research, karaktärer, platser och sådant som ryms mellan idé och färdig text.</p></div></div></section>
+<section class="section paper"><div class="container blog-layout"><div><div class="filters">${cats.map((c,i)=>`<button class="filter-btn${i===0?' active':''}" type="button" data-post-filter="${esc(c)}">${esc(c)}</button>`).join('')}</div><div class="blog-grid" data-post-grid>${posts.map(p=>`<div data-post-category="${esc(p.category)}">${postCard(p)}</div>`).join('')}</div></div><aside class="sidebar-panel"><p class="eyebrow">Välkommen hit</p><p>Här på bloggen delar jag tankar, inspiration och glimtar bakom mina berättelser.</p><a class="btn small" href="/om-mig.html">Läs mer om mig</a><hr style="border:0;border-top:1px solid var(--line);margin:2rem 0"><p class="eyebrow">Kategorier</p><div class="category-list">${cats.filter(c=>c!=='Alla').map(c=>`<span>${esc(c)}</span>`).join('')}</div><hr style="border:0;border-top:1px solid var(--line);margin:2rem 0">${newsletterForm('newsletter-blog','Håll dig uppdaterad','Få nya blogginlägg och inblickar direkt i din inkorg.')}</aside></div></section>`,scripts:`<script>document.querySelectorAll('[data-post-filter]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-post-filter]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('[data-post-category]').forEach(x=>x.hidden=b.dataset.postFilter!=='Alla'&&x.dataset.postCategory!==b.dataset.postFilter)}));</script>`});
+}
+
+function postPage(p){return layout({title:p.title,description:p.excerpt,active:'blog',body:`<section class="banner-hero" style="background-image:url('${esc(p.image)}')"><div class="container"><div class="copy"><p class="eyebrow">${esc(p.category)} · ${esc(formatDate(p.date))}</p><h1 style="font-size:clamp(2.8rem,5vw,5rem)">${esc(p.title)}</h1><p>${esc(p.excerpt)}</p></div></div></section><section class="section paper"><article class="container story-text" style="max-width:760px"><div class="rule"></div>${paras(p.body)}<p style="margin-top:3rem"><a class="btn" href="/blog.html">Tillbaka till bloggen</a></p></article></section>`});}
+
+function writersPage(){
+ const [main,...small]=writers.videos;
+ return layout({title:'För författare',description:'YouTube-videor, printables och skrivtips av '+site.author_name+'.',active:'writers',body:`
+<section class="resources-hero"><div class="copy"><p class="eyebrow">${esc(writers.hero.eyebrow)}</p><h1>${esc(writers.hero.title)}</h1><div class="rule"></div><p>${esc(writers.hero.body)}</p><div class="hero-actions"><a class="btn primary" href="#youtube">Se YouTube-videor</a><a class="btn" href="#printables">Printables</a></div></div><div class="image" style="background-image:url('${esc(writers.hero.image)}')"></div></section>
+<section id="youtube" class="section paper"><div class="container resource-band"><div><p class="eyebrow">YouTube-videor</p><p>${esc(writers.youtube_intro)}</p><a class="btn small" href="${esc(site.youtube)}" target="_blank" rel="noopener">Till YouTube</a></div><div class="video-grid"><a class="video-main" href="${esc(main.url)}" target="_blank" rel="noopener" style="background-image:url('${esc(main.image)}')"><div><div class="meta">YouTube</div><h2>${esc(main.title)}</h2><p>${esc(main.subtitle)}</p></div></a><div class="stack">${small.map(v=>`<a class="video-small" href="${esc(v.url)}" target="_blank" rel="noopener" style="background-image:url('${esc(v.image)}')"><span><strong>${esc(v.title)}</strong><br><small>${esc(v.subtitle)}</small></span></a>`).join('')}</div></div></div></section>
+<section id="printables" class="section paper-alt"><div class="container resource-band"><div><p class="eyebrow">Printables</p><p>${esc(writers.printables_intro)}</p></div><div class="printables-grid">${writers.printables.map(p=>`<article class="printable-card">${img(p.image,p.title)}<h3>${esc(p.title)}</h3>${p.file?`<a class="btn small" href="${esc(p.file)}" download>Ladda ner</a>`:`<span class="meta">Fil kan läggas till i CMS</span>`}</article>`).join('')}</div></div></section>
+<section class="section paper"><div class="container resource-band"><div><p class="eyebrow">Kom igång med ditt skrivande</p><p>En enkel väg från idé till bearbetad text.</p></div><ol style="font-size:1.15rem;margin:0;padding-left:1.4rem">${writers.guide_steps.map(x=>`<li style="padding:.6rem 0;border-bottom:1px solid var(--line)">${esc(x)}</li>`).join('')}</ol></div></section>
+<section class="section dark"><div class="container">${newsletterForm('newsletter-writers',writers.newsletter_title,writers.newsletter_body)}</div></section>`});}
+
+function otherPage(){return layout({title:'Annat',description:'Printables, projekt, inspirationsmaterial och annat av '+site.author_name+'.',active:'other',body:`
+<section class="resources-hero"><div class="copy"><p class="eyebrow">${esc(other.hero.eyebrow)}</p><h1>${esc(other.hero.title)}</h1><div class="rule"></div><p>${esc(other.hero.body)}</p></div><div class="image" style="background-image:url('${esc(other.hero.image)}')"></div></section>
+<section class="section paper"><div class="container other-grid">${other.cards.map((c,i)=>`<article class="card" id="${['printables','projekt','inspiration','ovrigt'][i]}"><div class="card-media">${img(c.image,c.title)}</div><div class="card-body"><h3>${esc(c.title)}</h3><p>${esc(c.text)}</p><a class="btn small" href="${esc(c.url)}">${esc(c.label)}</a></div></article>`).join('')}</div></section>
+<section class="section paper-alt"><div class="container">${newsletterForm('newsletter-other',other.newsletter_title,other.newsletter_body)}</div></section>`});}
+
+function contactPage(){return layout({title:'Kontakt',description:'Kontakta '+site.author_name+' för frågor, samarbeten och författarbesök.',active:'contact',body:`
+<section class="banner-hero" style="background-image:url('${esc(contact.hero.image)}')"><div class="container"><div class="copy"><p class="eyebrow" style="color:#f0e4d4">Kontakt</p><h1>${esc(contact.hero.title)}</h1><p class="section-subtitle" style="color:#fff">${esc(contact.hero.subtitle)}</p><p>${esc(contact.hero.body)}</p></div></div></section>
+<section class="section paper"><div class="container contact-grid"><div><p class="eyebrow">Skicka ett meddelande</p><form class="form" name="contact" method="POST" data-netlify="true" data-local-success="Tack! Meddelandet är skickat."><input type="hidden" name="form-name" value="contact"><div><label for="name">Namn</label><input id="name" name="name" required></div><div><label for="email">E-post</label><input id="email" type="email" name="email" required></div><div><label for="subject">Ämne</label><select id="subject" name="subject"><option>Läsarfråga</option><option>Samarbete</option><option>Skolor & bibliotek</option><option>Övrigt</option></select></div><div><label for="message">Meddelande</label><textarea id="message" name="message" required></textarea></div><button class="btn primary" type="submit">Skicka meddelande</button></form><div class="reasons-grid">${contact.reasons.map(r=>`<div class="reason"><h3>${esc(r.title)}</h3><p>${esc(r.text)}</p></div>`).join('')}</div></div><div><p class="eyebrow">Vanliga frågor</p><div class="faq-list">${contact.faqs.map((f,i)=>`<div class="faq-item"><button type="button" data-faq-button aria-expanded="${i===0?'true':'false'}"><span>${esc(f.q)}</span><span data-faq-symbol>${i===0?'−':'+'}</span></button><div class="faq-answer" data-faq-answer${i===0?'':' hidden'}>${esc(f.a)}</div></div>`).join('')}</div></div></div></section>
+<section class="section dark"><div class="container">${newsletterForm('newsletter-contact','Håll dig uppdaterad','Få nyheter om berättelser, projekt och nya resurser direkt i din inkorg.')}</div></section>`});}
+
+function notFound(){return layout({title:'Sidan hittades inte',description:'Sidan kunde inte hittas.',body:`<section class="section paper"><div class="container" style="max-width:720px;text-align:center;padding-block:8rem"><p class="eyebrow">404</p><h1 class="section-title">Sidan hittades inte</h1><p>Den här länken leder inte till någon sida ännu.</p><a class="btn primary" href="/index.html">Till startsidan</a></div></section>`});}
+
+function write(rel, html){const p=path.join(dist,rel);fs.mkdirSync(path.dirname(p),{recursive:true});fs.writeFileSync(p,html,'utf8');}
+
+fs.rmSync(dist,{recursive:true,force:true});fs.mkdirSync(dist,{recursive:true});
+fs.cpSync(path.join(root,'assets'),path.join(dist,'assets'),{recursive:true});
+write('index.html',homePage());
+write('om-mig.html',aboutPage());
+write('books.html',booksPage());
+write('noveller.html',novelsPage());
+write('blog.html',blogPage());
+write('for-forfattare.html',writersPage());
+write('annat.html',otherPage());
+write('contact.html',contactPage());
+write('404.html',notFound());
+for(const s of stories){write(path.join('noveller',s.slug+'.html'),storyPage(s));if(s.slug==='implantatet') write('implantatet.html',storyPage(s));}
+for(const p of posts) write(path.join('blog',p.slug+'.html'),postPage(p));
+write('robots.txt','User-agent: *\nAllow: /\nSitemap: /sitemap.xml\n');
+const urls=['/','/om-mig.html','/books.html','/noveller.html','/blog.html','/for-forfattare.html','/annat.html','/contact.html',...stories.map(s=>'/noveller/'+s.slug+'.html'),...posts.map(p=>'/blog/'+p.slug+'.html')];
+write('sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map(u=>`<url><loc>${esc(u)}</loc></url>`).join('')}</urlset>`);
+console.log(`Built ${urls.length} pages to ${dist}`);
