@@ -1,44 +1,70 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 560" role="img" aria-label="">
-  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M31 545C61 466 83 392 82 318C81 240 99 165 154 85C177 52 199 31 222 14" stroke="#31413a" stroke-width="4.4"/>
-    <path d="M79 363C119 344 151 313 177 276" stroke="#31413a" stroke-width="3.2"/>
-    <path d="M83 300C120 277 144 248 162 211" stroke="#31413a" stroke-width="3"/>
-    <path d="M101 221C130 204 153 181 171 153" stroke="#31413a" stroke-width="2.8"/>
-    <path d="M126 153C151 142 174 124 194 101" stroke="#31413a" stroke-width="2.6"/>
-    <path d="M70 429C111 419 143 399 171 374" stroke="#31413a" stroke-width="3"/>
-    <path d="M56 474C92 471 119 462 146 444" stroke="#31413a" stroke-width="2.8"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 900">
+<defs>
+  <g id="leaf">
+    <path d="M0 26C-5 17-15 15-25 12C-18 6-17-3-21-12C-12-9-6-15 0-27C6-15 12-9 21-12C17-3 18 6 25 12C15 15 5 17 0 26Z"/>
+    <path d="M0 22L0-17M0 3L-14-6M0 2L14-7" fill="none" stroke="#77806a" stroke-width="1.25" opacity=".55"/>
   </g>
-
-  <g fill="#3e5147">
-    <path d="M47 500c-22-20-20-47 3-63 22 16 28 42 8 62-4 4-7 5-11 1z"/>
-    <path d="M68 454c-7-31 10-53 38-55 10 26 2 49-24 61-6 3-11 1-14-6z"/>
-    <path d="M82 399c-22-19-21-44 0-60 21 13 29 37 13 57-4 5-8 6-13 3z"/>
-    <path d="M102 367c7-31 28-45 57-36 1 27-13 47-40 49-8 1-14-4-17-13z"/>
-    <path d="M90 332c-25-14-31-38-14-59 23 8 36 29 25 53-3 6-6 8-11 6z"/>
-    <path d="M119 300c4-29 23-44 51-39 4 25-8 45-33 50-8 2-14-2-18-11z"/>
-    <path d="M107 267c-24-14-29-36-14-57 22 7 34 27 24 49-3 7-6 9-10 8z"/>
-    <path d="M135 235c5-27 22-40 47-35 3 23-8 40-31 45-7 1-12-2-16-10z"/>
-    <path d="M125 199c-21-13-26-33-12-52 20 6 30 24 21 45-2 5-5 8-9 7z"/>
-    <path d="M150 173c5-24 20-36 42-32 4 21-7 37-27 41-7 2-11-1-15-9z"/>
-    <path d="M151 137c-18-12-22-29-10-45 17 5 26 21 18 39-2 5-4 7-8 6z"/>
-    <path d="M176 114c7-22 21-31 41-25 1 19-9 33-28 35-6 1-10-2-13-10z"/>
-    <path d="M190 77c-14-13-15-29-2-42 15 7 21 22 12 37-3 5-6 7-10 5z"/>
-    <path d="M211 47c7-18 20-25 36-18 0 16-9 28-25 29-6 1-10-3-11-11z"/>
+  <g id="small">
+    <path d="M0 17C-3 11-10 10-16 8C-11 4-10-2-13-8C-8-6-4-10 0-18C4-10 8-6 13-8C10-2 11 4 16 8C10 10 3 11 0 17Z"/>
   </g>
-
-  <g fill="#66705a" opacity=".76">
-    <path d="M39 527c-16-12-18-29-7-43 15 4 24 18 18 34-2 7-6 10-11 9z"/>
-    <path d="M73 479c13-16 30-19 45-8-5 17-18 27-36 22-7-2-10-7-9-14z"/>
-    <path d="M94 425c-14-13-15-29-3-42 15 7 22 21 14 36-3 5-6 7-11 6z"/>
-    <path d="M126 338c13-15 28-18 42-8-4 16-17 25-33 21-6-1-9-6-9-13z"/>
-    <path d="M116 247c-13-11-15-25-5-37 13 4 20 16 15 29-2 6-5 8-10 8z"/>
-    <path d="M160 196c11-13 25-15 37-7-3 14-14 22-28 18-5-1-8-5-9-11z"/>
-    <path d="M172 139c-11-10-12-23-3-33 12 5 17 16 11 27-2 5-5 7-8 6z"/>
-  </g>
-
-  <g fill="#9a8564" opacity=".72">
-    <circle cx="154" cy="89" r="4"/>
-    <circle cx="182" cy="63" r="3.5"/>
-    <circle cx="202" cy="39" r="3"/>
-  </g>
+</defs>
+<g fill="none" stroke="#26372f" stroke-linecap="round">
+  <path d="M54 886C74 758 88 647 111 548C132 455 153 374 203 285C246 208 303 124 414 18" stroke-width="7"/>
+  <path d="M96 655C44 606 25 552 27 493" stroke-width="4.5"/>
+  <path d="M121 563C175 539 215 498 252 451" stroke-width="4.8"/>
+  <path d="M149 463C103 424 86 382 90 335" stroke-width="4.2"/>
+  <path d="M190 356C244 337 289 301 324 259" stroke-width="4.6"/>
+  <path d="M250 247C214 214 203 177 210 141" stroke-width="3.8"/>
+  <path d="M314 159C354 144 390 118 421 84" stroke-width="3.8"/>
+  <path d="M72 753C119 731 155 699 184 662" stroke-width="4.1"/>
+  <path d="M51 809C27 786 16 757 18 727" stroke-width="3.7"/>
+  <path d="M207 315C210 250 234 193 276 147" stroke-width="3.4"/>
+</g>
+<g fill="#33483b">
+  <use href="#leaf" transform="translate(59 818) rotate(-34) scale(1.25)"/>
+  <use href="#leaf" transform="translate(77 744) rotate(30) scale(1.15)"/>
+  <use href="#leaf" transform="translate(96 677) rotate(-38) scale(1.05)"/>
+  <use href="#leaf" transform="translate(119 605) rotate(30) scale(1.05)"/>
+  <use href="#leaf" transform="translate(137 534) rotate(-35) scale(1.08)"/>
+  <use href="#leaf" transform="translate(161 459) rotate(31) scale(1.02)"/>
+  <use href="#leaf" transform="translate(192 386) rotate(-31) scale(.98)"/>
+  <use href="#leaf" transform="translate(226 316) rotate(27) scale(.95)"/>
+  <use href="#leaf" transform="translate(263 249) rotate(-30) scale(.92)"/>
+  <use href="#leaf" transform="translate(302 190) rotate(24) scale(.9)"/>
+  <use href="#leaf" transform="translate(346 133) rotate(-24) scale(.86)"/>
+  <use href="#leaf" transform="translate(389 77) rotate(20) scale(.82)"/>
+  <use href="#leaf" transform="translate(423 40) rotate(-16) scale(.7)"/>
+</g>
+<g fill="#465b49">
+  <use href="#leaf" transform="translate(58 629) rotate(-76) scale(.82)"/>
+  <use href="#leaf" transform="translate(34 571) rotate(-42) scale(.78)"/>
+  <use href="#small" transform="translate(26 513) rotate(-16) scale(.9)"/>
+  <use href="#small" transform="translate(42 476) rotate(26) scale(.82)"/>
+  <use href="#leaf" transform="translate(174 542) rotate(71) scale(.78)"/>
+  <use href="#leaf" transform="translate(218 502) rotate(54) scale(.73)"/>
+  <use href="#small" transform="translate(253 458) rotate(38) scale(.9)"/>
+  <use href="#leaf" transform="translate(119 430) rotate(-75) scale(.78)"/>
+  <use href="#small" transform="translate(96 385) rotate(-44) scale(.9)"/>
+  <use href="#small" transform="translate(92 339) rotate(-18) scale(.86)"/>
+  <use href="#leaf" transform="translate(241 336) rotate(69) scale(.75)"/>
+  <use href="#small" transform="translate(286 303) rotate(51) scale(.9)"/>
+  <use href="#small" transform="translate(325 262) rotate(34) scale(.86)"/>
+  <use href="#leaf" transform="translate(227 219) rotate(-73) scale(.72)"/>
+  <use href="#small" transform="translate(211 177) rotate(-44) scale(.85)"/>
+  <use href="#leaf" transform="translate(360 143) rotate(67) scale(.66)"/>
+  <use href="#small" transform="translate(398 116) rotate(48) scale(.82)"/>
+  <use href="#small" transform="translate(425 86) rotate(28) scale(.72)"/>
+  <use href="#leaf" transform="translate(123 720) rotate(65) scale(.74)"/>
+  <use href="#small" transform="translate(159 685) rotate(48) scale(.82)"/>
+  <use href="#small" transform="translate(187 652) rotate(32) scale(.72)"/>
+</g>
+<g fill="#69725c" opacity=".76">
+  <use href="#small" transform="translate(46 862) rotate(25)"/>
+  <use href="#small" transform="translate(85 787) rotate(-42)"/>
+  <use href="#small" transform="translate(108 646) rotate(42)"/>
+  <use href="#small" transform="translate(151 492) rotate(-48)"/>
+  <use href="#small" transform="translate(207 351) rotate(45)"/>
+  <use href="#small" transform="translate(279 228) rotate(-38)"/>
+  <use href="#small" transform="translate(371 104) rotate(38)"/>
+</g>
 </svg>
