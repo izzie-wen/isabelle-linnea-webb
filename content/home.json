@@ -2,7 +2,7 @@
   "hero": {
     "eyebrow": "Välkommen",
     "title": "Berättelser och tankar från min värld",
-    "subtitle": "Noveller, skrivande och annat om berättelser.",
+    "subtitle": "Noveller, skrivliv och sådant som väcker nya världar till liv.",
     "body": "Här delar jag berättelser, blogginlägg och glimtar ur den kreativa processen. Du kan läsa noveller, följa mitt skrivande och stiga in i en värld där fantasi och verklighet möts.",
     "image": "/assets/images/home-hero.jpg"
   },
@@ -13,13 +13,13 @@
     "image": "/assets/images/about-portrait.jpg"
   },
   "world": {
-    "title": "Utforska berättelsernas värld",
-    "body": "Fördjupa dig i platser, teman, inspiration och sådant som finns bakom berättelserna.",
+    "title": "Utforska Rienritens värld",
+    "body": "Kliv djupare in i världen bakom boken – karaktärer, platser, kartor och bakgrundshistoria.",
     "image": "/assets/images/world-banner.jpg"
   },
   "newsletter": {
     "title": "Håll dig uppdaterad",
-    "body": "Få nya berättelser, lästips och en inblick i kommande projekt direkt i din inkorg.",
+    "body": "Få nyheter, lästips och en inblick i nästa projekt direkt i din inkorg.",
     "note": "Inga spam. Bara berättelser."
   }
 }
