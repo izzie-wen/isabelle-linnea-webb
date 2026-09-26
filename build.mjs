@@ -65,7 +65,9 @@ ${scripts}
 function footer(){ return `<footer class="site-footer">
   <div class="container footer-inner">
     <div class="footer-brand"><strong>${esc(site.author_name).toUpperCase()}</strong><small>${esc(site.tagline)}</small><div class="copyright">${esc(site.copyright)}</div></div>
-    <nav class="footer-nav" aria-label="Sidfot">${nav('')}</nav>
+    <nav class="footer-nav" aria-label="Sidfot">
+      <a href="/index.html">Hem</a><a href="/om-mig.html">Om mig</a><a href="/books.html">Böcker</a><a href="/index.html#varlden">Världen</a><a href="/blog.html">Nyheter</a><a href="/contact.html">Kontakt</a>
+    </nav>
     <div class="footer-right">
       <div class="footer-socials" aria-label="Sociala medier">
         <a href="${esc(site.instagram)}" target="_blank" rel="noopener" aria-label="Instagram">◎</a>
@@ -84,6 +86,9 @@ function homePage(){
  const homePost = (p) => `<article class="home-post-card"><a href="/blog/${esc(p.slug)}.html"><div class="home-post-media">${img(p.image,p.title)}</div><h3>${esc(p.title)}</h3><p>${esc(p.excerpt)}</p><div class="home-post-date">${esc(formatDate(p.date))}</div></a></article>`;
  return layout({title:'Hem',description:'Berättelser, noveller, blogg och skrivliv av Isabelle Linnea.',active:'home',body:`
 <section class="home-hero">
+  <span class="hero-vine hero-vine-top" aria-hidden="true"></span>
+  <span class="hero-vine hero-vine-left" aria-hidden="true"></span>
+  <span class="hero-vine hero-vine-seam" aria-hidden="true"></span>
   <div class="home-hero-copy">
     <p class="eyebrow">${esc(home.hero.eyebrow)}</p>
     <h1>${esc(home.hero.title)}</h1>
@@ -98,13 +103,15 @@ function homePage(){
 <section class="home-about-section">
   <div class="container home-about">
     <div class="home-about-image">${img(home.about.image,'Porträtt av '+site.author_name)}</div>
-    <div class="home-about-copy"><p class="eyebrow">Om författaren</p><h2 class="section-title">${esc(home.about.title)}</h2><div class="rule"></div><p>${esc(home.about.body)}</p><a class="btn" href="/om-mig.html">Läs mer om mig</a></div>
+    <div class="home-about-copy"><h2 class="section-title">${esc(home.about.title)}</h2><div class="home-about-ornament" aria-hidden="true"><span></span><b>◆</b><span></span></div><p>${esc(home.about.body)}</p><a class="btn" href="/om-mig.html">Läs mer om mig</a></div>
     <blockquote class="quote-block">“${esc(home.about.quote)}”<strong>${esc(site.author_name)}</strong></blockquote>
   </div>
 </section>
 
-<section id="varlden" class="world-banner home-world" style="background-image:url('${esc(home.world.image)}')">
-  <div class="container"><div class="copy"><h2>${esc(home.world.title)}</h2><p>${esc(home.world.body)}</p><a class="btn" href="/annat.html">Utforska</a></div></div>
+<section id="varlden" class="home-world-showcase" style="background-image:url('${esc(home.world.image)}')">
+  <img class="home-world-art" src="${esc(home.world.image)}" alt="">
+  <a class="home-world-hotspot" href="/annat.html"><span class="visually-hidden">Till världen</span></a>
+  <div class="home-world-mobile-copy"><h2>${esc(home.world.title)}</h2><p>${esc(home.world.body)}</p><a class="btn" href="/annat.html">Till världen</a></div>
 </section>
 
 <section class="home-journal">
