@@ -1,0 +1,121 @@
+/* Exact homepage artwork placement — reference-driven */
+body{background:#f7f2ea}
+.header-music{width:26px;height:26px;display:grid;place-items:center}
+.header-music svg{width:20px;height:20px;display:block;fill:none;stroke:#111;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.socials a:nth-child(3) svg{width:21px;height:21px;fill:#111;stroke:none}
+.socials a:nth-child(3) .play{fill:#f8f4ed}
+
+@media(min-width:901px){
+  .main-nav a:nth-child(4),
+  .main-nav a:nth-child(7),
+  .main-nav a:nth-child(8){display:none!important}
+}
+
+/* HERO — the supplied banner itself is the base composition */
+.approved-home-hero{
+  position:relative!important;
+  display:block!important;
+  width:100%;
+  aspect-ratio:1672/941;
+  height:auto!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  background:#f7f2ea;
+  isolation:isolate;
+}
+.approved-home-hero::before,.approved-home-hero::after{display:none!important}
+.home-hero-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
+.approved-home-hero .home-hero-copy{
+  position:absolute!important;left:7.65%;top:12.5%;z-index:5;width:31.5%;max-width:430px;
+  padding:0!important;background:transparent!important;display:block!important;overflow:visible!important;
+}
+.approved-home-hero .home-hero-copy::before,.approved-home-hero .home-hero-copy::after{display:none!important}
+.approved-home-hero .home-hero-copy>*{position:relative;z-index:2}
+.approved-home-hero .home-hero-copy .eyebrow{font-size:clamp(.68rem,.82vw,.9rem);margin:0 0 1.05rem;letter-spacing:.25em;color:#302a25}
+.approved-home-hero .home-hero-copy .eyebrow::after{width:92px}
+.approved-home-hero h1{font-size:clamp(2.15rem,3.15vw,4rem)!important;line-height:1.035!important;max-width:none!important;margin:0 0 .7rem!important;letter-spacing:.022em!important}
+.approved-home-hero .lead{font-size:clamp(.96rem,1.26vw,1.35rem)!important;line-height:1.45;max-width:390px!important;margin:.2rem 0 .55rem!important}
+.approved-home-hero .home-ornament{width:130px;margin:.35rem 0 .75rem}
+.approved-home-hero .body{font-size:clamp(.72rem,.88vw,.98rem)!important;line-height:1.48;max-width:385px!important;margin:0 0 1rem!important}
+.approved-home-hero .hero-actions{display:grid!important;grid-template-columns:max-content max-content!important;gap:.65rem .9rem!important;align-items:center}
+.approved-home-hero .btn{min-height:38px!important;padding:.58rem 1.4rem!important;font-size:clamp(.62rem,.7vw,.76rem)!important}
+.approved-home-hero .hero-about-link{grid-column:1/-1!important;width:max-content;margin-top:.1rem;font-size:.68rem}
+.hero-vine{display:none!important}
+.hero-decor{position:absolute;z-index:4;pointer-events:none;height:auto;filter:drop-shadow(0 3px 5px rgba(20,29,23,.08))}
+.hero-decor-top-left{left:-7.5%;top:-10.5%;width:30%;transform:rotate(0deg)}
+.hero-decor-bottom-left{left:-11%;bottom:-29%;width:31%;transform:rotate(83deg) scale(.92)}
+
+/* ABOUT — real ivy artwork, no generated SVG */
+.home-about-section{position:relative!important;height:auto!important;padding:20px 0 18px!important;background:#f7f2ea!important;overflow:hidden!important}
+.home-about-section::before,.home-about-section::after,.home-about-image::after,.quote-block::after{display:none!important}
+.home-about-section .container{width:min(1180px,calc(100% - 64px))!important;height:auto!important}
+.home-about{position:relative;z-index:3;height:auto!important;grid-template-columns:26% 39% 29%!important;gap:3%!important;align-items:center}
+.home-about-image{height:auto!important}
+.home-about-image img{height:auto!important;aspect-ratio:4/4.65!important;object-fit:cover;object-position:center 30%;filter:grayscale(1) sepia(.02) contrast(1.04)!important}
+.home-about-copy .section-title{font-size:clamp(1.55rem,2.15vw,2.45rem)!important}
+.home-about-copy p{font-size:clamp(.76rem,.88vw,.94rem)!important;line-height:1.55}
+.quote-block{font-size:clamp(.98rem,1.25vw,1.3rem)!important;line-height:1.5;padding:2.2rem 1.1rem .8rem 2.2rem!important;background:transparent!important}
+.about-decor{position:absolute;z-index:2;pointer-events:none;height:auto}
+.about-decor-left{left:-7.5%;bottom:-35%;width:22%;transform:rotate(14deg)}
+.about-decor-right{right:-7%;bottom:-32%;width:21%;transform:scaleX(-1) rotate(8deg)}
+
+/* WORLD — use the existing baked banner at its natural ratio */
+.home-world-showcase{line-height:0!important;background:none!important}
+.home-world-art{display:block!important;width:100%!important;height:auto!important}
+.home-world-mobile-copy{line-height:1.55}
+
+/* BLOG + NEWSLETTER */
+.home-journal{position:relative!important;min-height:0!important;padding:28px 0 0!important;background:#f7f2ea!important;overflow:hidden!important}
+.home-journal::before,.home-journal::after{display:none!important}
+.home-journal .container{width:min(1180px,calc(100% - 90px))!important;padding-bottom:36px}
+.home-journal .blog-news-grid{grid-template-columns:3.2fr 1.05fr!important;gap:clamp(1.6rem,2.7vw,2.7rem)!important}
+.home-newsletter-wrap{position:relative;min-height:100%}
+.home-newsletter-wrap .newsletter-box{height:auto}
+.newsletter-twig{position:absolute;right:-3%;bottom:-32px;width:108px;height:auto;opacity:.58;pointer-events:none;mix-blend-mode:multiply}
+
+/* FOOTER — entire supplied treeline stays visible, never cropped */
+.site-footer{position:relative!important;min-height:0!important;padding:0!important;background:#09171d!important;overflow:hidden!important}
+.site-footer::before,.site-footer::after{display:none!important}
+.footer-treeline{display:block!important;width:100%!important;height:clamp(115px,13vw,205px)!important;object-fit:fill!important;margin:0!important;background:#f7f2ea}
+.footer-inner{min-height:clamp(128px,11vw,170px)!important;padding:20px 0 22px!important;grid-template-columns:1.15fr 2.1fr 1.15fr!important;align-items:center}
+.footer-brand strong{font-size:clamp(1rem,1.35vw,1.45rem)!important}
+.footer-nav{gap:.75rem clamp(.8rem,1.4vw,1.45rem)!important}
+.footer-right{padding-right:48px!important}
+.footer-extra{min-height:46px!important;background:#0b1b22!important}
+.footer-extra a{min-height:46px!important}
+
+@media(max-width:1080px) and (min-width:861px){
+  .approved-home-hero .home-hero-copy{left:6.8%;top:11%;width:34%}
+  .hero-decor-top-left{width:34%}.hero-decor-bottom-left{width:34%}
+}
+@media(max-width:860px){
+  .approved-home-hero{aspect-ratio:auto!important;min-height:880px!important}
+  .home-hero-art{object-fit:cover!important;object-position:60% center!important}
+  .approved-home-hero .home-hero-copy{left:7%;top:6.5%;width:86%;max-width:520px}
+  .approved-home-hero .home-hero-copy:before{content:"";display:block!important;position:absolute;inset:-30px -22px;background:rgba(248,244,237,.80)!important;filter:blur(12px);z-index:-1;border-radius:16px}
+  .approved-home-hero .hero-actions{grid-template-columns:1fr 1fr!important}
+  .hero-decor-top-left{width:54%;left:-18%;top:-5%}
+  .hero-decor-bottom-left{width:50%;left:-19%;bottom:-13%}
+  .home-about{grid-template-columns:.9fr 1.1fr!important;gap:2rem!important}
+  .home-about .quote-block{grid-column:1/-1!important}
+  .about-decor-left,.about-decor-right{width:32%}
+  .home-journal .container{width:min(700px,calc(100% - 42px))!important}
+  .home-journal .blog-news-grid{grid-template-columns:1fr!important}
+  .home-newsletter-wrap{border-top:1px solid var(--line);padding-top:1.5rem}
+  .home-newsletter-wrap .newsletter-box{border:0!important;padding-left:0!important}
+  .newsletter-twig{right:0;bottom:-20px}
+  .footer-treeline{height:130px!important;object-fit:fill!important}
+  .footer-inner{grid-template-columns:1fr!important;text-align:center!important}
+  .footer-right{padding-right:0!important}
+}
+@media(max-width:620px){
+  .approved-home-hero{min-height:780px!important}
+  .approved-home-hero .home-hero-copy{left:6%;top:5%;width:88%}
+  .approved-home-hero h1{font-size:clamp(2.1rem,10vw,3.5rem)!important}
+  .approved-home-hero .hero-actions{grid-template-columns:1fr!important}
+  .approved-home-hero .btn{width:100%}
+  .home-about{grid-template-columns:1fr!important}
+  .home-about-image{max-width:320px;margin:auto}
+  .about-decor-left,.about-decor-right{width:45%;opacity:.76}
+  .footer-treeline{height:100px!important}
+}
