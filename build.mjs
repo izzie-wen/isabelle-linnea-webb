@@ -41,16 +41,16 @@ return `<!doctype html>
 <title>${esc(title)} | ${esc(site.author_name)}</title>
 <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
-<body>
+<body id="top">
 <a class="skip-link" href="#main">Hoppa till innehållet</a>
 <header class="site-header">
   <div class="container header-inner">
     <a class="brand" href="/index.html"><strong>${esc(site.author_name).toUpperCase()}</strong><small>${esc(site.tagline)}</small></a>
     <nav class="main-nav" data-main-nav aria-label="Huvudmeny">${nav(active)}</nav>
     <div class="socials" aria-label="Sociala medier">
-      <a href="${esc(site.instagram)}" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
-      <a href="${esc(site.facebook)}" target="_blank" rel="noopener" aria-label="Facebook">f</a>
-      <a href="${esc(site.youtube)}" target="_blank" rel="noopener" aria-label="YouTube">▶</a>
+      <a href="${esc(site.instagram)}" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.4" cy="6.8" r="1"/></svg></a>
+      <a href="${esc(site.facebook)}" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.2 8H17V4.5c-.48-.07-2.12-.2-4.08-.2-4.03 0-6.79 2.46-6.79 6.98V15H2.5v3.92h3.63V24h4.45v-5.08h3.73L14.9 15h-4.32v-3.34c0-1.13.3-1.9 1.92-1.9h1.7V8Z"/></svg></a>
+      <button class="header-search" type="button" aria-label="Sök"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.6" cy="10.6" r="6.4"/><path d="M15.3 15.3 21 21"/></svg></button>
     </div>
     <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false">Meny</button>
   </div>
@@ -63,6 +63,7 @@ ${scripts}
 }
 
 function footer(){ return `<footer class="site-footer">
+  <div class="footer-treeline" aria-hidden="true"></div>
   <div class="container footer-inner">
     <div class="footer-brand"><strong>${esc(site.author_name).toUpperCase()}</strong><small>${esc(site.tagline)}</small><div class="copyright">${esc(site.copyright)}</div></div>
     <nav class="footer-nav" aria-label="Sidfot">
@@ -70,13 +71,18 @@ function footer(){ return `<footer class="site-footer">
     </nav>
     <div class="footer-right">
       <div class="footer-socials" aria-label="Sociala medier">
-        <a href="${esc(site.instagram)}" target="_blank" rel="noopener" aria-label="Instagram">◎</a>
-        <a href="${esc(site.facebook)}" target="_blank" rel="noopener" aria-label="Facebook">f</a>
-        <a href="${esc(site.youtube)}" target="_blank" rel="noopener" aria-label="YouTube">▶</a>
-        <a href="${esc(site.pinterest)}" target="_blank" rel="noopener" aria-label="Pinterest">p</a>
+        <a href="${esc(site.instagram)}" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.4" cy="6.8" r="1"/></svg></a>
+        <a href="${esc(site.facebook)}" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.2 8H17V4.5c-.48-.07-2.12-.2-4.08-.2-4.03 0-6.79 2.46-6.79 6.98V15H2.5v3.92h3.63V24h4.45v-5.08h3.73L14.9 15h-4.32v-3.34c0-1.13.3-1.9 1.92-1.9h1.7V8Z"/></svg></a>
+        <a href="${esc(site.youtube)}" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12s0-3.8-.48-5.63a2.9 2.9 0 0 0-2.04-2.04C17.65 3.85 12 3.85 12 3.85s-5.65 0-7.48.48a2.9 2.9 0 0 0-2.04 2.04C2 8.2 2 12 2 12s0 3.8.48 5.63a2.9 2.9 0 0 0 2.04 2.04c1.83.48 7.48.48 7.48.48s5.65 0 7.48-.48a2.9 2.9 0 0 0 2.04-2.04C22 15.8 22 12 22 12Z"/><path class="play" d="m10 15.4 5.2-3.4L10 8.6v6.8Z"/></svg></a>
+        <span class="footer-music" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M6.7 9.3c3.7-1.1 7.9-.8 11.1.8M7.6 12.3c3-.8 6.4-.6 9 .7M8.5 15.1c2.4-.6 4.9-.4 7 .5"/></svg></span>
       </div>
       <div class="footer-quote">${esc(site.footer_tagline)}</div>
     </div>
+    <a class="footer-top" href="#top" aria-label="Till sidans topp">⌃</a>
+  </div>
+  <div class="footer-extra">
+    <a href="/for-forfattare.html">För författare · Videor · Printables · Skrivtips</a>
+    <a href="/annat.html">Annat · Printables · Projekt · Inspiration</a>
   </div>
 </footer>`; }
 function newsletterForm(name,title,bodyText,note=''){return `<section class="newsletter-box"><p class="eyebrow">${esc(title)}</p><p>${esc(bodyText)}</p><form class="form-row" name="${esc(name)}" method="POST" data-netlify="true" data-local-success="Tack! Din anmälan är registrerad."><input type="hidden" name="form-name" value="${esc(name)}"><label class="visually-hidden" for="${esc(name)}-email">Din e-postadress</label><input id="${esc(name)}-email" type="email" name="email" placeholder="Din e-postadress" required><button class="btn primary" type="submit">Prenumerera</button></form>${note?`<p class="form-note">${esc(note)}</p>`:''}</section>`;}
