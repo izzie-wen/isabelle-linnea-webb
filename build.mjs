@@ -62,19 +62,60 @@ ${scripts}
 </body></html>`;
 }
 
-function footer(){ return `<footer class="site-footer"><div class="container footer-inner"><div class="footer-brand"><strong>${esc(site.author_name).toUpperCase()}</strong><small>${esc(site.tagline)}</small><div class="copyright">${esc(site.copyright)}</div></div><nav class="footer-nav" aria-label="Sidfot">${nav('')}</nav><div class="footer-quote">${esc(site.footer_tagline)}</div></div></footer>`; }
+function footer(){ return `<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand"><strong>${esc(site.author_name).toUpperCase()}</strong><small>${esc(site.tagline)}</small><div class="copyright">${esc(site.copyright)}</div></div>
+    <nav class="footer-nav" aria-label="Sidfot">${nav('')}</nav>
+    <div class="footer-right">
+      <div class="footer-socials" aria-label="Sociala medier">
+        <a href="${esc(site.instagram)}" target="_blank" rel="noopener" aria-label="Instagram">◎</a>
+        <a href="${esc(site.facebook)}" target="_blank" rel="noopener" aria-label="Facebook">f</a>
+        <a href="${esc(site.youtube)}" target="_blank" rel="noopener" aria-label="YouTube">▶</a>
+        <a href="${esc(site.pinterest)}" target="_blank" rel="noopener" aria-label="Pinterest">p</a>
+      </div>
+      <div class="footer-quote">${esc(site.footer_tagline)}</div>
+    </div>
+  </div>
+</footer>`; }
 function newsletterForm(name,title,bodyText,note=''){return `<section class="newsletter-box"><p class="eyebrow">${esc(title)}</p><p>${esc(bodyText)}</p><form class="form-row" name="${esc(name)}" method="POST" data-netlify="true" data-local-success="Tack! Din anmälan är registrerad."><input type="hidden" name="form-name" value="${esc(name)}"><label class="visually-hidden" for="${esc(name)}-email">Din e-postadress</label><input id="${esc(name)}-email" type="email" name="email" placeholder="Din e-postadress" required><button class="btn primary" type="submit">Prenumerera</button></form>${note?`<p class="form-note">${esc(note)}</p>`:''}</section>`;}
 
 function homePage(){
  const latest=posts.slice(0,3);
+ const homePost = (p) => `<article class="home-post-card"><a href="/blog/${esc(p.slug)}.html"><div class="home-post-media">${img(p.image,p.title)}</div><h3>${esc(p.title)}</h3><p>${esc(p.excerpt)}</p><div class="home-post-date">${esc(formatDate(p.date))}</div></a></article>`;
  return layout({title:'Hem',description:'Berättelser, noveller, blogg och skrivliv av Isabelle Linnea.',active:'home',body:`
-<section class="hero-split">
-  <div class="hero-copy"><p class="eyebrow">${esc(home.hero.eyebrow)}</p><h1>${esc(home.hero.title)}</h1><p class="lead">${esc(home.hero.subtitle)}</p><div class="rule"></div><p class="body">${esc(home.hero.body)}</p><div class="hero-actions"><a class="btn primary" href="/noveller.html">Läs noveller</a><a class="btn" href="/blog.html">Besök bloggen</a><a class="link-arrow" href="/om-mig.html">Om mig</a></div></div>
-  <div class="hero-media" style="background-image:url('${esc(home.hero.image)}')"></div>
+<section class="home-hero">
+  <div class="home-hero-copy">
+    <p class="eyebrow">${esc(home.hero.eyebrow)}</p>
+    <h1>${esc(home.hero.title)}</h1>
+    <p class="lead">${esc(home.hero.subtitle)}</p>
+    <div class="home-ornament" aria-hidden="true"><span></span><b>◆</b><span></span></div>
+    <p class="body">${esc(home.hero.body)}</p>
+    <div class="hero-actions"><a class="btn primary" href="/noveller.html">Läs noveller</a><a class="btn" href="/blog.html">Besök bloggen</a><a class="link-arrow hero-about-link" href="/om-mig.html">Om mig</a></div>
+  </div>
+  <div class="home-hero-media" style="background-image:url('${esc(home.hero.image)}')" role="img" aria-label="Stämningsfull skrivhörna med utsikt över en fantasivärld"></div>
 </section>
-<section class="section paper"><div class="container home-about"><div>${img(home.about.image,'Porträtt av '+site.author_name)}</div><div><p class="eyebrow">Om författaren</p><h2 class="section-title">${esc(home.about.title)}</h2><div class="rule"></div><p>${esc(home.about.body)}</p><a class="btn" href="/om-mig.html">Läs mer om mig</a></div><blockquote class="quote-block">“${esc(home.about.quote)}”<strong>${esc(site.author_name)}</strong></blockquote></div></section>
-<section id="varlden" class="world-banner" style="background-image:url('${esc(home.world.image)}')"><div class="container"><div class="copy"><h2>${esc(home.world.title)}</h2><p>${esc(home.world.body)}</p><a class="btn" href="/annat.html" style="color:white;border-color:#d7bd8e">Utforska</a></div></div></section>
-<section class="section paper"><div class="container blog-news-grid"><div><p class="eyebrow">Senaste från bloggen</p><div class="post-grid">${latest.map(p=>postCard(p)).join('')}</div></div>${newsletterForm('newsletter-home',home.newsletter.title,home.newsletter.body,home.newsletter.note)}</div></section>`});
+
+<section class="home-about-section">
+  <div class="container home-about">
+    <div class="home-about-image">${img(home.about.image,'Porträtt av '+site.author_name)}</div>
+    <div class="home-about-copy"><p class="eyebrow">Om författaren</p><h2 class="section-title">${esc(home.about.title)}</h2><div class="rule"></div><p>${esc(home.about.body)}</p><a class="btn" href="/om-mig.html">Läs mer om mig</a></div>
+    <blockquote class="quote-block">“${esc(home.about.quote)}”<strong>${esc(site.author_name)}</strong></blockquote>
+  </div>
+</section>
+
+<section id="varlden" class="world-banner home-world" style="background-image:url('${esc(home.world.image)}')">
+  <div class="container"><div class="copy"><h2>${esc(home.world.title)}</h2><p>${esc(home.world.body)}</p><a class="btn" href="/annat.html">Utforska</a></div></div>
+</section>
+
+<section class="home-journal">
+  <div class="container blog-news-grid">
+    <div class="home-posts">
+      <div class="home-section-heading"><p class="eyebrow">Senaste från bloggen</p></div>
+      <div class="post-grid home-post-grid">${latest.map(p=>homePost(p)).join('')}</div>
+    </div>
+    ${newsletterForm('newsletter-home',home.newsletter.title,home.newsletter.body,home.newsletter.note)}
+  </div>
+</section>`});
 }
 
 function postCard(p){return `<article class="card"><a href="/blog/${esc(p.slug)}.html"><div class="card-media">${img(p.image,p.title)}</div><div class="card-body"><div class="meta">${esc(p.category)} · ${esc(formatDate(p.date))}</div><h3>${esc(p.title)}</h3><p>${esc(p.excerpt)}</p><span class="link-arrow">Läs mer</span></div></a></article>`;}
