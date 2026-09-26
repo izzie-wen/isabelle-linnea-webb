@@ -50,8 +50,8 @@ return `<!doctype html>
     <div class="socials" aria-label="Sociala medier">
       <a href="${esc(site.instagram)}" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.4" cy="6.8" r="1"/></svg></a>
       <a href="${esc(site.facebook)}" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.2 8H17V4.5c-.48-.07-2.12-.2-4.08-.2-4.03 0-6.79 2.46-6.79 6.98V15H2.5v3.92h3.63V24h4.45v-5.08h3.73L14.9 15h-4.32v-3.34c0-1.13.3-1.9 1.92-1.9h1.7V8Z"/></svg></a>
-      <a href="${esc(site.youtube)}" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12s0-3.8-.48-5.63a2.9 2.9 0 0 0-2.04-2.04C17.65 3.85 12 3.85 12 3.85s-5.65 0-7.48.48a2.9 2.9 0 0 0-2.04 2.04C2 8.2 2 12 2 12s0 3.8.48 5.63a2.9 2.9 0 0 0 2.04 2.04c1.83.48 7.48.48 7.48.48s5.65 0 7.48-.48a2.9 2.9 0 0 0 2.04-2.04C22 15.8 22 12 22 12Z"/><path class="play" d="m10 15.4 5.2-3.4L10 8.6v6.8Z"/></svg></a>
-      <span class="header-music" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M7 9.2c3.4-1 7.2-.7 10.1.7M7.8 12c2.8-.8 5.9-.5 8.3.6M8.6 14.7c2.1-.5 4.4-.3 6.3.5"/></svg></span>
+      <a href="${esc(site.youtube)}" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.4" width="19" height="13.2" rx="4"/><path d="m10 9 5 3-5 3z" class="filled"/></svg></a>
+      <span class="social-static" aria-label="Spotify"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M6.8 9.3c3.8-1.1 7.8-.8 10.8.7M7.6 12.2c3-.8 6.3-.6 8.8.6M8.4 15c2.3-.6 4.8-.4 6.8.4"/></svg></span>
       <button class="header-search" type="button" aria-label="Sök"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.6" cy="10.6" r="6.4"/><path d="M15.3 15.3 21 21"/></svg></button>
     </div>
     <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false">Meny</button>
@@ -90,40 +90,44 @@ function footer(){ return `<footer class="site-footer">
 function newsletterForm(name,title,bodyText,note=''){return `<section class="newsletter-box"><p class="eyebrow">${esc(title)}</p><p>${esc(bodyText)}</p><form class="form-row" name="${esc(name)}" method="POST" data-netlify="true" data-local-success="Tack! Din anmälan är registrerad."><input type="hidden" name="form-name" value="${esc(name)}"><label class="visually-hidden" for="${esc(name)}-email">Din e-postadress</label><input id="${esc(name)}-email" type="email" name="email" placeholder="Din e-postadress" required><button class="btn primary" type="submit">Prenumerera</button></form>${note?`<p class="form-note">${esc(note)}</p>`:''}</section>`;}
 
 function homePage(){
- const latest=posts.slice(0,3);
+ const wanted=['bakom-kulisserna','platser-som-inspirerar','tema-och-budskap'];
+ const latest=wanted.map(slug=>posts.find(p=>p.slug===slug)).filter(Boolean);
  const homePost = (p) => `<article class="home-post-card"><a href="/blog/${esc(p.slug)}.html"><div class="home-post-media">${img(p.image,p.title)}</div><h3>${esc(p.title)}</h3><p>${esc(p.excerpt)}</p><div class="home-post-date">${esc(formatDate(p.date))}</div></a></article>`;
  return layout({title:'Hem',description:'Berättelser, noveller, blogg och skrivliv av Isabelle Linnea.',active:'home',body:`
-<section class="home-hero approved-home-hero">
-  <img class="home-hero-art" src="/assets/images/home/hero-banner.webp" alt="" aria-hidden="true">
-  <img class="hero-decor hero-decor-top-left" src="/assets/images/home/ivy-corner.webp" alt="" aria-hidden="true">
-  <img class="hero-decor hero-decor-bottom-left" src="/assets/images/home/ivy-corner.webp" alt="" aria-hidden="true">
-  <div class="home-hero-copy">
+<section class="home-hero exact-home-hero">
+  <img class="exact-hero-bg" src="/assets/images/home/hero-banner.png" alt="Stämningsfull skrivhörna med utsikt över en fantasivärld">
+  <img class="home-decor hero-ivy-top-left" src="/assets/images/home/ivy-c.png" alt="" aria-hidden="true">
+  <img class="home-decor hero-ivy-left" src="/assets/images/home/ivy-d.png" alt="" aria-hidden="true">
+  <img class="home-decor hero-ivy-top-right" src="/assets/images/home/ivy-e.png" alt="" aria-hidden="true">
+  <img class="home-decor hero-ivy-bottom-left" src="/assets/images/home/ivy-b.png" alt="" aria-hidden="true">
+  <div class="home-hero-copy exact-hero-copy">
     <p class="eyebrow">${esc(home.hero.eyebrow)}</p>
     <h1>${esc(home.hero.title)}</h1>
     <p class="lead">${esc(home.hero.subtitle)}</p>
     <div class="home-ornament" aria-hidden="true"><span></span><b>◆</b><span></span></div>
     <p class="body">${esc(home.hero.body)}</p>
-    <div class="hero-actions"><a class="btn primary" href="/noveller.html">Läs noveller</a><a class="btn" href="/blog.html">Besök bloggen</a><a class="link-arrow hero-about-link" href="/om-mig.html">Om mig</a></div>
+    <div class="hero-actions"><a class="btn primary" href="/noveller.html">Läs noveller</a><a class="btn" href="/blog.html">Besök bloggen</a></div>
+    <a class="hero-about-link" href="/om-mig.html">Om mig <span aria-hidden="true">›</span></a>
   </div>
 </section>
 
-<section class="home-about-section">
-  <img class="about-decor about-decor-left" src="/assets/images/home/ivy-corner.webp" alt="" aria-hidden="true">
-  <img class="about-decor about-decor-right" src="/assets/images/home/ivy-corner.webp" alt="" aria-hidden="true">
+<section class="home-about-section exact-about">
+  <img class="home-decor about-ivy-left" src="/assets/images/home/ivy-a.png" alt="" aria-hidden="true">
+  <img class="home-decor about-ivy-right" src="/assets/images/home/ivy-b.png" alt="" aria-hidden="true">
   <div class="container home-about">
     <div class="home-about-image">${img(home.about.image,'Porträtt av '+site.author_name)}</div>
     <div class="home-about-copy"><h2 class="section-title">${esc(home.about.title)}</h2><div class="home-about-ornament" aria-hidden="true"><span></span><b>◆</b><span></span></div><p>${esc(home.about.body)}</p><a class="btn" href="/om-mig.html">Läs mer om mig</a></div>
-    <blockquote class="quote-block">“${esc(home.about.quote)}”<strong>${esc(site.author_name)}</strong></blockquote>
+    <blockquote class="quote-block">“${esc(home.about.quote)}”<strong>${esc(site.author_name)}</strong><div class="quote-ornament" aria-hidden="true"><span></span><b>◆</b><span></span></div></blockquote>
   </div>
 </section>
 
-<section id="varlden" class="home-world-showcase" style="background-image:url('${esc(home.world.image)}')">
+<section id="varlden" class="home-world-showcase exact-world">
   <img class="home-world-art" src="${esc(home.world.image)}" alt="">
   <a class="home-world-hotspot" href="/annat.html"><span class="visually-hidden">Till världen</span></a>
   <div class="home-world-mobile-copy"><h2>${esc(home.world.title)}</h2><p>${esc(home.world.body)}</p><a class="btn" href="/annat.html">Till världen</a></div>
 </section>
 
-<section class="home-journal">
+<section class="home-journal exact-journal">
   <div class="container blog-news-grid">
     <div class="home-posts">
       <div class="home-section-heading"><p class="eyebrow">Senaste från bloggen</p></div>
@@ -131,7 +135,7 @@ function homePage(){
     </div>
     <div class="home-newsletter-wrap">
       ${newsletterForm('newsletter-home',home.newsletter.title,home.newsletter.body,home.newsletter.note)}
-      <img class="newsletter-twig" src="/assets/images/home/botanical-twig.webp" alt="" aria-hidden="true">
+      <img class="newsletter-twig" src="/assets/images/home/twig-small.png" alt="" aria-hidden="true">
     </div>
   </div>
 </section>`});
