@@ -1,0 +1,25 @@
+{
+  "hero": {
+    "eyebrow": "Välkommen",
+    "title": "Berättelser och tankar från min värld",
+    "subtitle": "Noveller, skrivliv och sådant som väcker nya världar till liv.",
+    "body": "Här delar jag berättelser, blogginlägg och glimtar ur den kreativa processen. Du kan läsa noveller, följa mitt skrivande och stiga in i en värld där fantasi och verklighet möts.",
+    "image": "/assets/images/home-hero.jpg"
+  },
+  "about": {
+    "title": "Om författaren",
+    "body": "Isabelle Linnea skriver berättelser om starka band, stora frågor och de val som formar oss. Med inspiration från naturen, mytologi och mänskliga relationer skapar hon världar där det vardagliga och det magiska möts.",
+    "quote": "Jag tror på berättelsers kraft att förändra – att de kan hjälpa oss att se oss själva, varandra och världen med nya ögon.",
+    "image": "/assets/images/about-portrait.jpg"
+  },
+  "world": {
+    "title": "Utforska berättelsernas värld",
+    "body": "Fördjupa dig i platser, teman, inspiration och sådant som finns bakom berättelserna.",
+    "image": "/assets/images/world-banner.jpg"
+  },
+  "newsletter": {
+    "title": "Håll dig uppdaterad",
+    "body": "Få nya berättelser, lästips och en inblick i kommande projekt direkt i din inkorg.",
+    "note": "Inga spam. Bara berättelser."
+  }
+}

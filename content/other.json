@@ -1,0 +1,40 @@
+{
+  "hero": {
+    "eyebrow": "Resurser, projekt & mer",
+    "title": "Annat",
+    "body": "Här samlar jag lite av allt det andra – printables, kreativa projekt, inspirationsmaterial och resurser som inte riktigt passar någon annanstans, men som kan vara fina att ha.",
+    "image": "/assets/images/other-hero.jpg"
+  },
+  "cards": [
+    {
+      "title": "Printables",
+      "text": "Ladda ner planeringsblad, mallar, inspirationslistor och annat som kan vara användbart.",
+      "image": "/assets/images/other-printables.jpg",
+      "label": "Till printables",
+      "url": "for-forfattare.html#printables"
+    },
+    {
+      "title": "Kreativa projekt",
+      "text": "Små och stora projekt jag arbetar med – från världsbygge och karaktärer till experiment och sidoprojekt.",
+      "image": "/assets/images/other-projects.jpg",
+      "label": "Se projekt",
+      "url": "#projekt"
+    },
+    {
+      "title": "Inspirationsmaterial",
+      "text": "Bilder, listor, prompts och annat som kan väcka nya idéer och hjälpa kreativiteten på traven.",
+      "image": "/assets/images/other-inspiration.jpg",
+      "label": "Utforska",
+      "url": "#inspiration"
+    },
+    {
+      "title": "Övriga resurser",
+      "text": "Tips, länkar, rekommendationer och annat som kan vara värdefullt – både för skrivande och fantasi i stort.",
+      "image": "/assets/images/other-resources.jpg",
+      "label": "Se mer",
+      "url": "#ovrigt"
+    }
+  ],
+  "newsletter_title": "Vill du ha fler resurser?",
+  "newsletter_body": "Prenumerera på nyhetsbrevet och få tillgång till nya printables, projektuppdateringar och annat smått och gott direkt i inkorgen."
+}
