@@ -39,7 +39,7 @@ return `<!doctype html>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="${esc(description)}">
 <title>${esc(title)} | ${esc(site.author_name)}</title>
-<link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="stylesheet" href="/assets/css/styles.css">\n<link rel="stylesheet" href="/assets/css/home-exact.css">
 </head>
 <body id="top">
 <a class="skip-link" href="#main">Hoppa till innehållet</a>
@@ -50,6 +50,8 @@ return `<!doctype html>
     <div class="socials" aria-label="Sociala medier">
       <a href="${esc(site.instagram)}" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.4" cy="6.8" r="1"/></svg></a>
       <a href="${esc(site.facebook)}" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.2 8H17V4.5c-.48-.07-2.12-.2-4.08-.2-4.03 0-6.79 2.46-6.79 6.98V15H2.5v3.92h3.63V24h4.45v-5.08h3.73L14.9 15h-4.32v-3.34c0-1.13.3-1.9 1.92-1.9h1.7V8Z"/></svg></a>
+      <a href="${esc(site.youtube)}" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12s0-3.8-.48-5.63a2.9 2.9 0 0 0-2.04-2.04C17.65 3.85 12 3.85 12 3.85s-5.65 0-7.48.48a2.9 2.9 0 0 0-2.04 2.04C2 8.2 2 12 2 12s0 3.8.48 5.63a2.9 2.9 0 0 0 2.04 2.04c1.83.48 7.48.48 7.48.48s5.65 0 7.48-.48a2.9 2.9 0 0 0 2.04-2.04C22 15.8 22 12 22 12Z"/><path class="play" d="m10 15.4 5.2-3.4L10 8.6v6.8Z"/></svg></a>
+      <span class="header-music" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M7 9.2c3.4-1 7.2-.7 10.1.7M7.8 12c2.8-.8 5.9-.5 8.3.6M8.6 14.7c2.1-.5 4.4-.3 6.3.5"/></svg></span>
       <button class="header-search" type="button" aria-label="Sök"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.6" cy="10.6" r="6.4"/><path d="M15.3 15.3 21 21"/></svg></button>
     </div>
     <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false">Meny</button>
@@ -63,7 +65,7 @@ ${scripts}
 }
 
 function footer(){ return `<footer class="site-footer">
-  <div class="footer-treeline" aria-hidden="true"></div>
+  <img class="footer-treeline" src="/assets/images/home/footer-treeline.webp" alt="" aria-hidden="true">
   <div class="container footer-inner">
     <div class="footer-brand"><strong>${esc(site.author_name).toUpperCase()}</strong><small>${esc(site.tagline)}</small><div class="copyright">${esc(site.copyright)}</div></div>
     <nav class="footer-nav" aria-label="Sidfot">
@@ -91,10 +93,10 @@ function homePage(){
  const latest=posts.slice(0,3);
  const homePost = (p) => `<article class="home-post-card"><a href="/blog/${esc(p.slug)}.html"><div class="home-post-media">${img(p.image,p.title)}</div><h3>${esc(p.title)}</h3><p>${esc(p.excerpt)}</p><div class="home-post-date">${esc(formatDate(p.date))}</div></a></article>`;
  return layout({title:'Hem',description:'Berättelser, noveller, blogg och skrivliv av Isabelle Linnea.',active:'home',body:`
-<section class="home-hero">
-  <span class="hero-vine hero-vine-top" aria-hidden="true"></span>
-  <span class="hero-vine hero-vine-left" aria-hidden="true"></span>
-  <span class="hero-vine hero-vine-seam" aria-hidden="true"></span>
+<section class="home-hero approved-home-hero">
+  <img class="home-hero-art" src="/assets/images/home/hero-banner.webp" alt="" aria-hidden="true">
+  <img class="hero-decor hero-decor-top-left" src="/assets/images/home/ivy-corner.webp" alt="" aria-hidden="true">
+  <img class="hero-decor hero-decor-bottom-left" src="/assets/images/home/ivy-corner.webp" alt="" aria-hidden="true">
   <div class="home-hero-copy">
     <p class="eyebrow">${esc(home.hero.eyebrow)}</p>
     <h1>${esc(home.hero.title)}</h1>
@@ -103,10 +105,11 @@ function homePage(){
     <p class="body">${esc(home.hero.body)}</p>
     <div class="hero-actions"><a class="btn primary" href="/noveller.html">Läs noveller</a><a class="btn" href="/blog.html">Besök bloggen</a><a class="link-arrow hero-about-link" href="/om-mig.html">Om mig</a></div>
   </div>
-  <div class="home-hero-media" style="background-image:url('${esc(home.hero.image)}')" role="img" aria-label="Stämningsfull skrivhörna med utsikt över en fantasivärld"></div>
 </section>
 
 <section class="home-about-section">
+  <img class="about-decor about-decor-left" src="/assets/images/home/ivy-corner.webp" alt="" aria-hidden="true">
+  <img class="about-decor about-decor-right" src="/assets/images/home/ivy-corner.webp" alt="" aria-hidden="true">
   <div class="container home-about">
     <div class="home-about-image">${img(home.about.image,'Porträtt av '+site.author_name)}</div>
     <div class="home-about-copy"><h2 class="section-title">${esc(home.about.title)}</h2><div class="home-about-ornament" aria-hidden="true"><span></span><b>◆</b><span></span></div><p>${esc(home.about.body)}</p><a class="btn" href="/om-mig.html">Läs mer om mig</a></div>
@@ -126,7 +129,10 @@ function homePage(){
       <div class="home-section-heading"><p class="eyebrow">Senaste från bloggen</p></div>
       <div class="post-grid home-post-grid">${latest.map(p=>homePost(p)).join('')}</div>
     </div>
-    ${newsletterForm('newsletter-home',home.newsletter.title,home.newsletter.body,home.newsletter.note)}
+    <div class="home-newsletter-wrap">
+      ${newsletterForm('newsletter-home',home.newsletter.title,home.newsletter.body,home.newsletter.note)}
+      <img class="newsletter-twig" src="/assets/images/home/botanical-twig.webp" alt="" aria-hidden="true">
+    </div>
   </div>
 </section>`});
 }
