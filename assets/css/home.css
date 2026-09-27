@@ -6,7 +6,7 @@
 :root {
   --paper: #f3eee5;
   --paper-2: #ece5d8;
-  --ink: #26221e;
+  --ink: #111;
   --ink-soft: #4a433b;
   --brown: #6a4a2c;
   --brown-dark: #563a21;
@@ -33,7 +33,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--serif);
-  font-size: 1.15rem;
+  font-size: 1.22rem;
   line-height: 1.55;
   overflow-x: clip;
   position: relative;
@@ -157,7 +157,7 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
   letter-spacing: .04em;
 }
 .hero__lead { font-style: italic; font-size: clamp(1.3rem, 1.8vw, 1.55rem); line-height: 1.3; margin: 16px 0 0; color: var(--ink-soft); }
-.hero__body { font-size: 1.05rem; color: var(--ink-soft); margin: 0 0 24px; }
+.hero__body { font-size: 1.15rem; color: var(--ink); margin: 0 0 24px; }
 .buttons { display: flex; flex-wrap: wrap; gap: 16px; }
 .text-link {
   display: inline-block; margin-top: 20px;
@@ -235,7 +235,7 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
 .post h3 { font-size: 1.2rem; font-weight: 600; }
 .post h3 a { text-decoration: none; }
 .post h3 a:hover { color: var(--brown); }
-.post__sub { font-style: italic; margin: 0 0 8px; color: var(--ink-soft); line-height: 1.3; }
+.post__sub { font-style: italic; margin: 0 0 8px; color: var(--ink); line-height: 1.3; }
 .post time { font-family: var(--caps); font-size: .8rem; letter-spacing: .14em; color: var(--ink-soft); }
 
 .newsletter { position: relative; border-left: 1px solid var(--line); padding-left: 32px; }
