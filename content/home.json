@@ -4,7 +4,7 @@
     "title": "Berättelser och tankar från min värld",
     "subtitle": "Noveller, skrivliv och sådant som väcker nya världar till liv.",
     "body": "Här delar jag berättelser, blogginlägg och glimtar ur den kreativa processen. Du kan läsa noveller, följa mitt skrivande och stiga in i en värld där fantasi och verklighet möts.",
-    "image": "/assets/images/home-hero.jpg"
+    "image": "/assets/images/hero.webp"
   },
   "about": {
     "title": "Om författaren",
@@ -15,7 +15,7 @@
   "world": {
     "title": "Utforska Rienritens värld",
     "body": "Kliv djupare in i världen bakom boken – karaktärer, platser, kartor och bakgrundshistoria.",
-    "image": "/assets/images/world-banner.jpg"
+    "image": "/assets/images/varlden.webp"
   },
   "newsletter": {
     "title": "Håll dig uppdaterad",

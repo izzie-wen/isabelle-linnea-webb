@@ -6,6 +6,7 @@ Den här versionen är **inte en skärmdump med klickytor**. Rubriker, brödtext
 
 - `content/` – allt innehåll du vill ändra.
 - `assets/images/` – bilder som används på webbplatsen.
+- `assets/css/home.css` – stilmall för startsidan (ny design). Övriga sidor använder `assets/css/styles.css`.
 - `assets/uploads/` – nya bilder/PDF:er som du laddar upp via CMS.
 - `build.mjs` – bygger den färdiga webbplatsen.
 - `dist/` – den färdiga webbplatsen som publiceras.
