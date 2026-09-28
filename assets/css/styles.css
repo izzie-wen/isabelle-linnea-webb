@@ -183,6 +183,14 @@ button{cursor:pointer}
 .resources-hero .copy{padding:4rem;display:flex;flex-direction:column;justify-content:center}
 .resources-hero .image{background:center/cover no-repeat}
 .resources-hero h1{font-size:4rem;font-weight:400;margin:0}
+.resources-hero .copy{font-family:"Cormorant Garamond",Garamond,Georgia,serif;color:#1c1a17}
+.resources-hero .eyebrow{font-family:"Cormorant SC","Cormorant Garamond",Georgia,serif;font-size:1.05rem;font-weight:600;letter-spacing:.2em;color:#2a2621}
+.resources-hero .eyebrow::after{content:none}
+.resources-hero h1{font-family:"Cormorant Garamond",Garamond,Georgia,serif;font-size:clamp(3.4rem,6vw,5.6rem);font-weight:500;text-transform:uppercase;letter-spacing:.03em;line-height:1;color:#161512}
+.resources-hero .rule{margin:1.3rem 0 1.6rem}
+.resources-hero .rule::before,.resources-hero .rule::after{width:130px;background:#6b5a44;opacity:1}
+.resources-hero .rule span{font-size:.6rem;color:#8a6a3f}
+.resources-hero .copy>p:not(.eyebrow){font-family:"EB Garamond",Garamond,Georgia,serif;font-size:clamp(1.15rem,1.4vw,1.35rem);font-weight:700;line-height:1.5;color:#111;max-width:34rem;margin:0}
 .resource-band{display:grid;grid-template-columns:260px 1fr;gap:2rem;align-items:start;padding:2.5rem 0;border-bottom:1px solid var(--line)}
 .video-grid{display:grid;grid-template-columns:1.35fr .8fr;gap:1rem}
 .video-main{position:relative;min-height:320px;background:center/cover no-repeat;color:white;display:flex;align-items:flex-end;padding:1.5rem}
