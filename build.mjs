@@ -6,6 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = __dirname;
 const contentDir = path.join(root, 'content');
 const dist = path.join(root, 'dist');
+const assetVersion = Date.now().toString(36);
 
 const readJSON = (p) => JSON.parse(fs.readFileSync(path.join(contentDir,p),'utf8'));
 const readCollection = (dir) => fs.readdirSync(path.join(contentDir,dir)).filter(f=>f.endsWith('.json')).map(f=>readJSON(path.join(dir,f)));
@@ -39,7 +40,7 @@ return `<!doctype html>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="${esc(description)}">
 <title>${esc(title)} | ${esc(site.author_name)}</title>
-<link rel="stylesheet" href="/assets/css/styles.css">\n<link rel="stylesheet" href="/assets/css/home-exact.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Cormorant+SC:wght@500;600&family=EB+Garamond:wght@500;600;700&display=swap" rel="stylesheet">\n<link rel="stylesheet" href="/assets/css/styles.css?v=${assetVersion}">\n<link rel="stylesheet" href="/assets/css/home-exact.css?v=${assetVersion}">
 </head>
 <body id="top">
 <a class="skip-link" href="#main">Hoppa till innehållet</a>
@@ -114,7 +115,7 @@ function homePage(){
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+SC:wght@500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="${esc(home.hero.image)}">
-  <link rel="stylesheet" href="/assets/css/home.css">
+  <link rel="stylesheet" href="/assets/css/home.css?v=${assetVersion}">
 </head>
 <body>
 
@@ -321,7 +322,7 @@ function writersPage(){
 <section class="section dark"><div class="container">${newsletterForm('newsletter-writers',writers.newsletter_title,writers.newsletter_body)}</div></section>`});}
 
 function otherPage(){return layout({title:'Annat',description:'Printables, projekt, inspirationsmaterial och annat av '+site.author_name+'.',active:'other',body:`
-<section class="resources-hero"><div class="copy"><p class="eyebrow">${esc(other.hero.eyebrow)}</p><h1>${esc(other.hero.title)}</h1><div class="rule"></div><p>${esc(other.hero.body)}</p></div><div class="image" style="background-image:url('${esc(other.hero.image)}')"></div></section>
+<section class="resources-hero"><div class="copy"><p class="eyebrow">${esc(other.hero.eyebrow)}</p><h1>${esc(other.hero.title)}</h1><div class="rule"><span aria-hidden="true">◆</span></div><p>${esc(other.hero.body)}</p></div><div class="image" style="background-image:url('${esc(other.hero.image)}')"></div></section>
 <section class="section paper"><div class="container other-grid">${other.cards.map((c,i)=>`<article class="card" id="${['printables','projekt','inspiration','ovrigt'][i]}"><div class="card-media">${img(c.image,c.title)}</div><div class="card-body"><h3>${esc(c.title)}</h3><p>${esc(c.text)}</p><a class="btn small" href="${esc(c.url)}">${esc(c.label)}</a></div></article>`).join('')}</div></section>
 <section class="section paper-alt"><div class="container">${newsletterForm('newsletter-other',other.newsletter_title,other.newsletter_body)}</div></section>`});}
 
