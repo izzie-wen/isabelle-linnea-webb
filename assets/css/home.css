@@ -79,11 +79,11 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
 /* Murgröna i övre hörnen – ligger över header och hero */
 .ivy--top-left, .ivy--top-right {
   top: -8px;
-  z-index: 30;
+  z-index: 15; /* under headerns text/ikoner (20) men över hero-bilden */
   filter: drop-shadow(2px 4px 4px rgba(0,0,0,.2));
 }
-.ivy--top-left  { left: -14px;  width: clamp(150px, 19vw, 300px); }
-.ivy--top-right { right: -14px; width: clamp(150px, 19vw, 300px); }
+.ivy--top-left  { left: -14px;  width: clamp(180px, 20vw, 300px); }
+.ivy--top-right { right: -14px; width: clamp(150px, 16vw, 250px); } /* smalare så ikonerna syns */
 
 /* ---------- Header ---------- */
 .site-header {
@@ -92,8 +92,8 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
   display: flex;
   align-items: center;
   gap: 2rem;
-  padding: 14px clamp(80px, 10vw, 150px) 12px clamp(100px, 13vw, 190px); /* plats för murgrönan i båda hörnen */
-  background: var(--paper);
+  padding: 14px clamp(100px, 13vw, 190px) 12px clamp(100px, 13vw, 190px); /* plats för murgrönan i båda hörnen */
+  background: transparent; /* samma papper syns genom från body, så murgrönan kan ligga bakom */
   border-bottom: 1px solid rgba(0,0,0,.06);
 }
 .logo { text-decoration: none; display: flex; flex-direction: column; line-height: 1; white-space: nowrap; }
