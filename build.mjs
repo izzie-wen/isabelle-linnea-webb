@@ -131,7 +131,8 @@ function homePage(){
 
 <a class="skip" href="#innehall">Hoppa till innehållet</a>
 
-<img class="ivy ivy--page-corner" src="/assets/images/murgrona-hangande.webp" alt="" aria-hidden="true">
+<img class="ivy ivy--top-left" src="/assets/images/murgrona-topp-vanster.webp" alt="" aria-hidden="true">
+<img class="ivy ivy--top-right" src="/assets/images/murgrona-topp-hoger.webp" alt="" aria-hidden="true">
 
 <header class="site-header">
   ${logo()}

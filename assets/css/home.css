@@ -76,12 +76,14 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
 
 /* ---------- Murgröna / dekor ---------- */
 .ivy { position: absolute; pointer-events: none; user-select: none; }
-.ivy--page-corner {
-  top: -10px; left: -30px;
-  width: clamp(120px, 15vw, 210px);
+/* Murgröna i övre hörnen – ligger över header och hero */
+.ivy--top-left, .ivy--top-right {
+  top: -8px;
   z-index: 30;
-  filter: drop-shadow(2px 4px 4px rgba(0,0,0,.25));
+  filter: drop-shadow(2px 4px 4px rgba(0,0,0,.2));
 }
+.ivy--top-left  { left: -14px;  width: clamp(150px, 19vw, 300px); }
+.ivy--top-right { right: -14px; width: clamp(150px, 19vw, 300px); }
 
 /* ---------- Header ---------- */
 .site-header {
@@ -90,11 +92,11 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
   display: flex;
   align-items: center;
   gap: 2rem;
-  padding: 14px var(--gutter) 12px clamp(100px, 13vw, 190px);
+  padding: 14px clamp(80px, 10vw, 150px) 12px clamp(100px, 13vw, 190px); /* plats för murgrönan i båda hörnen */
   background: var(--paper);
   border-bottom: 1px solid rgba(0,0,0,.06);
 }
-.logo { text-decoration: none; display: flex; flex-direction: column; line-height: 1; }
+.logo { text-decoration: none; display: flex; flex-direction: column; line-height: 1; white-space: nowrap; }
 .logo__name {
   font-family: var(--serif);
   font-size: clamp(1.6rem, 2.6vw, 2.2rem);
@@ -320,7 +322,10 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
    Mobil
    ========================================================== */
 @media (max-width: 860px) {
-  .site-header { padding-left: clamp(80px, 22vw, 120px); flex-wrap: wrap; gap: 12px; }
+  .site-header { padding-left: clamp(80px, 22vw, 120px); padding-right: var(--gutter); flex-wrap: wrap; gap: 12px; }
+  .logo { white-space: normal; }
+  .ivy--top-left { width: 120px; }
+  .ivy--top-right { display: none; } /* för trångt bredvid namnet på mobil */
   .social { display: none; }
   .menu-toggle {
     display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
