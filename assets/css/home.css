@@ -227,8 +227,8 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
 /* Exakt samma färg som trädsilhuettens nederkant (skog.webp) så att träden går sömlöst över i sidfoten */
 .site-footer__main, .site-footer__bar { background: #0b141a; }
 .site-footer__forest {
-  width: 100%; height: clamp(110px, 15vw, 210px);
-  object-fit: cover; object-position: center top;
+  /* Hela bilden visas alltid (ingen beskärning) så att dess mörka nederkant möter sidfoten */
+  width: 100%; height: auto;
   margin-bottom: -2px;
   background: linear-gradient(var(--paper) calc(100% - 4px), #0b141a calc(100% - 4px)); /* ingen ljus kant längst ner */
 }
