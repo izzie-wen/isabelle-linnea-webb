@@ -93,7 +93,7 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
   display: flex;
   align-items: center;
   gap: 2rem;
-  padding: 14px clamp(100px, 13vw, 190px) 12px clamp(100px, 13vw, 190px); /* plats för murgrönan i båda hörnen */
+  padding: 14px clamp(60px, 8vw, 150px) 12px clamp(100px, 13vw, 190px); /* plats för murgrönan i hörnen */
   background: #f7f3ec; /* en aning vitare än sidans papper */
   border-bottom: 1px solid rgba(0,0,0,.06);
 }
@@ -116,7 +116,7 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
 }
 
 .main-nav { margin-left: auto; }
-.main-nav ul { list-style: none; display: flex; gap: clamp(1rem, 2.4vw, 2.4rem); margin: 0; padding: 0; }
+.main-nav ul { list-style: none; display: flex; gap: clamp(1rem, 1.7vw, 2.2rem); margin: 0; padding: 0; }
 .main-nav a {
   font-family: var(--caps);
   font-size: 1rem;
@@ -307,14 +307,15 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
 /* Mellanstora skärmar: tätare meny så att allt ryms på en rad */
-@media (max-width: 1250px) and (min-width: 1101px) {
+@media (max-width: 1399px) and (min-width: 1200px) {
   .site-header { padding-right: var(--gutter); gap: 1.25rem; }
-  .main-nav ul { gap: 1rem; }
-  .main-nav a { font-size: .92rem; letter-spacing: .08em; }
+  .main-nav ul { gap: .9rem; }
+  .main-nav a { font-size: .92rem; letter-spacing: .07em; }
+  .logo__name { font-size: 1.8rem; }
 }
 
-/* Under 1100px ryms inte menyn på en rad – visa hamburgermenyn */
-@media (max-width: 1100px) {
+/* Under 1200px ryms inte menyn på en rad – visa hamburgermenyn */
+@media (max-width: 1199px) {
   .site-header { padding-right: var(--gutter); flex-wrap: wrap; gap: 12px; }
   .social { display: none; }
   .menu-toggle {

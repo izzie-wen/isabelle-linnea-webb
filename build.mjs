@@ -26,7 +26,7 @@ const posts = readCollection('posts').sort((a,b)=>b.date.localeCompare(a.date));
 
 function nav(active='') {
   const items=[
-    ['Hem','/index.html','home'],['Om mig','/om-mig.html','about'],['Böcker','/books.html','books'],['Noveller','/noveller.html','stories'],['Världen','/index.html#varlden','world'],['Nyheter','/blog.html','blog'],['För författare','/for-forfattare.html','writers'],['Annat','/annat.html','other'],['Kontakt','/contact.html','contact']
+    ['Hem','/index.html','home'],['Om mig','/om-mig.html','about'],['Böcker','/books.html','books'],['Noveller','/noveller.html','stories'],['Blogg','/blog.html','blog'],['För författare','/for-forfattare.html','writers'],['Annat','/annat.html','other'],['Kontakt','/contact.html','contact']
   ];
   return items.map(([label,href,key])=>`<a href="${href}"${active===key?' class="active" aria-current="page"':''}>${esc(label)}</a>`).join('');
 }
@@ -69,7 +69,7 @@ function footer(){ return `<footer class="site-footer">
   <div class="container footer-inner">
     <div class="footer-brand"><strong>${esc(site.author_name).toUpperCase()}</strong><small>${esc(site.tagline)}</small><div class="copyright">${esc(site.copyright)}</div></div>
     <nav class="footer-nav" aria-label="Sidfot">
-      <a href="/index.html">Hem</a><a href="/om-mig.html">Om mig</a><a href="/books.html">Böcker</a><a href="/index.html#varlden">Världen</a><a href="/blog.html">Nyheter</a><a href="/contact.html">Kontakt</a>
+      <a href="/index.html">Hem</a><a href="/om-mig.html">Om mig</a><a href="/books.html">Böcker</a><a href="/noveller.html">Noveller</a><a href="/blog.html">Blogg</a><a href="/for-forfattare.html">För författare</a><a href="/annat.html">Annat</a><a href="/contact.html">Kontakt</a>
     </nav>
     <div class="footer-right">
       <div class="footer-socials" aria-label="Sociala medier">
@@ -97,7 +97,7 @@ function homePage(){
  const orn=(cls='')=>`<svg class="ornament${cls?' '+cls:''}"><use href="#ornament"/></svg>`;
  const icon=(id)=>`<svg><use href="#i-${id}"/></svg>`;
  const socials=[['Instagram',site.instagram,'instagram'],['YouTube',site.youtube,'youtube']].filter(([,url])=>url).map(([label,url,id])=>`<a href="${esc(url)}" target="_blank" rel="noopener" aria-label="${label}">${icon(id)}</a>`).join('\n    ');
- const navItems=[['Hem','/index.html'],['Om mig','/om-mig.html'],['Böcker','/books.html'],['Noveller','/noveller.html'],['Världen','#varlden'],['Nyheter','/blog.html'],['Kontakt','/contact.html']];
+ const navItems=[['Hem','/index.html'],['Om mig','/om-mig.html'],['Böcker','/books.html'],['Noveller','/noveller.html'],['Blogg','/blog.html'],['För författare','/for-forfattare.html'],['Annat','/annat.html'],['Kontakt','/contact.html']];
  const navLinks=(wrap)=>navItems.map(([label,href],i)=>wrap(`<a href="${href}"${i===0?' aria-current="page"':''}>${esc(label)}</a>`)).join('\n      ');
  const logo=(extra='',cls='logo')=>`<a class="${cls}" href="/index.html">
       <span class="logo__name">${esc(site.author_name)}</span>

@@ -5,11 +5,6 @@ body{background:#f7f2ea}
 .socials a:nth-child(3) svg{width:21px;height:21px;fill:#111;stroke:none}
 .socials a:nth-child(3) .play{fill:#f8f4ed}
 
-@media(min-width:901px){
-  .main-nav a:nth-child(4),
-  .main-nav a:nth-child(7),
-  .main-nav a:nth-child(8){display:none!important}
-}
 
 /* HERO — the supplied banner itself is the base composition */
 .approved-home-hero{
