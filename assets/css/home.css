@@ -224,11 +224,13 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
 
 /* ---------- Footer ---------- */
 .site-footer { position: relative; color: var(--night-text); margin-top: 30px; }
-.site-footer__main, .site-footer__bar { background: var(--night); }
+/* Exakt samma färg som trädsilhuettens nederkant (skog.webp) så att träden går sömlöst över i sidfoten */
+.site-footer__main, .site-footer__bar { background: #0b141a; }
 .site-footer__forest {
   width: 100%; height: clamp(110px, 15vw, 210px);
   object-fit: cover; object-position: center top;
   margin-bottom: -2px;
+  background: linear-gradient(var(--paper) calc(100% - 4px), #0b141a calc(100% - 4px)); /* ingen ljus kant längst ner */
 }
 .site-footer__main {
   padding: 30px max(var(--gutter), calc((100% - var(--wrap)) / 2)) 34px;

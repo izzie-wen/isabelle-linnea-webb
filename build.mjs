@@ -84,7 +84,7 @@ ${scripts}
 }
 
 function footer(){ return `<footer class="site-footer">
-  <img class="footer-treeline" src="/assets/images/home/footer-treeline.webp" alt="" aria-hidden="true">
+  <img class="footer-treeline" src="/assets/images/skog.webp" alt="" aria-hidden="true">
   <div class="container footer-inner">
     <div class="footer-brand"><strong>${esc(site.author_name).toUpperCase()}</strong><small>${esc(site.tagline)}</small><div class="copyright">${esc(site.copyright)}</div></div>
     <nav class="footer-nav" aria-label="Sidfot">

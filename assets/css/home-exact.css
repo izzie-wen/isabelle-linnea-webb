@@ -68,15 +68,16 @@ body{background:#f7f2ea}
 .home-newsletter-wrap .newsletter-box{height:auto}
 .newsletter-twig{position:absolute;right:-3%;bottom:-32px;width:108px;height:auto;opacity:.58;pointer-events:none;mix-blend-mode:multiply}
 
-/* FOOTER — entire supplied treeline stays visible, never cropped */
-.site-footer{position:relative!important;min-height:0!important;padding:0!important;background:#09171d!important;overflow:hidden!important}
+/* FOOTER — samma trädsilhuett som startsidan (skog.webp). Bakgrunden har exakt trädens
+   mörka färg (#0b141a) så att träden går sömlöst över i sidfoten. */
+.site-footer{position:relative!important;min-height:0!important;padding:0!important;background:#0b141a!important;overflow:hidden!important}
 .site-footer::before,.site-footer::after{display:none!important}
-.footer-treeline{display:block!important;width:100%!important;height:clamp(115px,13vw,205px)!important;object-fit:fill!important;margin:0!important;background:#f7f2ea}
+.footer-treeline{display:block!important;width:100%!important;height:clamp(115px,13vw,205px)!important;object-fit:cover!important;object-position:center top!important;margin:0 0 -2px!important;background:linear-gradient(#f7f2ea calc(100% - 4px),#0b141a calc(100% - 4px))}
 .footer-inner{min-height:clamp(128px,11vw,170px)!important;padding:20px 0 22px!important;grid-template-columns:1.15fr 2.1fr 1.15fr!important;align-items:center}
 .footer-brand strong{font-size:clamp(1rem,1.35vw,1.45rem)!important}
 .footer-nav{gap:.75rem clamp(.8rem,1.4vw,1.45rem)!important}
 .footer-right{padding-right:48px!important}
-.footer-extra{min-height:46px!important;background:#0b1b22!important}
+.footer-extra{min-height:46px!important;background:#0b141a!important}
 .footer-extra a{min-height:46px!important}
 
 @media(max-width:1080px) and (min-width:861px){
@@ -99,7 +100,7 @@ body{background:#f7f2ea}
   .home-newsletter-wrap{border-top:1px solid var(--line);padding-top:1.5rem}
   .home-newsletter-wrap .newsletter-box{border:0!important;padding-left:0!important}
   .newsletter-twig{right:0;bottom:-20px}
-  .footer-treeline{height:130px!important;object-fit:fill!important}
+  .footer-treeline{height:130px!important}
   .footer-inner{grid-template-columns:1fr!important;text-align:center!important}
   .footer-right{padding-right:0!important}
 }
