@@ -1,0 +1,116 @@
+/* ==========================================================
+   Menyraden (topbar) med murgröna – gemensam för alla sidor.
+   Egna klassnamn (topbar-…) så att den inte krockar med styles.css.
+   Lager: menyradens bakgrund < murgrönan (15) < text och ikoner (20).
+   ========================================================== */
+.topbar, .topbar-ivy {
+  --tb-ink: #111;
+  --tb-ink-soft: #4a433b;
+  --tb-brown: #6a4a2c;
+  --tb-bg: #f7f3ec; /* en aning vitare än sidans papper */
+  --tb-serif: "Cormorant Garamond", "EB Garamond", Garamond, Georgia, serif;
+  --tb-caps: "Cormorant SC", "Cormorant Garamond", Garamond, Georgia, serif;
+  --tb-gutter: clamp(20px, 5vw, 60px);
+}
+/* Murgrönan sticker ut lite utanför kanten – klipp den så att sidan inte kan scrollas i sidled */
+html, body { overflow-x: clip; }
+body { position: relative; }
+
+/* ---------- Murgröna i övre hörnen ---------- */
+.topbar-ivy {
+  position: absolute; top: -8px; z-index: 15;
+  pointer-events: none; user-select: none;
+  max-width: none; height: auto; display: block;
+  filter: drop-shadow(2px 4px 4px rgba(0,0,0,.2));
+}
+.topbar-ivy--left  { left: -14px;  width: clamp(180px, 20vw, 300px); }
+.topbar-ivy--right { right: -14px; width: clamp(150px, 16vw, 250px); } /* smalare så ikonerna syns */
+
+/* ---------- Själva raden ---------- */
+.topbar {
+  position: relative; /* ingen z-index: då hamnar murgrönan ovanför bakgrunden */
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 14px clamp(60px, 8vw, 150px) 12px clamp(100px, 13vw, 190px); /* plats för murgrönan i hörnen */
+  background: var(--tb-bg);
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  color: var(--tb-ink);
+  font-family: var(--tb-serif);
+  line-height: 1.55;
+}
+.topbar > * { position: relative; z-index: 20; }
+.topbar a { color: inherit; text-decoration: none; }
+
+.topbar-logo { display: flex; flex-direction: column; align-items: center; text-align: center; line-height: 1; white-space: nowrap; }
+.topbar-logo__name {
+  font-family: var(--tb-serif);
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-weight: 500;
+}
+.topbar-logo__tag {
+  font-family: var(--tb-caps);
+  font-size: .72rem;
+  letter-spacing: .32em;
+  color: var(--tb-ink-soft);
+  margin-top: 6px;
+}
+
+.topbar-nav { margin-left: auto; }
+.topbar-nav ul { list-style: none; display: flex; gap: clamp(1rem, 1.7vw, 2.2rem); margin: 0; padding: 0; }
+.topbar-nav a {
+  display: inline-block;
+  font-family: var(--tb-caps);
+  font-size: 1rem;
+  letter-spacing: .12em;
+  white-space: nowrap;
+  padding: 6px 0;
+  border-bottom: 1px solid transparent;
+}
+.topbar-nav a:hover, .topbar-nav a[aria-current] { border-bottom-color: var(--tb-ink); }
+.topbar-nav a[aria-current] { font-weight: 600; }
+
+.topbar-social { display: flex; align-items: center; gap: 18px; }
+.topbar-social a { display: inline-flex; }
+.topbar-social svg { width: 19px; height: 19px; display: block; }
+.topbar-social a:hover { color: var(--tb-brown); }
+
+.topbar-toggle { display: none; }
+.topbar .visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* Mellanstora skärmar: tätare meny så att allt ryms på en rad */
+@media (max-width: 1399px) and (min-width: 1200px) {
+  .topbar { padding-right: var(--tb-gutter); gap: 1.25rem; }
+  .topbar-nav ul { gap: .9rem; }
+  .topbar-nav a { font-size: .92rem; letter-spacing: .07em; }
+  .topbar-logo__name { font-size: 1.8rem; }
+}
+
+/* Under 1200px ryms inte menyn på en rad – visa hamburgermenyn */
+@media (max-width: 1199px) {
+  .topbar { padding-right: var(--tb-gutter); flex-wrap: wrap; gap: 12px; }
+  .topbar-social { display: none; }
+  .topbar-toggle {
+    display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
+    margin-left: auto; width: 44px; height: 44px; padding: 10px;
+    background: none; border: 0; cursor: pointer;
+  }
+  .topbar-toggle span:not(.visually-hidden) { display: block; height: 1.5px; background: var(--tb-ink); }
+  .topbar-nav { display: none; width: 100%; margin: 0; }
+  .topbar-nav.open { display: block; }
+  .topbar-nav ul { flex-direction: column; gap: 0; padding: 8px 0 12px; }
+  .topbar-nav a { display: block; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,.06); }
+}
+
+/* Mobil */
+@media (max-width: 860px) {
+  .topbar { padding-left: clamp(80px, 22vw, 120px); }
+  .topbar-logo { white-space: normal; }
+  .topbar-ivy--left { width: 120px; }
+  .topbar-ivy--right { display: none; } /* för trångt bredvid namnet på mobil */
+}

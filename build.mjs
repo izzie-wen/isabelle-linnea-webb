@@ -24,11 +24,41 @@ const contact = readJSON('contact.json');
 const stories = readCollection('stories').sort((a,b)=>a.title.localeCompare(b.title,'sv'));
 const posts = readCollection('posts').sort((a,b)=>b.date.localeCompare(a.date));
 
-function nav(active='') {
-  const items=[
-    ['Hem','/index.html','home'],['Om mig','/om-mig.html','about'],['Böcker','/books.html','books'],['Noveller','/noveller.html','stories'],['Blogg','/blog.html','blog'],['För författare','/for-forfattare.html','writers'],['Annat','/annat.html','other'],['Kontakt','/contact.html','contact']
-  ];
-  return items.map(([label,href,key])=>`<a href="${href}"${active===key?' class="active" aria-current="page"':''}>${esc(label)}</a>`).join('');
+// Menyvalen – samma på alla sidor
+const menuItems=[
+  ['Hem','/index.html','home'],['Om mig','/om-mig.html','about'],['Böcker','/books.html','books'],['Noveller','/noveller.html','stories'],['Blogg','/blog.html','blog'],['För författare','/for-forfattare.html','writers'],['Annat','/annat.html','other'],['Kontakt','/contact.html','contact']
+];
+
+// Menyraden med murgröna högst upp – gemensam för alla sidor (stilar i /assets/css/topbar.css)
+const topbarHead=`<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+SC:wght@500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/topbar.css">`;
+function topbar(active=''){
+ const icons={
+  instagram:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg>',
+  youtube:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M22 8.2a3 3 0 0 0-2.1-2.1C18 5.6 12 5.6 12 5.6s-6 0-7.9.5A3 3 0 0 0 2 8.2 31 31 0 0 0 1.6 12c0 1.3.1 2.6.4 3.8a3 3 0 0 0 2.1 2.1c1.9.5 7.9.5 7.9.5s6 0 7.9-.5a3 3 0 0 0 2.1-2.1c.3-1.2.4-2.5.4-3.8s-.1-2.6-.4-3.8zM10 15.1V8.9l5.2 3.1L10 15.1z"/></svg>'
+ };
+ const socials=[['Instagram',site.instagram,'instagram'],['YouTube',site.youtube,'youtube']].filter(([,url])=>url).map(([label,url,id])=>`<a href="${esc(url)}" target="_blank" rel="noopener" aria-label="${label}">${icons[id]}</a>`).join('\n    ');
+ return `<img class="topbar-ivy topbar-ivy--left" src="/assets/images/murgrona-topp-vanster.webp" alt="" aria-hidden="true">
+<img class="topbar-ivy topbar-ivy--right" src="/assets/images/murgrona-topp-hoger.webp" alt="" aria-hidden="true">
+<header class="topbar">
+  <a class="topbar-logo" href="/index.html">
+    <span class="topbar-logo__name">${esc(site.author_name)}</span>
+    <span class="topbar-logo__tag">${esc(site.tagline)}</span>
+  </a>
+  <button class="topbar-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="huvudmeny">
+    <span></span><span></span><span></span><span class="visually-hidden">Meny</span>
+  </button>
+  <nav id="huvudmeny" class="topbar-nav" data-main-nav aria-label="Huvudmeny">
+    <ul>
+      ${menuItems.map(([label,href,key])=>`<li><a href="${href}"${active===key?' aria-current="page"':''}>${esc(label)}</a></li>`).join('\n      ')}
+    </ul>
+  </nav>
+  <div class="topbar-social">
+    ${socials}
+  </div>
+</header>`;
 }
 
 function layout({title,description='',active='',body,scripts=''}){
@@ -39,24 +69,13 @@ return `<!doctype html>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="${esc(description)}">
 <title>${esc(title)} | ${esc(site.author_name)}</title>
-<link rel="stylesheet" href="/assets/css/styles.css">\n<link rel="stylesheet" href="/assets/css/home-exact.css">
+<link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="stylesheet" href="/assets/css/home-exact.css">
+${topbarHead}
 </head>
 <body id="top">
 <a class="skip-link" href="#main">Hoppa till innehållet</a>
-<header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="/index.html"><strong>${esc(site.author_name).toUpperCase()}</strong><small>${esc(site.tagline)}</small></a>
-    <nav class="main-nav" data-main-nav aria-label="Huvudmeny">${nav(active)}</nav>
-    <div class="socials" aria-label="Sociala medier">
-      <a href="${esc(site.instagram)}" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.4" cy="6.8" r="1"/></svg></a>
-      <a href="${esc(site.facebook)}" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.2 8H17V4.5c-.48-.07-2.12-.2-4.08-.2-4.03 0-6.79 2.46-6.79 6.98V15H2.5v3.92h3.63V24h4.45v-5.08h3.73L14.9 15h-4.32v-3.34c0-1.13.3-1.9 1.92-1.9h1.7V8Z"/></svg></a>
-      <a href="${esc(site.youtube)}" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.4" width="19" height="13.2" rx="4"/><path d="m10 9 5 3-5 3z" class="filled"/></svg></a>
-      <span class="social-static" aria-label="Spotify"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M6.8 9.3c3.8-1.1 7.8-.8 10.8.7M7.6 12.2c3-.8 6.3-.6 8.8.6M8.4 15c2.3-.6 4.8-.4 6.8.4"/></svg></span>
-      <button class="header-search" type="button" aria-label="Sök"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.6" cy="10.6" r="6.4"/><path d="M15.3 15.3 21 21"/></svg></button>
-    </div>
-    <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false">Meny</button>
-  </div>
-</header>
+${topbar(active)}
 <main id="main">${body}</main>
 ${footer()}
 <script src="/assets/js/site.js" defer></script>
@@ -89,16 +108,16 @@ function footer(){ return `<footer class="site-footer">
 </footer>`; }
 function newsletterForm(name,title,bodyText,note=''){return `<section class="newsletter-box"><p class="eyebrow">${esc(title)}</p><p>${esc(bodyText)}</p><form class="form-row" name="${esc(name)}" method="POST" data-netlify="true" data-local-success="Tack! Din anmälan är registrerad."><input type="hidden" name="form-name" value="${esc(name)}"><label class="visually-hidden" for="${esc(name)}-email">Din e-postadress</label><input id="${esc(name)}-email" type="email" name="email" placeholder="Din e-postadress" required><button class="btn primary" type="submit">Prenumerera</button></form>${note?`<p class="form-note">${esc(note)}</p>`:''}</section>`;}
 
-// Startsidan har en egen design (mockup) med egen header/footer och stilmallen /assets/css/home.css.
-// Övriga sidor använder fortfarande layout() och styles.css.
+// Startsidan har en egen design (mockup) med egen footer och stilmallen /assets/css/home.css.
+// Menyraden högst upp är gemensam för alla sidor: topbar() + topbar.css.
+// Övriga sidor använder layout() och styles.css.
 function homePage(){
  const wanted=['bakom-kulisserna','platser-som-inspirerar','tema-och-budskap'];
  const latest=wanted.map(slug=>posts.find(p=>p.slug===slug)).filter(Boolean);
  const orn=(cls='')=>`<svg class="ornament${cls?' '+cls:''}"><use href="#ornament"/></svg>`;
  const icon=(id)=>`<svg><use href="#i-${id}"/></svg>`;
  const socials=[['Instagram',site.instagram,'instagram'],['YouTube',site.youtube,'youtube']].filter(([,url])=>url).map(([label,url,id])=>`<a href="${esc(url)}" target="_blank" rel="noopener" aria-label="${label}">${icon(id)}</a>`).join('\n    ');
- const navItems=[['Hem','/index.html'],['Om mig','/om-mig.html'],['Böcker','/books.html'],['Noveller','/noveller.html'],['Blogg','/blog.html'],['För författare','/for-forfattare.html'],['Annat','/annat.html'],['Kontakt','/contact.html']];
- const navLinks=(wrap)=>navItems.map(([label,href],i)=>wrap(`<a href="${href}"${i===0?' aria-current="page"':''}>${esc(label)}</a>`)).join('\n      ');
+ const navLinks=(wrap)=>menuItems.map(([label,href],i)=>wrap(`<a href="${href}"${i===0?' aria-current="page"':''}>${esc(label)}</a>`)).join('\n      ');
  const logo=(extra='',cls='logo')=>`<a class="${cls}" href="/index.html">
       <span class="logo__name">${esc(site.author_name)}</span>
       <span class="logo__tag">${esc(site.tagline)}</span>${extra}
@@ -115,6 +134,7 @@ function homePage(){
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+SC:wght@500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="${esc(home.hero.image)}">
   <link rel="stylesheet" href="/assets/css/home.css">
+  <link rel="stylesheet" href="/assets/css/topbar.css">
 </head>
 <body>
 
@@ -131,26 +151,7 @@ function homePage(){
 
 <a class="skip" href="#innehall">Hoppa till innehållet</a>
 
-<img class="ivy ivy--top-left" src="/assets/images/murgrona-topp-vanster.webp" alt="" aria-hidden="true">
-<img class="ivy ivy--top-right" src="/assets/images/murgrona-topp-hoger.webp" alt="" aria-hidden="true">
-
-<header class="site-header">
-  ${logo()}
-
-  <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="huvudmeny">
-    <span></span><span></span><span></span><span class="visually-hidden">Meny</span>
-  </button>
-
-  <nav id="huvudmeny" class="main-nav" data-main-nav aria-label="Huvudmeny">
-    <ul>
-      ${navLinks(a=>`<li>${a}</li>`)}
-    </ul>
-  </nav>
-
-  <div class="social">
-    ${socials}
-  </div>
-</header>
+${topbar('home')}
 
 <main id="innehall">
 
