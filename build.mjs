@@ -170,8 +170,6 @@ ${topbar('home')}
   </section>
 
   <section class="about" id="om-mig">
-    <img class="ivy ivy--about-left" src="/assets/images/murgrona-horn.webp" alt="" aria-hidden="true">
-    <img class="ivy ivy--about-right" src="/assets/images/murgrona-gren.webp" alt="" aria-hidden="true">
     <img class="ivy ivy--about-top" src="/assets/images/blad.webp" alt="" aria-hidden="true">
 
     <div class="about__inner">

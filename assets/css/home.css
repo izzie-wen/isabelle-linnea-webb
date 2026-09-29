@@ -161,8 +161,6 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
 .about__quote p { margin: 0 0 18px; }
 .about__quote footer { font-family: var(--caps); font-style: normal; letter-spacing: .2em; font-size: .85rem; }
 
-.ivy--about-left { left: -40px; bottom: -70px; width: clamp(120px, 14vw, 200px); z-index: 3; transform: scaleX(-1) rotate(90deg); }
-.ivy--about-right { right: -30px; bottom: -40px; width: clamp(90px, 9vw, 130px); z-index: 3; transform: scaleX(-1) rotate(-15deg); }
 .ivy--about-top { right: 30px; top: -24px; width: 44px; transform: rotate(160deg); z-index: 3; }
 
 /* ---------- Världen ---------- */
