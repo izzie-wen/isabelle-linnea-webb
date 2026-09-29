@@ -96,7 +96,7 @@ function homePage(){
  const latest=wanted.map(slug=>posts.find(p=>p.slug===slug)).filter(Boolean);
  const orn=(cls='')=>`<svg class="ornament${cls?' '+cls:''}"><use href="#ornament"/></svg>`;
  const icon=(id)=>`<svg><use href="#i-${id}"/></svg>`;
- const socials=[['Instagram',site.instagram,'instagram'],['Facebook',site.facebook,'facebook'],['YouTube',site.youtube,'youtube']].filter(([,url])=>url).map(([label,url,id])=>`<a href="${esc(url)}" target="_blank" rel="noopener" aria-label="${label}">${icon(id)}</a>`).join('\n    ');
+ const socials=[['Instagram',site.instagram,'instagram'],['YouTube',site.youtube,'youtube']].filter(([,url])=>url).map(([label,url,id])=>`<a href="${esc(url)}" target="_blank" rel="noopener" aria-label="${label}">${icon(id)}</a>`).join('\n    ');
  const navItems=[['Hem','/index.html'],['Om mig','/om-mig.html'],['Böcker','/books.html'],['Noveller','/noveller.html'],['Världen','#varlden'],['Nyheter','/blog.html'],['Kontakt','/contact.html']];
  const navLinks=(wrap)=>navItems.map(([label,href],i)=>wrap(`<a href="${href}"${i===0?' aria-current="page"':''}>${esc(label)}</a>`)).join('\n      ');
  const logo=(extra='',cls='logo')=>`<a class="${cls}" href="/index.html">

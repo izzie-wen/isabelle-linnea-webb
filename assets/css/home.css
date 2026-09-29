@@ -97,6 +97,7 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
   border-bottom: 1px solid rgba(0,0,0,.06);
 }
 .logo { text-decoration: none; display: flex; flex-direction: column; line-height: 1; white-space: nowrap; }
+.site-header .logo { align-items: center; text-align: center; } /* raden under namnet centrerad under namnet */
 .logo__name {
   font-family: var(--serif);
   font-size: clamp(1.6rem, 2.6vw, 2.2rem);
@@ -116,7 +117,7 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
 .main-nav ul { list-style: none; display: flex; gap: clamp(1rem, 2.4vw, 2.4rem); margin: 0; padding: 0; }
 .main-nav a {
   font-family: var(--caps);
-  font-size: .88rem;
+  font-size: 1rem;
   letter-spacing: .12em;
   text-decoration: none;
   white-space: nowrap;
@@ -126,7 +127,7 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
 .main-nav a:hover, .main-nav a[aria-current] { border-bottom-color: var(--ink); }
 .main-nav a[aria-current] { font-weight: 600; }
 
-.social { display: flex; align-items: center; gap: 16px; }
+.social { display: flex; align-items: center; gap: 18px; }
 .social a { display: inline-flex; color: var(--ink); }
 .social svg { width: 19px; height: 19px; }
 .social a:hover { color: var(--brown); }
@@ -303,6 +304,29 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
 }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
+/* Mellanstora skärmar: tätare meny så att allt ryms på en rad */
+@media (max-width: 1250px) and (min-width: 1101px) {
+  .site-header { padding-right: var(--gutter); gap: 1.25rem; }
+  .main-nav ul { gap: 1rem; }
+  .main-nav a { font-size: .92rem; letter-spacing: .08em; }
+}
+
+/* Under 1100px ryms inte menyn på en rad – visa hamburgermenyn */
+@media (max-width: 1100px) {
+  .site-header { padding-right: var(--gutter); flex-wrap: wrap; gap: 12px; }
+  .social { display: none; }
+  .menu-toggle {
+    display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
+    margin-left: auto; width: 44px; height: 44px; padding: 10px;
+    background: none; border: 0; cursor: pointer;
+  }
+  .menu-toggle span:not(.visually-hidden) { display: block; height: 1.5px; background: var(--ink); }
+  .main-nav { display: none; width: 100%; margin: 0; }
+  .main-nav.open { display: block; }
+  .main-nav ul { flex-direction: column; gap: 0; padding: 8px 0 12px; }
+  .main-nav a { display: block; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,.06); }
+}
+
 /* ==========================================================
    Surfplatta
    ========================================================== */
@@ -322,21 +346,10 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
    Mobil
    ========================================================== */
 @media (max-width: 860px) {
-  .site-header { padding-left: clamp(80px, 22vw, 120px); padding-right: var(--gutter); flex-wrap: wrap; gap: 12px; }
+  .site-header { padding-left: clamp(80px, 22vw, 120px); }
   .logo { white-space: normal; }
   .ivy--top-left { width: 120px; }
   .ivy--top-right { display: none; } /* för trångt bredvid namnet på mobil */
-  .social { display: none; }
-  .menu-toggle {
-    display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
-    margin-left: auto; width: 44px; height: 44px; padding: 10px;
-    background: none; border: 0; cursor: pointer;
-  }
-  .menu-toggle span:not(.visually-hidden) { display: block; height: 1.5px; background: var(--ink); }
-  .main-nav { display: none; width: 100%; margin: 0; }
-  .main-nav.open { display: block; }
-  .main-nav ul { flex-direction: column; gap: 0; padding: 8px 0 12px; }
-  .main-nav a { display: block; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,.06); }
 
   .hero {
     min-height: 0;
