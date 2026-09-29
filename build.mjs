@@ -39,7 +39,7 @@ function topbar(active=''){
   instagram:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg>',
   youtube:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M22 8.2a3 3 0 0 0-2.1-2.1C18 5.6 12 5.6 12 5.6s-6 0-7.9.5A3 3 0 0 0 2 8.2 31 31 0 0 0 1.6 12c0 1.3.1 2.6.4 3.8a3 3 0 0 0 2.1 2.1c1.9.5 7.9.5 7.9.5s6 0 7.9-.5a3 3 0 0 0 2.1-2.1c.3-1.2.4-2.5.4-3.8s-.1-2.6-.4-3.8zM10 15.1V8.9l5.2 3.1L10 15.1z"/></svg>'
  };
- const socials=[['Instagram',site.instagram,'instagram'],['YouTube',site.youtube,'youtube']].filter(([,url])=>url).map(([label,url,id])=>`<a href="${esc(url)}" target="_blank" rel="noopener" aria-label="${label}">${icons[id]}</a>`).join('\n    ');
+ const socials=[['Instagram',site.instagram,'instagram']].filter(([,url])=>url).map(([label,url,id])=>`<a href="${esc(url)}" target="_blank" rel="noopener" aria-label="${label}">${icons[id]}</a>`).join('\n    ');
  return `<img class="topbar-ivy topbar-ivy--left" src="/assets/images/murgrona-topp-vanster.webp" alt="" aria-hidden="true">
 <img class="topbar-ivy topbar-ivy--right" src="/assets/images/murgrona-topp-hoger.webp" alt="" aria-hidden="true">
 <header class="topbar">
@@ -93,8 +93,6 @@ function footer(){ return `<footer class="site-footer">
     <div class="footer-right">
       <div class="footer-socials" aria-label="Sociala medier">
         <a href="${esc(site.instagram)}" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.4" cy="6.8" r="1"/></svg></a>
-        <a href="${esc(site.facebook)}" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.2 8H17V4.5c-.48-.07-2.12-.2-4.08-.2-4.03 0-6.79 2.46-6.79 6.98V15H2.5v3.92h3.63V24h4.45v-5.08h3.73L14.9 15h-4.32v-3.34c0-1.13.3-1.9 1.92-1.9h1.7V8Z"/></svg></a>
-        <a href="${esc(site.youtube)}" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12s0-3.8-.48-5.63a2.9 2.9 0 0 0-2.04-2.04C17.65 3.85 12 3.85 12 3.85s-5.65 0-7.48.48a2.9 2.9 0 0 0-2.04 2.04C2 8.2 2 12 2 12s0 3.8.48 5.63a2.9 2.9 0 0 0 2.04 2.04c1.83.48 7.48.48 7.48.48s5.65 0 7.48-.48a2.9 2.9 0 0 0 2.04-2.04C22 15.8 22 12 22 12Z"/><path class="play" d="m10 15.4 5.2-3.4L10 8.6v6.8Z"/></svg></a>
         <span class="footer-music" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M6.7 9.3c3.7-1.1 7.9-.8 11.1.8M7.6 12.3c3-.8 6.4-.6 9 .7M8.5 15.1c2.4-.6 4.9-.4 7 .5"/></svg></span>
       </div>
       <div class="footer-quote">${esc(site.footer_tagline)}</div>
@@ -116,7 +114,7 @@ function homePage(){
  const latest=wanted.map(slug=>posts.find(p=>p.slug===slug)).filter(Boolean);
  const orn=(cls='')=>`<svg class="ornament${cls?' '+cls:''}"><use href="#ornament"/></svg>`;
  const icon=(id)=>`<svg><use href="#i-${id}"/></svg>`;
- const socials=[['Instagram',site.instagram,'instagram'],['YouTube',site.youtube,'youtube']].filter(([,url])=>url).map(([label,url,id])=>`<a href="${esc(url)}" target="_blank" rel="noopener" aria-label="${label}">${icon(id)}</a>`).join('\n    ');
+ const socials=[['Instagram',site.instagram,'instagram']].filter(([,url])=>url).map(([label,url,id])=>`<a href="${esc(url)}" target="_blank" rel="noopener" aria-label="${label}">${icon(id)}</a>`).join('\n    ');
  const navLinks=(wrap)=>menuItems.map(([label,href],i)=>wrap(`<a href="${href}"${i===0?' aria-current="page"':''}>${esc(label)}</a>`)).join('\n      ');
  const logo=(extra='',cls='logo')=>`<a class="${cls}" href="/index.html">
       <span class="logo__name">${esc(site.author_name)}</span>
