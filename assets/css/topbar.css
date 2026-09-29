@@ -11,6 +11,10 @@
   --tb-serif: "Cormorant Garamond", "EB Garamond", Garamond, Georgia, serif;
   --tb-caps: "Cormorant SC", "Cormorant Garamond", Garamond, Georgia, serif;
   --tb-gutter: clamp(20px, 5vw, 60px);
+  --tb-ivy-right-w: clamp(150px, 16vw, 250px);
+  /* Löven på högra kvisten börjar ca 62 % av bildens bredd in från kanten –
+     så mycket plats lämnas till höger så att Instagram-ikonen hamnar bredvid kvisten */
+  --tb-right-space: calc(var(--tb-ivy-right-w) * .62 + 10px);
 }
 /* Murgrönan sticker ut lite utanför kanten – klipp den så att sidan inte kan scrollas i sidled */
 html, body { overflow-x: clip; }
@@ -24,7 +28,7 @@ body { position: relative; }
   filter: drop-shadow(2px 4px 4px rgba(0,0,0,.2));
 }
 .topbar-ivy--left  { left: -14px;  width: clamp(180px, 20vw, 300px); }
-.topbar-ivy--right { right: -14px; width: clamp(150px, 16vw, 250px); } /* smalare så ikonerna syns */
+.topbar-ivy--right { right: -14px; width: var(--tb-ivy-right-w); }
 
 /* ---------- Själva raden ---------- */
 .topbar {
@@ -32,7 +36,7 @@ body { position: relative; }
   display: flex;
   align-items: center;
   gap: 2rem;
-  padding: 14px clamp(60px, 8vw, 150px) 12px clamp(100px, 13vw, 190px); /* plats för murgrönan i hörnen */
+  padding: 14px var(--tb-right-space) 12px clamp(100px, 13vw, 190px); /* plats för murgrönan i hörnen */
   background: var(--tb-bg);
   border-bottom: 1px solid rgba(0,0,0,.06);
   color: var(--tb-ink);
@@ -84,15 +88,15 @@ body { position: relative; }
 }
 
 /* Mellanstora skärmar: tätare meny så att allt ryms på en rad */
-@media (max-width: 1399px) and (min-width: 1200px) {
-  .topbar { padding-right: var(--tb-gutter); gap: 1.25rem; }
+@media (max-width: 1519px) and (min-width: 1240px) {
+  .topbar { gap: 1.25rem; }
   .topbar-nav ul { gap: .9rem; }
   .topbar-nav a { font-size: .92rem; letter-spacing: .07em; }
   .topbar-logo__name { font-size: 1.8rem; }
 }
 
-/* Under 1200px ryms inte menyn på en rad – visa hamburgermenyn */
-@media (max-width: 1199px) {
+/* Under 1240px ryms inte menyn på en rad – visa hamburgermenyn */
+@media (max-width: 1239px) {
   .topbar { padding-right: var(--tb-gutter); flex-wrap: wrap; gap: 12px; }
   .topbar-social { display: none; }
   .topbar-toggle {
