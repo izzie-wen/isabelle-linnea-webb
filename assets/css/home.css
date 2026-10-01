@@ -187,13 +187,10 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
 .world h2 { font-family: var(--serif); text-transform: uppercase; letter-spacing: .1em; font-size: clamp(1.6rem, 2.6vw, 2.2rem); line-height: 1.15; }
 .world p { margin: 6px 0 22px; font-size: 1.15rem; }
 
-/* ---------- Blogg + nyhetsbrev ---------- */
+/* ---------- Senaste från bloggen (nyhetsbrevet ligger ovanför sidfoten, se signup.css) ---------- */
 .latest {
   max-width: var(--wrap); margin: 0 auto;
   padding: 40px var(--gutter) 30px;
-  display: grid;
-  grid-template-columns: 1fr 250px;
-  gap: 48px;
 }
 .latest h2 { font-family: var(--serif); text-transform: uppercase; letter-spacing: .1em; font-size: 1.45rem; }
 .latest .ornament { margin: 8px 0 22px; width: 130px; }
@@ -205,31 +202,11 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
 .post__sub { font-style: italic; margin: 0 0 8px; color: var(--ink); line-height: 1.3; }
 .post time { font-family: var(--caps); font-size: .8rem; letter-spacing: .14em; color: var(--ink-soft); }
 
-.newsletter { position: relative; border-left: 1px solid var(--line); padding-left: 32px; }
-.newsletter h2 { font-size: 1.3rem; }
-.newsletter p { margin: 12px 0 18px; }
-.newsletter form { display: grid; gap: 10px; }
-.newsletter input[type="email"] {
-  font: inherit; font-size: 1rem;
-  padding: .6em .8em;
-  border: 1px solid var(--line);
-  background: #faf7f1;
-  color: var(--ink);
-}
-.newsletter .btn { width: 100%; }
-.newsletter__note { font-style: italic; font-size: .95rem; }
-.newsletter__sprig { position: absolute; right: -10px; bottom: 0; width: 60px; opacity: .8; transform: rotate(-20deg); }
-
 /* ---------- Footer ---------- */
-.site-footer { position: relative; color: var(--night-text); margin-top: 30px; }
-/* Exakt samma färg som trädsilhuettens nederkant (skog.webp) så att träden går sömlöst över i sidfoten */
+/* Trädsilhuetten ovanför sidfoten ligger i nyhetsbrevsdelen (signup.css).
+   Exakt samma färg som trädens nederkant (skog.webp) så att träden går sömlöst över i sidfoten. */
+.site-footer { position: relative; color: var(--night-text); }
 .site-footer__main, .site-footer__bar { background: #0b141a; }
-.site-footer__forest {
-  /* Hela bilden visas alltid (ingen beskärning) så att dess mörka nederkant möter sidfoten */
-  width: 100%; height: auto;
-  margin-bottom: -2px;
-  background: linear-gradient(var(--paper) calc(100% - 4px), #0b141a calc(100% - 4px)); /* ingen ljus kant längst ner */
-}
 .site-footer__main {
   padding: 30px max(var(--gutter), calc((100% - var(--wrap)) / 2)) 34px;
   display: grid;
@@ -276,8 +253,6 @@ h1, h2, h3 { font-weight: 500; margin: 0; }
 @media (max-width: 1020px) {
   .about__inner { grid-template-columns: 220px 1fr; }
   .about__quote { grid-column: 1 / -1; max-width: 560px; margin: 10px auto 0; }
-  .latest { grid-template-columns: 1fr; }
-  .newsletter { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); padding-top: 30px; max-width: 460px; }
   .site-footer__main { grid-template-columns: 1fr; text-align: center; }
   .logo--light { align-items: center; }
   .footer-right { text-align: center; }

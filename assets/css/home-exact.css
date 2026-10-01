@@ -68,11 +68,10 @@ body{background:#f7f2ea}
 .home-newsletter-wrap .newsletter-box{height:auto}
 .newsletter-twig{position:absolute;right:-3%;bottom:-32px;width:108px;height:auto;opacity:.58;pointer-events:none;mix-blend-mode:multiply}
 
-/* FOOTER — samma trädsilhuett som startsidan (skog.webp). Bakgrunden har exakt trädens
-   mörka färg (#0b141a) så att träden går sömlöst över i sidfoten. */
+/* FOOTER — trädsilhuetten ovanför ligger i nyhetsbrevsdelen (signup.css). Bakgrunden har exakt
+   trädens mörka färg (#0b141a) så att träden går sömlöst över i sidfoten. */
 .site-footer{position:relative!important;min-height:0!important;padding:0!important;background:#0b141a!important;overflow:hidden!important}
 .site-footer::before,.site-footer::after{display:none!important}
-.footer-treeline{display:block!important;width:100%!important;height:auto!important;object-fit:initial!important;margin:0 0 -2px!important;background:linear-gradient(#f7f2ea calc(100% - 4px),#0b141a calc(100% - 4px))}
 .footer-inner{min-height:clamp(128px,11vw,170px)!important;padding:20px 0 22px!important;grid-template-columns:1.15fr 2.1fr 1.15fr!important;align-items:center}
 .footer-brand strong{font-size:clamp(1rem,1.35vw,1.45rem)!important}
 .footer-nav{gap:.75rem clamp(.8rem,1.4vw,1.45rem)!important}

@@ -44,6 +44,32 @@
     }
   });
 
+  // Nyhetsbrevet ovanför sidfoten: skickas till Netlify Forms i bakgrunden och visar tack på sidan
+  document.querySelectorAll('form[data-signup]').forEach(form => {
+    const msg = form.querySelector('.signup__msg');
+    const button = form.querySelector('button[type="submit"]');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      button.disabled = true;
+      msg.textContent = '';
+      try {
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(new FormData(form)).toString()
+        });
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        form.reset();
+        form.classList.add('is-done');
+        msg.textContent = 'Tack! Nu är du anmäld till nyhetsbrevet.';
+      } catch {
+        msg.textContent = 'Det gick inte att skicka just nu. Försök gärna igen om en stund.';
+      } finally {
+        button.disabled = false;
+      }
+    });
+  });
+
   document.querySelectorAll('form[data-local-success]').forEach(form => {
     form.addEventListener('submit', () => {
       setTimeout(() => toast(form.dataset.localSuccess || 'Tack!'), 50);

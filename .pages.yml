@@ -18,6 +18,9 @@ content:
       - { name: pinterest, label: Pinterest-länk, type: string }
       - { name: copyright, label: Copyright-text, type: string }
       - { name: footer_tagline, label: Text i sidfoten, type: string }
+      - { name: newsletter_title, label: Nyhetsbrev – rubrik (ovanför sidfoten på alla sidor), type: string }
+      - { name: newsletter_body, label: Nyhetsbrev – text, type: text }
+      - { name: newsletter_button, label: Nyhetsbrev – text på knappen, type: string }
 
   - name: pages
     label: Sidor
@@ -53,13 +56,6 @@ content:
               - { name: title, label: Rubrik, type: string }
               - { name: body, label: Text, type: text }
               - { name: image, label: Bild, type: image }
-          - name: newsletter
-            label: Nyhetsbrev
-            type: object
-            fields:
-              - { name: title, label: Rubrik, type: string }
-              - { name: body, label: Text, type: text }
-              - { name: note, label: Liten text under formuläret, type: string }
 
       - name: about
         label: Om mig
@@ -149,8 +145,6 @@ content:
               - { name: genre, label: Genre, type: string }
               - { name: description, label: Beskrivning, type: text }
               - { name: image, label: Bild, type: image }
-          - { name: newsletter_title, label: Nyhetsbrev rubrik, type: string }
-          - { name: newsletter_body, label: Nyhetsbrev text, type: text }
 
       - name: writers
         label: För författare
@@ -198,8 +192,6 @@ content:
                   extensions: [pdf, docx, zip]
                   rename: true
           - { name: guide_steps, label: Skrivguide steg, type: string, list: true }
-          - { name: newsletter_title, label: Nyhetsbrev rubrik, type: string }
-          - { name: newsletter_body, label: Nyhetsbrev text, type: text }
 
       - name: other
         label: Annat
@@ -228,8 +220,6 @@ content:
               - { name: image, label: Bild, type: image }
               - { name: label, label: Knapptext, type: string }
               - { name: url, label: Länk, type: string }
-          - { name: newsletter_title, label: Nyhetsbrev rubrik, type: string }
-          - { name: newsletter_body, label: Nyhetsbrev text, type: text }
 
       - name: contact
         label: Kontakt

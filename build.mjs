@@ -74,6 +74,7 @@ return `<!doctype html>
 <link rel="stylesheet" href="/assets/css/styles.css">
 <link rel="stylesheet" href="/assets/css/home-exact.css">
 ${topbarHead}
+<link rel="stylesheet" href="/assets/css/signup.css">
 ${head}
 </head>
 <body id="top">
@@ -86,8 +87,8 @@ ${scripts}
 </body></html>`;
 }
 
-function footer(){ return `<footer class="site-footer">
-  <img class="footer-treeline" src="/assets/images/skog.webp" alt="" aria-hidden="true">
+function footer(){ return `${signup()}
+<footer class="site-footer">
   <div class="container footer-inner">
     <div class="footer-brand"><strong>${esc(site.author_name).toUpperCase()}</strong><small>${esc(site.tagline)}</small><div class="copyright">${esc(site.copyright)}</div></div>
     <nav class="footer-nav" aria-label="Sidfot">
@@ -107,7 +108,30 @@ function footer(){ return `<footer class="site-footer">
     <a href="/annat.html">Annat · Printables · Projekt · Inspiration</a>
   </div>
 </footer>`; }
-function newsletterForm(name,title,bodyText,note=''){return `<section class="newsletter-box"><p class="eyebrow">${esc(title)}</p><p>${esc(bodyText)}</p><form class="form-row" name="${esc(name)}" method="POST" data-netlify="true" data-local-success="Tack! Din anmälan är registrerad."><input type="hidden" name="form-name" value="${esc(name)}"><label class="visually-hidden" for="${esc(name)}-email">Din e-postadress</label><input id="${esc(name)}-email" type="email" name="email" placeholder="Din e-postadress" required><button class="btn primary" type="submit">Prenumerera</button></form>${note?`<p class="form-note">${esc(note)}</p>`:''}</section>`;}
+// Nyhetsbrevet ovanför sidfoten – samma på alla sidor (stilar i /assets/css/signup.css, skickas av site.js).
+// Trädsilhuetten (skog.webp) ligger sist i den här delen: texten och formuläret hamnar i "dalen"
+// mellan de höga träden, och trädens mörka nederkant går sömlöst över i sidfoten.
+function signup(){
+ return `<section class="signup" aria-labelledby="signup-title">
+  <div class="signup__inner">
+    <div class="signup__text">
+      <h2 class="signup__title" id="signup-title">${esc(site.newsletter_title||'Vill du veta när jag publicerat något nytt?')}</h2>
+      <svg class="signup__ornament" viewBox="0 0 140 14" aria-hidden="true"><line x1="0" y1="7" x2="58" y2="7" stroke="currentColor" stroke-width="1"/><path d="M70 1 L73 7 L70 13 L67 7 Z" fill="currentColor"/><line x1="82" y1="7" x2="140" y2="7" stroke="currentColor" stroke-width="1"/></svg>
+      ${site.newsletter_body?`<p>${esc(site.newsletter_body)}</p>`:''}
+    </div>
+    <form class="signup__form" name="nyhetsbrev" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-signup>
+      <input type="hidden" name="form-name" value="nyhetsbrev">
+      <p class="signup__hp"><label>Fyll inte i detta: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <label class="signup__label" for="signup-email">Din e-postadress</label>
+      <input id="signup-email" type="email" name="email" placeholder="Din e-postadress" autocomplete="email" required>
+      <button type="submit">${esc(site.newsletter_button||'Ja tack!')}</button>
+      <p class="signup__msg" role="status" aria-live="polite"></p>
+    </form>
+    <svg class="signup__birds" viewBox="0 0 64 26" aria-hidden="true"><path d="M2 14c4-4 8-4 11 0 3-4 7-4 11 0-4-1.5-8-1-11 2.5C10 13 6 12.5 2 14z"/><path d="M34 6c5-5 10-5 14 0 4-5 9-5 14 0-5-2-10-1.4-14 3C44 4.6 39 4 34 6z"/></svg>
+  </div>
+  <img class="signup__forest" src="/assets/images/skog.webp" alt="" aria-hidden="true" width="1600" height="312">
+</section>`;
+}
 
 // Startsidan har en egen design (mockup) med egen footer och stilmallen /assets/css/home.css.
 // Menyraden högst upp är gemensam för alla sidor: topbar() + topbar.css.
@@ -136,6 +160,7 @@ function homePage(){
   <link rel="preload" as="image" href="${esc(home.hero.image)}">
   <link rel="stylesheet" href="/assets/css/home.css">
   <link rel="stylesheet" href="/assets/css/topbar.css">
+  <link rel="stylesheet" href="/assets/css/signup.css">
 </head>
 <body>
 
@@ -220,25 +245,12 @@ ${topbar('home')}
         </article>`).join('\n        ')}
       </div>
     </div>
-
-    <aside class="newsletter" id="kontakt">
-      <h2>${esc(home.newsletter.title)}</h2>
-      <p>${esc(home.newsletter.body)}</p>
-      <form name="newsletter-home" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-local-success="Tack! Din anmälan är registrerad.">
-        <input type="hidden" name="form-name" value="newsletter-home">
-        <p class="visually-hidden"><label>Fyll inte i detta: <input name="bot-field"></label></p>
-        <label class="visually-hidden" for="epost">E-postadress</label>
-        <input id="epost" type="email" name="email" placeholder="Din e-postadress" required>
-        <button class="btn btn--solid" type="submit">Prenumerera</button>
-      </form>
-      ${home.newsletter.note?`<p class="newsletter__note">${esc(home.newsletter.note)}</p>`:''}
-      <img class="newsletter__sprig" src="/assets/images/kvist.webp" alt="" aria-hidden="true">
-    </aside>
   </section>
 </main>
 
+${signup()}
+
 <footer class="site-footer">
-  <img class="site-footer__forest" src="/assets/images/skog.webp" alt="" aria-hidden="true">
   <div class="site-footer__main">
     ${logo(`\n      <small>${esc(site.copyright)}</small>`,'logo logo--light')}
 
@@ -286,8 +298,7 @@ function aboutPage(){return layout({title:'Om mig',description:'Om '+site.author
 function booksPage(){return layout({title:'Böcker',description:'Böcker och längre verk av '+site.author_name+'.',active:'books',body:`
 <section class="banner-hero" style="background-image:url('${esc(books.hero.image)}')"><div class="container"><div class="copy"><p class="eyebrow" style="color:#f0e4d4">Böcker</p><h1>${esc(books.hero.title)}</h1><p class="section-subtitle" style="color:#fff">${esc(books.hero.subtitle)}</p><p>${esc(books.hero.body)}</p></div></div></section>
 <section class="section paper"><div class="container feature-book"><div>${img(books.featured.image,books.featured.title,'book-cover')}</div><div class="copy"><p class="eyebrow">${esc(books.featured.kicker)}</p><h2>${esc(books.featured.title)}</h2><p class="section-subtitle">${esc(books.featured.tagline)}</p><div class="rule"></div><p>${esc(books.featured.description)}</p><p><strong>${esc(books.featured.genre)}</strong><br>${esc(books.featured.status)}</p><a class="btn primary" href="/contact.html">Fråga om projektet</a></div><blockquote class="feature-quote">“Berättelser växer fram i sin egen takt. Här kan du följa vad som händer längs vägen.”</blockquote></div></section>
-<section class="section paper-alt"><div class="container"><p class="eyebrow">Andra verk</p><div class="three-col">${books.other.map(b=>`<article class="card book-card"><div class="card-media">${img(b.image,b.title)}</div><div class="card-body"><div class="meta">${esc(b.genre)}</div><h3>${esc(b.title)}</h3><p>${esc(b.description)}</p><a class="btn small" href="/contact.html">Läs mer</a></div></article>`).join('')}</div></div></section>
-<section class="section dark"><div class="container">${newsletterForm('newsletter-books',books.newsletter_title,books.newsletter_body)}</div></section>`});}
+<section class="section paper-alt"><div class="container"><p class="eyebrow">Andra verk</p><div class="three-col">${books.other.map(b=>`<article class="card book-card"><div class="card-media">${img(b.image,b.title)}</div><div class="card-body"><div class="meta">${esc(b.genre)}</div><h3>${esc(b.title)}</h3><p>${esc(b.description)}</p><a class="btn small" href="/contact.html">Läs mer</a></div></article>`).join('')}</div></div></section>`});}
 
 function novelsPage(){
  const genres=['Alla',...new Set(stories.map(s=>s.genre))];
@@ -307,7 +318,7 @@ function blogPage(){
  const cats=['Alla',...new Set(posts.map(p=>p.category))];
  return layout({title:'Bloggen',description:'Blogg om skrivande, inspiration och berättelser av '+site.author_name+'.',active:'blog',body:`
 <section class="blog-hero" style="background-image:url('${esc(home.hero.image)}')"><div class="container"><div class="copy"><p class="eyebrow">Nyheter & blogg</p><h1>Bloggen</h1><p class="section-subtitle">Tankar, inspiration och inblickar bakom berättelserna.</p><p>Här delar jag med mig av skrivprocessen, research, karaktärer, platser och sådant som ryms mellan idé och färdig text.</p></div></div></section>
-<section class="section paper"><div class="container blog-layout"><div><div class="filters">${cats.map((c,i)=>`<button class="filter-btn${i===0?' active':''}" type="button" data-post-filter="${esc(c)}">${esc(c)}</button>`).join('')}</div><div class="blog-grid" data-post-grid>${posts.map(p=>`<div data-post-category="${esc(p.category)}">${postCard(p)}</div>`).join('')}</div></div><aside class="sidebar-panel"><p class="eyebrow">Välkommen hit</p><p>Här på bloggen delar jag tankar, inspiration och glimtar bakom mina berättelser.</p><a class="btn small" href="/om-mig.html">Läs mer om mig</a><hr style="border:0;border-top:1px solid var(--line);margin:2rem 0"><p class="eyebrow">Kategorier</p><div class="category-list">${cats.filter(c=>c!=='Alla').map(c=>`<span>${esc(c)}</span>`).join('')}</div><hr style="border:0;border-top:1px solid var(--line);margin:2rem 0">${newsletterForm('newsletter-blog','Håll dig uppdaterad','Få nya blogginlägg och inblickar direkt i din inkorg.')}</aside></div></section>`,scripts:`<script>document.querySelectorAll('[data-post-filter]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-post-filter]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('[data-post-category]').forEach(x=>x.hidden=b.dataset.postFilter!=='Alla'&&x.dataset.postCategory!==b.dataset.postFilter)}));</script>`});
+<section class="section paper"><div class="container blog-layout"><div><div class="filters">${cats.map((c,i)=>`<button class="filter-btn${i===0?' active':''}" type="button" data-post-filter="${esc(c)}">${esc(c)}</button>`).join('')}</div><div class="blog-grid" data-post-grid>${posts.map(p=>`<div data-post-category="${esc(p.category)}">${postCard(p)}</div>`).join('')}</div></div><aside class="sidebar-panel"><p class="eyebrow">Välkommen hit</p><p>Här på bloggen delar jag tankar, inspiration och glimtar bakom mina berättelser.</p><a class="btn small" href="/om-mig.html">Läs mer om mig</a><hr style="border:0;border-top:1px solid var(--line);margin:2rem 0"><p class="eyebrow">Kategorier</p><div class="category-list">${cats.filter(c=>c!=='Alla').map(c=>`<span>${esc(c)}</span>`).join('')}</div></aside></div></section>`,scripts:`<script>document.querySelectorAll('[data-post-filter]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-post-filter]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('[data-post-category]').forEach(x=>x.hidden=b.dataset.postFilter!=='Alla'&&x.dataset.postCategory!==b.dataset.postFilter)}));</script>`});
 }
 
 function postPage(p){return layout({title:p.title,description:p.excerpt,active:'blog',body:`<section class="banner-hero" style="background-image:url('${esc(p.image)}')"><div class="container"><div class="copy"><p class="eyebrow">${esc(p.category)} · ${esc(formatDate(p.date))}</p><h1 style="font-size:clamp(2.8rem,5vw,5rem)">${esc(p.title)}</h1><p>${esc(p.excerpt)}</p></div></div></section><section class="section paper"><article class="container story-text" style="max-width:760px"><div class="rule"></div>${paras(p.body)}<p style="margin-top:3rem"><a class="btn" href="/blog.html">Tillbaka till bloggen</a></p></article></section>`});}
@@ -318,18 +329,15 @@ function writersPage(){
 <section class="resources-hero"><div class="copy"><p class="eyebrow">${esc(writers.hero.eyebrow)}</p><h1>${esc(writers.hero.title)}</h1><div class="rule"></div><p>${esc(writers.hero.body)}</p><div class="hero-actions"><a class="btn primary" href="#youtube">Se YouTube-videor</a><a class="btn" href="#printables">Printables</a><a class="btn" href="/podd.html">Lyssna på podden</a></div></div><div class="image" style="background-image:url('${esc(writers.hero.image)}')"></div></section>
 <section id="youtube" class="section paper"><div class="container resource-band"><div><p class="eyebrow">YouTube-videor</p><p>${esc(writers.youtube_intro)}</p><a class="btn small" href="${esc(site.youtube)}" target="_blank" rel="noopener">Till YouTube</a></div><div class="video-grid"><a class="video-main" href="${esc(main.url)}" target="_blank" rel="noopener" style="background-image:url('${esc(main.image)}')"><div><div class="meta">YouTube</div><h2>${esc(main.title)}</h2><p>${esc(main.subtitle)}</p></div></a><div class="stack">${small.map(v=>`<a class="video-small" href="${esc(v.url)}" target="_blank" rel="noopener" style="background-image:url('${esc(v.image)}')"><span><strong>${esc(v.title)}</strong><br><small>${esc(v.subtitle)}</small></span></a>`).join('')}</div></div></div></section>
 <section id="printables" class="section paper-alt"><div class="container resource-band"><div><p class="eyebrow">Printables</p><p>${esc(writers.printables_intro)}</p></div><div class="printables-grid">${writers.printables.map(p=>`<article class="printable-card">${img(p.image,p.title)}<h3>${esc(p.title)}</h3>${p.file?`<a class="btn small" href="${esc(p.file)}" download>Ladda ner</a>`:`<span class="meta">Fil kan läggas till i CMS</span>`}</article>`).join('')}</div></div></section>
-<section class="section paper"><div class="container resource-band"><div><p class="eyebrow">Kom igång med ditt skrivande</p><p>En enkel väg från idé till bearbetad text.</p></div><ol style="font-size:1.15rem;margin:0;padding-left:1.4rem">${writers.guide_steps.map(x=>`<li style="padding:.6rem 0;border-bottom:1px solid var(--line)">${esc(x)}</li>`).join('')}</ol></div></section>
-<section class="section dark"><div class="container">${newsletterForm('newsletter-writers',writers.newsletter_title,writers.newsletter_body)}</div></section>`});}
+<section class="section paper"><div class="container resource-band"><div><p class="eyebrow">Kom igång med ditt skrivande</p><p>En enkel väg från idé till bearbetad text.</p></div><ol style="font-size:1.15rem;margin:0;padding-left:1.4rem">${writers.guide_steps.map(x=>`<li style="padding:.6rem 0;border-bottom:1px solid var(--line)">${esc(x)}</li>`).join('')}</ol></div></section>`});}
 
 function otherPage(){return layout({title:'Annat',description:'Printables, projekt, inspirationsmaterial och annat av '+site.author_name+'.',active:'other',body:`
 <section class="resources-hero"><div class="copy"><p class="eyebrow">${esc(other.hero.eyebrow)}</p><h1>${esc(other.hero.title)}</h1><div class="rule"></div><p>${esc(other.hero.body)}</p></div><div class="image" style="background-image:url('${esc(other.hero.image)}')"></div></section>
-<section class="section paper"><div class="container other-grid">${other.cards.map((c,i)=>`<article class="card" id="${['printables','projekt','inspiration','ovrigt'][i]}"><div class="card-media">${img(c.image,c.title)}</div><div class="card-body"><h3>${esc(c.title)}</h3><p>${esc(c.text)}</p><a class="btn small" href="${esc(c.url)}">${esc(c.label)}</a></div></article>`).join('')}</div></section>
-<section class="section paper-alt"><div class="container">${newsletterForm('newsletter-other',other.newsletter_title,other.newsletter_body)}</div></section>`});}
+<section class="section paper"><div class="container other-grid">${other.cards.map((c,i)=>`<article class="card" id="${['printables','projekt','inspiration','ovrigt'][i]}"><div class="card-media">${img(c.image,c.title)}</div><div class="card-body"><h3>${esc(c.title)}</h3><p>${esc(c.text)}</p><a class="btn small" href="${esc(c.url)}">${esc(c.label)}</a></div></article>`).join('')}</div></section>`});}
 
 function contactPage(){return layout({title:'Kontakt',description:'Kontakta '+site.author_name+' för frågor, samarbeten och författarbesök.',active:'contact',body:`
 <section class="banner-hero" style="background-image:url('${esc(contact.hero.image)}')"><div class="container"><div class="copy"><p class="eyebrow" style="color:#f0e4d4">Kontakt</p><h1>${esc(contact.hero.title)}</h1><p class="section-subtitle" style="color:#fff">${esc(contact.hero.subtitle)}</p><p>${esc(contact.hero.body)}</p></div></div></section>
-<section class="section paper"><div class="container contact-grid"><div><p class="eyebrow">Skicka ett meddelande</p><form class="form" name="contact" method="POST" data-netlify="true" data-local-success="Tack! Meddelandet är skickat."><input type="hidden" name="form-name" value="contact"><div><label for="name">Namn</label><input id="name" name="name" required></div><div><label for="email">E-post</label><input id="email" type="email" name="email" required></div><div><label for="subject">Ämne</label><select id="subject" name="subject"><option>Läsarfråga</option><option>Samarbete</option><option>Skolor & bibliotek</option><option>Övrigt</option></select></div><div><label for="message">Meddelande</label><textarea id="message" name="message" required></textarea></div><button class="btn primary" type="submit">Skicka meddelande</button></form><div class="reasons-grid">${contact.reasons.map(r=>`<div class="reason"><h3>${esc(r.title)}</h3><p>${esc(r.text)}</p></div>`).join('')}</div></div><div><p class="eyebrow">Vanliga frågor</p><div class="faq-list">${contact.faqs.map((f,i)=>`<div class="faq-item"><button type="button" data-faq-button aria-expanded="${i===0?'true':'false'}"><span>${esc(f.q)}</span><span data-faq-symbol>${i===0?'−':'+'}</span></button><div class="faq-answer" data-faq-answer${i===0?'':' hidden'}>${esc(f.a)}</div></div>`).join('')}</div></div></div></section>
-<section class="section dark"><div class="container">${newsletterForm('newsletter-contact','Håll dig uppdaterad','Få nyheter om berättelser, projekt och nya resurser direkt i din inkorg.')}</div></section>`});}
+<section class="section paper"><div class="container contact-grid"><div><p class="eyebrow">Skicka ett meddelande</p><form class="form" name="contact" method="POST" data-netlify="true" data-local-success="Tack! Meddelandet är skickat."><input type="hidden" name="form-name" value="contact"><div><label for="name">Namn</label><input id="name" name="name" required></div><div><label for="email">E-post</label><input id="email" type="email" name="email" required></div><div><label for="subject">Ämne</label><select id="subject" name="subject"><option>Läsarfråga</option><option>Samarbete</option><option>Skolor & bibliotek</option><option>Övrigt</option></select></div><div><label for="message">Meddelande</label><textarea id="message" name="message" required></textarea></div><button class="btn primary" type="submit">Skicka meddelande</button></form><div class="reasons-grid">${contact.reasons.map(r=>`<div class="reason"><h3>${esc(r.title)}</h3><p>${esc(r.text)}</p></div>`).join('')}</div></div><div><p class="eyebrow">Vanliga frågor</p><div class="faq-list">${contact.faqs.map((f,i)=>`<div class="faq-item"><button type="button" data-faq-button aria-expanded="${i===0?'true':'false'}"><span>${esc(f.q)}</span><span data-faq-symbol>${i===0?'−':'+'}</span></button><div class="faq-answer" data-faq-answer${i===0?'':' hidden'}>${esc(f.a)}</div></div>`).join('')}</div></div></div></section>`});}
 
 // Podd: block och avsnitt från content/podd/*.json, sidinställningar i content/podd.json.
 // Ljudfilerna ligger utanför webbplatsen. Ett avsnitt får sin ljudfil antingen från fältet "audio"

@@ -7,5 +7,8 @@
   "youtube": "https://youtube.com/",
   "pinterest": "https://pinterest.com/",
   "copyright": "© 2026 Isabelle Linnea. Alla rättigheter förbehållna.",
-  "footer_tagline": "För historier som lever vidare"
+  "footer_tagline": "För historier som lever vidare",
+  "newsletter_title": "Vill du veta när jag publicerat något nytt?",
+  "newsletter_body": "Prenumerera på nyhetsbrevet, så får du veta om nya berättelser, blogginlägg och material för författare.",
+  "newsletter_button": "Ja tack!"
 }
