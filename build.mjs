@@ -28,7 +28,7 @@ const poddBlocks = readCollection('podd').sort((a,b)=>a.number-b.number);
 
 // Menyvalen – samma på alla sidor
 const menuItems=[
-  ['Hem','/index.html','home'],['Om mig','/om-mig.html','about'],['Böcker','/books.html','books'],['Noveller','/noveller.html','stories'],['Blogg','/blog.html','blog'],['För författare','/for-forfattare.html','writers'],['Podd','/podd.html','podd'],['Annat','/annat.html','other'],['Kontakt','/contact.html','contact']
+  ['Hem','/index.html','home'],['Om mig','/om-mig.html','about'],['Böcker','/books.html','books'],['Noveller','/noveller.html','stories'],['Blogg','/blog.html','blog'],['För författare','/for-forfattare.html','writers'],['Annat','/annat.html','other'],['Kontakt','/contact.html','contact']
 ];
 
 // Menyraden med murgröna högst upp – gemensam för alla sidor (stilar i /assets/css/topbar.css)
@@ -315,7 +315,7 @@ function postPage(p){return layout({title:p.title,description:p.excerpt,active:'
 function writersPage(){
  const [main,...small]=writers.videos;
  return layout({title:'För författare',description:'YouTube-videor, printables och skrivtips av '+site.author_name+'.',active:'writers',body:`
-<section class="resources-hero"><div class="copy"><p class="eyebrow">${esc(writers.hero.eyebrow)}</p><h1>${esc(writers.hero.title)}</h1><div class="rule"></div><p>${esc(writers.hero.body)}</p><div class="hero-actions"><a class="btn primary" href="#youtube">Se YouTube-videor</a><a class="btn" href="#printables">Printables</a></div></div><div class="image" style="background-image:url('${esc(writers.hero.image)}')"></div></section>
+<section class="resources-hero"><div class="copy"><p class="eyebrow">${esc(writers.hero.eyebrow)}</p><h1>${esc(writers.hero.title)}</h1><div class="rule"></div><p>${esc(writers.hero.body)}</p><div class="hero-actions"><a class="btn primary" href="#youtube">Se YouTube-videor</a><a class="btn" href="#printables">Printables</a><a class="btn" href="/podd.html">Lyssna på podden</a></div></div><div class="image" style="background-image:url('${esc(writers.hero.image)}')"></div></section>
 <section id="youtube" class="section paper"><div class="container resource-band"><div><p class="eyebrow">YouTube-videor</p><p>${esc(writers.youtube_intro)}</p><a class="btn small" href="${esc(site.youtube)}" target="_blank" rel="noopener">Till YouTube</a></div><div class="video-grid"><a class="video-main" href="${esc(main.url)}" target="_blank" rel="noopener" style="background-image:url('${esc(main.image)}')"><div><div class="meta">YouTube</div><h2>${esc(main.title)}</h2><p>${esc(main.subtitle)}</p></div></a><div class="stack">${small.map(v=>`<a class="video-small" href="${esc(v.url)}" target="_blank" rel="noopener" style="background-image:url('${esc(v.image)}')"><span><strong>${esc(v.title)}</strong><br><small>${esc(v.subtitle)}</small></span></a>`).join('')}</div></div></div></section>
 <section id="printables" class="section paper-alt"><div class="container resource-band"><div><p class="eyebrow">Printables</p><p>${esc(writers.printables_intro)}</p></div><div class="printables-grid">${writers.printables.map(p=>`<article class="printable-card">${img(p.image,p.title)}<h3>${esc(p.title)}</h3>${p.file?`<a class="btn small" href="${esc(p.file)}" download>Ladda ner</a>`:`<span class="meta">Fil kan läggas till i CMS</span>`}</article>`).join('')}</div></div></section>
 <section class="section paper"><div class="container resource-band"><div><p class="eyebrow">Kom igång med ditt skrivande</p><p>En enkel väg från idé till bearbetad text.</p></div><ol style="font-size:1.15rem;margin:0;padding-left:1.4rem">${writers.guide_steps.map(x=>`<li style="padding:.6rem 0;border-bottom:1px solid var(--line)">${esc(x)}</li>`).join('')}</ol></div></section>
@@ -392,7 +392,8 @@ function poddPage(){
   </details>`;
  };
  const hero=podd.hero||{};
- return layout({title:'Podd',description:`${total} avsnitt om skrivande och berättande i ${poddBlocks.length} block – från idé och karaktärer till dialog, redigering och utgivning.`,active:'podd',
+ // Podden ligger inte i huvudmenyn – den nås via en knapp på För författare, som därför markeras i menyn
+ return layout({title:'Podd',description:`${total} avsnitt om skrivande och berättande i ${poddBlocks.length} block – från idé och karaktärer till dialog, redigering och utgivning.`,active:'writers',
   head:'<link rel="stylesheet" href="/assets/css/podd.css">',
   scripts:'<script src="/assets/js/podd.js" defer></script>',
   body:`${sprite}

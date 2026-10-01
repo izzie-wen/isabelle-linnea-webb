@@ -88,10 +88,10 @@ body { position: relative; }
 }
 
 /* Mellanstora skärmar: tätare meny så att allt ryms på en rad */
-@media (max-width: 1599px) and (min-width: 1240px) {
+@media (max-width: 1519px) and (min-width: 1240px) {
   .topbar { gap: 1.25rem; }
-  .topbar-nav ul { gap: .75rem; }
-  .topbar-nav a { font-size: .9rem; letter-spacing: .05em; }
+  .topbar-nav ul { gap: .9rem; }
+  .topbar-nav a { font-size: .92rem; letter-spacing: .07em; }
   .topbar-logo__name { font-size: 1.8rem; }
 }
 
