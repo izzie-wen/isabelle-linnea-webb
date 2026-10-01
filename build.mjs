@@ -119,13 +119,13 @@ function signup(){
       <svg class="signup__ornament" viewBox="0 0 140 14" aria-hidden="true"><line x1="0" y1="7" x2="58" y2="7" stroke="currentColor" stroke-width="1"/><path d="M70 1 L73 7 L70 13 L67 7 Z" fill="currentColor"/><line x1="82" y1="7" x2="140" y2="7" stroke="currentColor" stroke-width="1"/></svg>
       ${site.newsletter_body?`<p>${esc(site.newsletter_body)}</p>`:''}
     </div>
-    <form class="signup__form" name="nyhetsbrev" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-signup>
+    <form class="signup__form" name="nyhetsbrev" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-ajax-form data-hide-on-success data-success="Tack! Nu är du anmäld till nyhetsbrevet.">
       <input type="hidden" name="form-name" value="nyhetsbrev">
       <p class="signup__hp"><label>Fyll inte i detta: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
       <label class="signup__label" for="signup-email">Din e-postadress</label>
       <input id="signup-email" type="email" name="email" placeholder="Din e-postadress" autocomplete="email" required>
       <button type="submit">${esc(site.newsletter_button||'Ja tack!')}</button>
-      <p class="signup__msg" role="status" aria-live="polite"></p>
+      <p class="signup__msg" data-form-msg role="status" aria-live="polite"></p>
     </form>
     <svg class="signup__birds" viewBox="0 0 64 26" aria-hidden="true"><path d="M2 14c4-4 8-4 11 0 3-4 7-4 11 0-4-1.5-8-1-11 2.5C10 13 6 12.5 2 14z"/><path d="M34 6c5-5 10-5 14 0 4-5 9-5 14 0-5-2-10-1.4-14 3C44 4.6 39 4 34 6z"/></svg>
   </div>
@@ -335,9 +335,80 @@ function otherPage(){return layout({title:'Annat',description:'Printables, proje
 <section class="resources-hero"><div class="copy"><p class="eyebrow">${esc(other.hero.eyebrow)}</p><h1>${esc(other.hero.title)}</h1><div class="rule"></div><p>${esc(other.hero.body)}</p></div><div class="image" style="background-image:url('${esc(other.hero.image)}')"></div></section>
 <section class="section paper"><div class="container other-grid">${other.cards.map((c,i)=>`<article class="card" id="${['printables','projekt','inspiration','ovrigt'][i]}"><div class="card-media">${img(c.image,c.title)}</div><div class="card-body"><h3>${esc(c.title)}</h3><p>${esc(c.text)}</p><a class="btn small" href="${esc(c.url)}">${esc(c.label)}</a></div></article>`).join('')}</div></section>`});}
 
-function contactPage(){return layout({title:'Kontakt',description:'Kontakta '+site.author_name+' för frågor, samarbeten och författarbesök.',active:'contact',body:`
-<section class="banner-hero" style="background-image:url('${esc(contact.hero.image)}')"><div class="container"><div class="copy"><p class="eyebrow" style="color:#f0e4d4">Kontakt</p><h1>${esc(contact.hero.title)}</h1><p class="section-subtitle" style="color:#fff">${esc(contact.hero.subtitle)}</p><p>${esc(contact.hero.body)}</p></div></div></section>
-<section class="section paper"><div class="container contact-grid"><div><p class="eyebrow">Skicka ett meddelande</p><form class="form" name="contact" method="POST" data-netlify="true" data-local-success="Tack! Meddelandet är skickat."><input type="hidden" name="form-name" value="contact"><div><label for="name">Namn</label><input id="name" name="name" required></div><div><label for="email">E-post</label><input id="email" type="email" name="email" required></div><div><label for="subject">Ämne</label><select id="subject" name="subject"><option>Läsarfråga</option><option>Samarbete</option><option>Skolor & bibliotek</option><option>Övrigt</option></select></div><div><label for="message">Meddelande</label><textarea id="message" name="message" required></textarea></div><button class="btn primary" type="submit">Skicka meddelande</button></form><div class="reasons-grid">${contact.reasons.map(r=>`<div class="reason"><h3>${esc(r.title)}</h3><p>${esc(r.text)}</p></div>`).join('')}</div></div><div><p class="eyebrow">Vanliga frågor</p><div class="faq-list">${contact.faqs.map((f,i)=>`<div class="faq-item"><button type="button" data-faq-button aria-expanded="${i===0?'true':'false'}"><span>${esc(f.q)}</span><span data-faq-symbol>${i===0?'−':'+'}</span></button><div class="faq-answer" data-faq-answer${i===0?'':' hidden'}>${esc(f.a)}</div></div>`).join('')}</div></div></div></section>`});}
+// Kontakt: banner med bild, formulär och andra kontaktvägar till vänster, vanliga frågor till höger.
+// Stilar i /assets/css/kontakt.css. Texterna redigeras i content/contact.json (Pages CMS: Kontakt).
+function contactPage(){
+ const c=contact, hero=c.hero||{}, reasons=c.reasons||[], faqs=c.faqs||[];
+ const icons={
+  bok:'<path d="M3 6.2c3-1.2 6-1 9 .9 3-1.9 6-2.1 9-.9v12.4c-3-1.2-6-1-9 .9-3-1.9-6-2.1-9-.9z"/><path d="M12 7.1v12.4"/>',
+  penna:'<path d="M15.8 4.2l4 4L8.6 19.4l-5.1 1.1 1.1-5.1z"/><path d="M13.6 6.4l4 4"/>',
+  personer:'<circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.5-3.6 2.9-5.6 6-5.6s5.5 2 6 5.6"/><circle cx="17.2" cy="8.8" r="2.5"/><path d="M15.8 14.1c2.8-.3 4.8 1.4 5.2 4.7"/>',
+  pratbubbla:'<path d="M20.5 11.6c0 4-3.8 7.1-8.5 7.1-1.3 0-2.5-.2-3.6-.6L4 19.8l1.4-3.6c-1.1-1.2-1.9-2.8-1.9-4.6 0-4 3.8-7.1 8.5-7.1s8.5 3.1 8.5 7.1z"/>'
+ };
+ const iconOrder=['bok','penna','personer','pratbubbla'];
+ const icon=(name,i)=>`<svg class="ct-reason__icon" viewBox="0 0 24 24" aria-hidden="true">${icons[name]||icons[iconOrder[i%iconOrder.length]]}</svg>`;
+ const orn=(cls='')=>`<span class="ct-orn${cls?' '+cls:''}" aria-hidden="true"><span>◆</span></span>`;
+ const chevron='<svg class="ct-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+ const arrow='<svg class="ct-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>';
+ // Ämnena i formuläret = rubrikerna under "Andra sätt att kontakta mig"
+ const subjects=reasons.length?reasons.map(r=>r.title):['Läsarfråga','Samarbete','Skolor & bibliotek','Övrigt'];
+ const [noteFirst,...noteRest]=String(c.faq_note||'').split(/(?<=\?)\s+/);
+ return layout({title:'Kontakt',description:'Kontakta '+site.author_name+' för frågor, samarbeten och författarbesök.',active:'contact',
+  head:'<link rel="stylesheet" href="/assets/css/kontakt.css">',
+  body:`
+<section class="ct-hero"${hero.image?` style="--ct-hero:url('${esc(hero.image)}')"`:''}>
+  <div class="ct-wrap ct-hero__inner">
+    <h1>${esc(hero.title||'Kontakt')}</h1>
+    ${orn('ct-orn--short')}
+    ${hero.subtitle?`<p class="ct-hero__lead">${esc(hero.subtitle)}</p>`:''}
+    ${hero.body?`<p class="ct-hero__body">${esc(hero.body)}</p>`:''}
+  </div>
+</section>
+<section class="ct-main">
+  <div class="ct-wrap ct-grid">
+    <div class="ct-col" id="meddelande">
+      <h2 class="ct-h">Skicka ett meddelande</h2>
+      ${orn()}
+      <form class="ct-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-ajax-form data-success="Tack för ditt meddelande! Jag återkommer så snart jag kan.">
+        <input type="hidden" name="form-name" value="contact">
+        <p class="ct-hidden"><label>Fyll inte i detta: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <label class="ct-hidden" for="ct-name">Namn</label>
+        <input id="ct-name" name="name" placeholder="Namn *" autocomplete="name" required>
+        <label class="ct-hidden" for="ct-email">E-post</label>
+        <input id="ct-email" type="email" name="email" placeholder="E-post *" autocomplete="email" required>
+        <label class="ct-hidden" for="ct-subject">Ämne</label>
+        <div class="ct-select">
+          <select id="ct-subject" name="subject" required>
+            <option value="" disabled selected>Ämne *</option>
+            ${subjects.map(s=>`<option>${esc(s)}</option>`).join('\n            ')}
+          </select>
+          ${chevron}
+        </div>
+        <label class="ct-hidden" for="ct-message">Meddelande</label>
+        <textarea id="ct-message" name="message" placeholder="Meddelande *" rows="6" required></textarea>
+        <button class="ct-btn" type="submit">Skicka meddelande ${arrow}</button>
+        <p class="ct-form__msg" data-form-msg role="status" aria-live="polite"></p>
+      </form>
+      ${c.form_note?`<p class="ct-note">${esc(c.form_note)}</p>`:''}
+      ${reasons.length?`<h2 class="ct-h ct-h--small">Andra sätt att kontakta mig</h2>
+      ${orn()}
+      <div class="ct-reasons">
+        ${reasons.map((r,i)=>`<div class="ct-reason">${icon(r.icon,i)}<div><h3>${esc(r.title)}</h3><p>${esc(r.text)}</p></div></div>`).join('\n        ')}
+      </div>`:''}
+    </div>
+    <div class="ct-col ct-col--faq">
+      <h2 class="ct-h">Vanliga frågor</h2>
+      ${orn()}
+      <div class="ct-faq">
+        ${faqs.map((f,i)=>`<div class="ct-faq__item">
+          <button type="button" id="fraga-${i+1}" data-faq-button aria-expanded="${i===0?'true':'false'}" aria-controls="svar-${i+1}"><span>${esc(f.q)}</span>${chevron}</button>
+          <div class="ct-faq__answer" id="svar-${i+1}" role="region" aria-labelledby="fraga-${i+1}" data-faq-answer${i===0?'':' hidden'}><p>${esc(f.a)}</p></div>
+        </div>`).join('\n        ')}
+      </div>
+      ${c.faq_note?`<a class="ct-faq__note" href="#meddelande"><span>${esc(noteFirst)}</span>${noteRest.length?` <span>${esc(noteRest.join(' '))}</span>`:''} ${arrow}</a>`:''}
+    </div>
+  </div>
+</section>`});}
 
 // Podd: block och avsnitt från content/podd/*.json, sidinställningar i content/podd.json.
 // Ljudfilerna ligger utanför webbplatsen. Ett avsnitt får sin ljudfil antingen från fältet "audio"

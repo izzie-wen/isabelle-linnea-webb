@@ -3,26 +3,32 @@
     "title": "Kontakt",
     "subtitle": "Jag blir alltid glad av att höra från er.",
     "body": "Här kan du ställa frågor, dela tankar, skriva om samarbeten eller bara säga hej. Jag läser alla meddelanden och försöker svara så snart jag kan.",
-    "image": "/assets/images/contact-hero.jpg"
+    "image": "/assets/images/kontakt-banner.webp"
   },
+  "form_note": "Jag försöker svara inom några dagar. Tack för att du hör av dig!",
   "reasons": [
     {
       "title": "Förfrågningar om böcker",
-      "text": "Frågor om berättelser, karaktärer, världen eller skrivprocessen."
+      "text": "Frågor om berättelser, karaktärer, världen eller skrivprocessen.",
+      "icon": "bok"
     },
     {
       "title": "Samarbeten",
-      "text": "Intervjuer, event, bloggar eller andra samarbeten."
+      "text": "Intervjuer, event, bloggar eller andra samarbeten.",
+      "icon": "penna"
     },
     {
       "title": "Skolor & bibliotek",
-      "text": "Författarbesök, samtal, föreläsningar och workshops."
+      "text": "Författarbesök, samtal, föreläsningar och workshops.",
+      "icon": "personer"
     },
     {
       "title": "Övrigt",
-      "text": "Andra frågor eller meddelanden som inte passar in i ovanstående."
+      "text": "Andra frågor eller meddelanden som inte passar in i ovanstående.",
+      "icon": "pratbubbla"
     }
   ],
+  "faq_note": "Hittar du inte svaret på din fråga? Skicka ett meddelande så hjälper jag dig!",
   "faqs": [
     {
       "q": "Kommer du ha fler böcker i Rienriten-serien?",

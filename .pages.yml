@@ -235,8 +235,9 @@ content:
               - { name: subtitle, label: Underrubrik, type: string }
               - { name: body, label: Text, type: text }
               - { name: image, label: Bild, type: image }
+          - { name: form_note, label: Text under formuläret, type: string }
           - name: reasons
-            label: Kontaktorsaker
+            label: Andra sätt att kontakta mig (blir också ämnena i formuläret)
             type: object
             list:
               collapsible:
@@ -245,6 +246,12 @@ content:
             fields:
               - { name: title, label: Rubrik, type: string }
               - { name: text, label: Text, type: text }
+              - name: icon
+                label: Ikon
+                type: select
+                options:
+                  values: ["bok", "penna", "personer", "pratbubbla"]
+          - { name: faq_note, label: Text under vanliga frågor (länkar till formuläret), type: string }
           - name: faqs
             label: Vanliga frågor
             type: object

@@ -1,0 +1,154 @@
+/* ==========================================================
+   Kontaktsidan – banner, formulär, andra kontaktvägar och vanliga frågor.
+   Menyraden (topbar.css), nyhetsbrevet (signup.css) och sidfoten är samma som på övriga sidor.
+   ========================================================== */
+.ct-hero, .ct-main {
+  --ct-ink: #1f1d1a;
+  --ct-soft: #4f4840;
+  --ct-gold: #a88657;
+  --ct-line: #ddd3c4;
+  --ct-field: #fbf9f5;
+  --ct-box: #f4efe7;
+  --ct-box-open: #ece5da;
+  --ct-button: #3a2f22;
+  --ct-serif: "Cormorant Garamond", "EB Garamond", Garamond, Georgia, serif;
+  --ct-caps: "Cormorant SC", "Cormorant Garamond", Garamond, Georgia, serif;
+  --ct-gutter: clamp(16px, 4vw, 48px);
+}
+.ct-wrap { width: min(1120px, 100% - 2 * var(--ct-gutter)); margin-inline: auto; }
+.ct-hidden {
+  position: absolute !important; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; margin: 0;
+}
+
+/* Prydnad: linje – ◆ – linje (i spalterna fyller den hela bredden) */
+.ct-orn { display: flex; align-items: center; gap: 12px; margin: 14px 0 26px; color: var(--ct-gold); }
+.ct-orn::before, .ct-orn::after { content: ""; flex: 1; height: 1px; background: currentColor; opacity: .55; }
+.ct-orn span { font-size: .78rem; line-height: 1; }
+.ct-orn--short { width: 140px; margin: 18px 0 20px; }
+.ct-orn--short::before, .ct-orn--short::after { opacity: .85; }
+
+/* ---------- Banner ---------- */
+.ct-hero {
+  position: relative;
+  display: flex; align-items: center;
+  min-height: clamp(380px, 37vw, 620px);
+  background: #1b2420 var(--ct-hero, none) 62% 50% / cover no-repeat;
+  color: #fff;
+  overflow: hidden;
+}
+.ct-hero::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(8,12,10,.62) 0%, rgba(8,12,10,.38) 34%, rgba(8,12,10,0) 62%);
+}
+.ct-hero__inner { position: relative; z-index: 1; padding-block: 56px 48px; }
+.ct-hero h1 {
+  margin: 0;
+  font: 500 clamp(2.8rem, 5vw, 4.4rem)/1 var(--ct-serif);
+  letter-spacing: .05em; text-transform: uppercase;
+  color: #fff; text-shadow: 0 2px 14px rgba(0,0,0,.35);
+}
+.ct-hero__lead {
+  margin: 0 0 18px; max-width: 40ch;
+  font: italic 500 clamp(1.3rem, 2vw, 1.75rem)/1.3 var(--ct-serif);
+  color: #f6f1e8; text-shadow: 0 1px 8px rgba(0,0,0,.35);
+}
+.ct-hero__body {
+  margin: 0; max-width: 34ch;
+  font: 500 clamp(1.1rem, 1.5vw, 1.35rem)/1.45 var(--ct-serif);
+  color: #f3eee5; text-shadow: 0 1px 8px rgba(0,0,0,.35);
+}
+
+/* ---------- Två spalter ---------- */
+.ct-main { padding: clamp(40px, 5vw, 64px) 0 clamp(24px, 3vw, 40px); color: var(--ct-ink); font-family: var(--ct-serif); }
+.ct-grid { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); }
+.ct-col { min-width: 0; padding-right: clamp(28px, 4vw, 56px); }
+.ct-col--faq { padding-right: 0; padding-left: clamp(28px, 4vw, 56px); border-left: 1px solid var(--ct-line); }
+.ct-h {
+  margin: 0;
+  font: 500 clamp(1.55rem, 2.3vw, 2.05rem)/1.15 var(--ct-serif);
+  letter-spacing: .06em; text-transform: uppercase; color: var(--ct-ink);
+}
+.ct-h--small { margin-top: clamp(40px, 5vw, 56px); font-size: clamp(1.25rem, 1.7vw, 1.5rem); }
+
+/* ---------- Formulär ---------- */
+.ct-form { display: flex; flex-direction: column; gap: 10px; margin: 0; }
+.ct-form input, .ct-form select, .ct-form textarea {
+  width: 100%; margin: 0;
+  border: 1px solid var(--ct-line); border-radius: 0; background: var(--ct-field);
+  font: 500 1.1rem/1.3 var(--ct-serif); color: var(--ct-ink);
+}
+.ct-form input, .ct-form select { height: 48px; padding: 0 14px; }
+.ct-form textarea { min-height: 150px; padding: 12px 14px; resize: vertical; }
+.ct-form ::placeholder { color: #8b8378; opacity: 1; }
+.ct-form input:focus, .ct-form select:focus, .ct-form textarea:focus { outline: 2px solid var(--ct-gold); outline-offset: 1px; }
+.ct-select { position: relative; }
+.ct-select select { appearance: none; -webkit-appearance: none; padding-right: 44px; cursor: pointer; }
+.ct-select select:invalid { color: #8b8378; }
+.ct-select .ct-chevron { position: absolute; right: 14px; top: 50%; width: 20px; height: 20px; transform: translateY(-50%); pointer-events: none; }
+.ct-chevron, .ct-arrow { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.ct-btn {
+  align-self: flex-start;
+  display: inline-flex; align-items: center; gap: 14px;
+  min-height: 50px; margin-top: 8px; padding: 0 34px;
+  border: 0; border-radius: 0; background: var(--ct-button); color: #f6efe3;
+  font: 600 .98rem/1 var(--ct-caps); letter-spacing: .14em; text-transform: uppercase;
+  cursor: pointer;
+}
+.ct-btn:hover { background: #4b3d2c; }
+.ct-btn:disabled { opacity: .6; cursor: wait; }
+.ct-btn .ct-arrow { width: 20px; height: 20px; }
+.ct-form__msg { margin: 4px 0 0; font-style: italic; font-size: 1.1rem; color: var(--ct-ink); }
+.ct-form__msg:empty { display: none; }
+.ct-form__msg.is-error { color: #8a3b2a; }
+.ct-note { margin: 14px 0 0; font-size: 1.08rem; color: var(--ct-soft); }
+
+/* ---------- Andra sätt att kontakta mig ---------- */
+.ct-reasons { display: grid; grid-template-columns: 1fr 1fr; }
+.ct-reason { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 16px; padding: 14px 24px 18px 0; }
+.ct-reason:nth-child(even) { padding: 14px 0 18px 24px; border-left: 1px solid var(--ct-line); }
+.ct-reason__icon { width: 38px; height: 38px; fill: none; stroke: var(--ct-ink); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+.ct-reason h3 { margin: 4px 0 6px; font: 600 .98rem/1.25 var(--ct-caps); letter-spacing: .1em; text-transform: uppercase; color: var(--ct-ink); }
+.ct-reason p { margin: 0; font-size: 1.05rem; line-height: 1.4; color: var(--ct-soft); }
+
+/* ---------- Vanliga frågor ---------- */
+.ct-faq { display: grid; gap: 10px; }
+.ct-faq__item { border: 1px solid var(--ct-line); background: var(--ct-box); }
+.ct-faq__item button {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 13px 16px; border: 0; background: transparent;
+  font: 500 1.12rem/1.3 var(--ct-serif); color: var(--ct-ink); text-align: left; cursor: pointer;
+}
+.ct-faq__item button:hover { background: var(--ct-box-open); }
+.ct-faq__item button[aria-expanded="true"] { background: var(--ct-box-open); }
+.ct-faq__item button:focus-visible { outline: 2px solid var(--ct-gold); outline-offset: -2px; }
+.ct-faq__item .ct-chevron { flex: none; width: 20px; height: 20px; transition: transform .2s ease; }
+.ct-faq__item button[aria-expanded="true"] .ct-chevron { transform: rotate(180deg); }
+.ct-faq__answer { padding: 12px 16px 16px; border-top: 1px solid var(--ct-line); }
+.ct-faq__answer[hidden] { display: none; }
+.ct-faq__answer p { margin: 0; font-size: 1.06rem; line-height: 1.5; color: var(--ct-soft); }
+.ct-faq__note {
+  display: inline-block; margin-top: 30px;
+  font-size: 1.1rem; line-height: 1.45; color: var(--ct-soft); text-decoration: none;
+}
+.ct-faq__note span:first-child { display: block; }
+.ct-faq__note .ct-arrow { display: inline-block; width: 18px; height: 18px; margin-left: 6px; vertical-align: -3px; transition: transform .2s ease; }
+.ct-faq__note:hover { color: var(--ct-ink); }
+.ct-faq__note:hover .ct-arrow { transform: translateX(3px); }
+
+/* ---------- Smalare skärmar ---------- */
+@media (max-width: 960px) {
+  .ct-grid { grid-template-columns: 1fr; }
+  .ct-col { padding-right: 0; }
+  .ct-col--faq { padding-left: 0; border-left: 0; border-top: 1px solid var(--ct-line); margin-top: 48px; padding-top: 44px; }
+}
+@media (max-width: 760px) {
+  .ct-hero { min-height: 460px; align-items: flex-end; background-position: 78% 50%; }
+  .ct-hero::before { background: linear-gradient(180deg, rgba(8,12,10,.15) 0%, rgba(8,12,10,.62) 55%, rgba(8,12,10,.72) 100%); }
+}
+@media (max-width: 560px) {
+  .ct-reasons { grid-template-columns: 1fr; }
+  .ct-reason, .ct-reason:nth-child(even) { padding: 12px 0; border-left: 0; }
+  .ct-reason + .ct-reason { border-top: 1px solid var(--ct-line); }
+  .ct-btn { align-self: stretch; justify-content: center; }
+}

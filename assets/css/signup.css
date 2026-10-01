@@ -58,6 +58,7 @@
 .signup__form button:disabled { opacity: .6; cursor: wait; }
 .signup__msg { flex-basis: 100%; margin: 0; font-style: italic; font-size: 1.08rem; line-height: 1.4; color: var(--sg-soft); }
 .signup__msg:empty { display: none; }
+.signup__msg.is-error { color: #8a3b2a; }
 /* Efter anmälan: tackmeddelandet ersätter fältet och knappen */
 .signup__form.is-done input[type="email"], .signup__form.is-done button { display: none; }
 .signup__form.is-done .signup__msg { font-size: 1.2rem; color: var(--sg-ink); }
