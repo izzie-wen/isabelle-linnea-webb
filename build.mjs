@@ -23,10 +23,12 @@ const other = readJSON('other.json');
 const contact = readJSON('contact.json');
 const stories = readCollection('stories').sort((a,b)=>a.title.localeCompare(b.title,'sv'));
 const posts = readCollection('posts').sort((a,b)=>b.date.localeCompare(a.date));
+const podd = readJSON('podd.json');
+const poddBlocks = readCollection('podd').sort((a,b)=>a.number-b.number);
 
 // Menyvalen – samma på alla sidor
 const menuItems=[
-  ['Hem','/index.html','home'],['Om mig','/om-mig.html','about'],['Böcker','/books.html','books'],['Noveller','/noveller.html','stories'],['Blogg','/blog.html','blog'],['För författare','/for-forfattare.html','writers'],['Annat','/annat.html','other'],['Kontakt','/contact.html','contact']
+  ['Hem','/index.html','home'],['Om mig','/om-mig.html','about'],['Böcker','/books.html','books'],['Noveller','/noveller.html','stories'],['Blogg','/blog.html','blog'],['För författare','/for-forfattare.html','writers'],['Podd','/podd.html','podd'],['Annat','/annat.html','other'],['Kontakt','/contact.html','contact']
 ];
 
 // Menyraden med murgröna högst upp – gemensam för alla sidor (stilar i /assets/css/topbar.css)
@@ -61,7 +63,7 @@ function topbar(active=''){
 </header>`;
 }
 
-function layout({title,description='',active='',body,scripts=''}){
+function layout({title,description='',active='',body,scripts='',head=''}){
 return `<!doctype html>
 <html lang="sv">
 <head>
@@ -72,6 +74,7 @@ return `<!doctype html>
 <link rel="stylesheet" href="/assets/css/styles.css">
 <link rel="stylesheet" href="/assets/css/home-exact.css">
 ${topbarHead}
+${head}
 </head>
 <body id="top">
 <a class="skip-link" href="#main">Hoppa till innehållet</a>
@@ -88,7 +91,7 @@ function footer(){ return `<footer class="site-footer">
   <div class="container footer-inner">
     <div class="footer-brand"><strong>${esc(site.author_name).toUpperCase()}</strong><small>${esc(site.tagline)}</small><div class="copyright">${esc(site.copyright)}</div></div>
     <nav class="footer-nav" aria-label="Sidfot">
-      <a href="/index.html">Hem</a><a href="/om-mig.html">Om mig</a><a href="/books.html">Böcker</a><a href="/noveller.html">Noveller</a><a href="/blog.html">Blogg</a><a href="/for-forfattare.html">För författare</a><a href="/annat.html">Annat</a><a href="/contact.html">Kontakt</a>
+      ${menuItems.map(([label,href])=>`<a href="${href}">${esc(label)}</a>`).join('')}
     </nav>
     <div class="footer-right">
       <div class="footer-socials" aria-label="Sociala medier">
@@ -328,6 +331,109 @@ function contactPage(){return layout({title:'Kontakt',description:'Kontakta '+si
 <section class="section paper"><div class="container contact-grid"><div><p class="eyebrow">Skicka ett meddelande</p><form class="form" name="contact" method="POST" data-netlify="true" data-local-success="Tack! Meddelandet är skickat."><input type="hidden" name="form-name" value="contact"><div><label for="name">Namn</label><input id="name" name="name" required></div><div><label for="email">E-post</label><input id="email" type="email" name="email" required></div><div><label for="subject">Ämne</label><select id="subject" name="subject"><option>Läsarfråga</option><option>Samarbete</option><option>Skolor & bibliotek</option><option>Övrigt</option></select></div><div><label for="message">Meddelande</label><textarea id="message" name="message" required></textarea></div><button class="btn primary" type="submit">Skicka meddelande</button></form><div class="reasons-grid">${contact.reasons.map(r=>`<div class="reason"><h3>${esc(r.title)}</h3><p>${esc(r.text)}</p></div>`).join('')}</div></div><div><p class="eyebrow">Vanliga frågor</p><div class="faq-list">${contact.faqs.map((f,i)=>`<div class="faq-item"><button type="button" data-faq-button aria-expanded="${i===0?'true':'false'}"><span>${esc(f.q)}</span><span data-faq-symbol>${i===0?'−':'+'}</span></button><div class="faq-answer" data-faq-answer${i===0?'':' hidden'}>${esc(f.a)}</div></div>`).join('')}</div></div></div></section>
 <section class="section dark"><div class="container">${newsletterForm('newsletter-contact','Håll dig uppdaterad','Få nyheter om berättelser, projekt och nya resurser direkt i din inkorg.')}</div></section>`});}
 
+// Podd: block och avsnitt från content/podd/*.json, sidinställningar i content/podd.json.
+// Ljudfilerna ligger utanför webbplatsen. Ett avsnitt får sin ljudfil antingen från fältet "audio"
+// (en länk per avsnitt) eller automatiskt från audio_base + /avsnitt-001.mp3 … för alla avsnitt
+// till och med published_through.
+function poddPage(){
+ const base=String(podd.audio_base||'').trim().replace(/\/+$/,'');
+ const upTo=Number(podd.published_through)||0;
+ const audioFor=(e)=>String(e.audio||'').trim()||(base&&e.number<=upTo?`${base}/avsnitt-${String(e.number).padStart(3,'0')}.mp3`:'');
+ const categories=[...new Set(poddBlocks.map(b=>b.category).filter(Boolean))];
+ const total=poddBlocks.reduce((n,b)=>n+(b.episodes||[]).length,0);
+ // Ikonerna definieras en gång (sprite) och återanvänds med <use>, så att sidan med ~400 avsnitt hålls liten
+ const sprite=`<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="pi-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></symbol>
+  <symbol id="pi-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></symbol>
+  <symbol id="pi-doc" viewBox="0 0 24 24"><path d="M6 2.5h8l4.5 4.5v14.5H6z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M14 2.5V7h4.5M9 11h6.5M9 14h6.5M9 17h4.5" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="pi-chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="pi-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="pi-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15.5 15.5L21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+</svg>`;
+ const use=(id,cls='')=>`<svg${cls?` class="${cls}"`:''} aria-hidden="true"><use href="#pi-${id}"/></svg>`;
+ const ic={play:use('play','i-play'),pause:use('pause','i-pause'),doc:use('doc'),chevron:use('chevron'),arrow:use('arrow'),search:use('search')};
+ const episode=(e)=>{
+  const audio=audioFor(e), hasNote=Boolean(e.description||e.notes);
+  // En rad per avsnitt (sidan har ~400 avsnitt, så varje tecken räknas)
+  return `<li class="pod-ep${audio?'':' is-soon'}" id="avsnitt-${e.number}" data-ep="${e.number}"${audio?` data-audio="${esc(audio)}"`:''}>`
+   +`<span class="pod-ep__num">${e.number}</span>`
+   +`<button class="pod-ep__play" type="button" data-play aria-label="${audio?'Spela':'Kommer snart:'} avsnitt ${e.number}">${ic.play}${ic.pause}</button>`
+   +`<span class="pod-ep__title">${esc(e.title)}</span>`
+   +`<span class="pod-ep__time" data-time>${audio?esc(e.duration||''):''}</span>`
+   +(hasNote?`<button class="pod-ep__notes" type="button" data-note aria-expanded="false" aria-controls="anteckning-${e.number}" title="Anteckningar">${ic.doc}<span class="visually-hidden">Anteckningar till avsnitt ${e.number}</span></button>`
+    +`<div class="pod-ep__note" id="anteckning-${e.number}" hidden>${e.description?`<p>${esc(e.description)}</p>`:''}${e.notes?paras(e.notes):''}</div>`:'')
+   +`</li>`;
+ };
+ const block=(b,i)=>{
+  const eps=b.episodes||[]; if(!eps.length) return '';
+  const first=eps[0].number, last=eps[eps.length-1].number;
+  const playable=eps.some(e=>audioFor(e)), hasNotes=eps.some(e=>e.description||e.notes);
+  const search=[b.title,b.description,b.category].join(' ').toLowerCase();
+  return `<details class="pod-block" id="block-${b.number}" data-category="${esc(b.category||'')}" data-search="${esc(search)}"${i===0?' open':''}>
+    <summary class="pod-block__head">
+      ${b.image?`<span class="pod-block__thumb"><img src="${esc(b.image)}" alt="" loading="lazy" width="760" height="713"></span>`:''}
+      <h2 class="pod-block__title">Block ${b.number} – ${esc(b.title)}</h2>
+      ${b.description?`<span class="pod-block__desc">${esc(b.description)}</span>`:''}
+      <span class="pod-block__meta">${eps.length} avsnitt · Avsnitt ${first}–${last}${playable?'':'<em>Kommer snart</em>'}</span>
+      <span class="pod-block__chevron" aria-hidden="true">${ic.chevron}</span>
+    </summary>
+    <div class="pod-block__body">
+      ${b.image?`<figure class="pod-block__art"><img src="${esc(b.image)}" alt="" loading="lazy" width="760" height="713">${b.caption?`<figcaption>”${esc(b.caption)}”</figcaption>`:''}</figure>`:''}
+      <div class="pod-block__list">
+        <ol class="pod-eps">
+        ${eps.map(episode).join('\n        ')}
+        </ol>
+        <div class="pod-block__actions">
+          <button class="pod-btn pod-btn--solid" type="button" data-continue data-first="${first}">Börja med avsnitt ${first} ${ic.arrow}</button>
+          ${hasNotes?`<button class="pod-btn" type="button" data-all-notes aria-expanded="false"><span>Visa alla anteckningar</span> ${ic.doc}</button>`:''}
+        </div>
+      </div>
+    </div>
+  </details>`;
+ };
+ const hero=podd.hero||{};
+ return layout({title:'Podd',description:`${total} avsnitt om skrivande och berättande i ${poddBlocks.length} block – från idé och karaktärer till dialog, redigering och utgivning.`,active:'podd',
+  head:'<link rel="stylesheet" href="/assets/css/podd.css">',
+  scripts:'<script src="/assets/js/podd.js" defer></script>',
+  body:`${sprite}
+<section class="pod-hero"${hero.image?` style="--pod-hero:url('${esc(hero.image)}')"`:''}>
+  <div class="pod-wrap pod-hero__inner">
+    <h1>${esc(hero.title||'Podd')}</h1>
+    ${hero.subtitle?`<p>${esc(hero.subtitle)}</p>`:''}
+  </div>
+</section>
+<div class="pod-page">
+  <div class="pod-wrap">
+    <div class="pod-tools">
+      <label class="pod-search">${ic.search}<span class="visually-hidden">Sök bland alla avsnitt</span><input type="search" placeholder="Sök bland alla ${total} avsnitt …" data-pod-search autocomplete="off"></label>
+      <div class="pod-filters" role="group" aria-label="Filtrera på ämne">
+        <button type="button" class="is-active" aria-pressed="true" data-pod-filter="">Alla</button>
+        ${categories.map(c=>`<button type="button" aria-pressed="false" data-pod-filter="${esc(c)}">${esc(c)}</button>`).join('\n        ')}
+      </div>
+    </div>
+    <p class="pod-status" data-pod-status aria-live="polite"></p>
+    <div class="pod-blocks">
+    ${poddBlocks.map(block).join('\n    ')}
+    </div>
+  </div>
+</div>
+<div class="pod-player" data-pod-player hidden>
+  <div class="pod-wrap pod-player__inner">
+    <button class="pod-player__toggle" type="button" data-pp-toggle aria-label="Spela">${ic.play}${ic.pause}</button>
+    <div class="pod-player__info"><span class="pod-player__label" data-pp-label></span><span class="pod-player__title" data-pp-title></span></div>
+    <div class="pod-player__progress"><span data-pp-current>0:00</span><input type="range" min="0" max="0" step="1" value="0" data-pp-seek aria-label="Spola i avsnittet"><span data-pp-duration>0:00</span></div>
+    <div class="pod-player__extra">
+      <button type="button" data-pp-skip="-15" aria-label="15 sekunder bakåt">−15</button>
+      <button type="button" data-pp-skip="15" aria-label="15 sekunder framåt">+15</button>
+      <button type="button" data-pp-rate aria-label="Uppspelningshastighet">1×</button>
+      <button type="button" data-pp-close aria-label="Stäng spelaren">✕</button>
+    </div>
+  </div>
+  <audio data-pp-audio preload="none"></audio>
+</div>
+<div class="pod-toast" data-pod-toast role="status" hidden></div>`});
+}
+
 function notFound(){return layout({title:'Sidan hittades inte',description:'Sidan kunde inte hittas.',body:`<section class="section paper"><div class="container" style="max-width:720px;text-align:center;padding-block:8rem"><p class="eyebrow">404</p><h1 class="section-title">Sidan hittades inte</h1><p>Den här länken leder inte till någon sida ännu.</p><a class="btn primary" href="/index.html">Till startsidan</a></div></section>`});}
 
 function write(rel, html){const p=path.join(dist,rel);fs.mkdirSync(path.dirname(p),{recursive:true});fs.writeFileSync(p,html,'utf8');}
@@ -342,10 +448,11 @@ write('blog.html',blogPage());
 write('for-forfattare.html',writersPage());
 write('annat.html',otherPage());
 write('contact.html',contactPage());
+write('podd.html',poddPage());
 write('404.html',notFound());
 for(const s of stories){write(path.join('noveller',s.slug+'.html'),storyPage(s));if(s.slug==='implantatet') write('implantatet.html',storyPage(s));}
 for(const p of posts) write(path.join('blog',p.slug+'.html'),postPage(p));
 write('robots.txt','User-agent: *\nAllow: /\nSitemap: /sitemap.xml\n');
-const urls=['/','/om-mig.html','/books.html','/noveller.html','/blog.html','/for-forfattare.html','/annat.html','/contact.html',...stories.map(s=>'/noveller/'+s.slug+'.html'),...posts.map(p=>'/blog/'+p.slug+'.html')];
+const urls=['/','/om-mig.html','/books.html','/noveller.html','/blog.html','/for-forfattare.html','/podd.html','/annat.html','/contact.html',...stories.map(s=>'/noveller/'+s.slug+'.html'),...posts.map(p=>'/blog/'+p.slug+'.html')];
 write('sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map(u=>`<url><loc>${esc(u)}</loc></url>`).join('')}</urlset>`);
 console.log(`Built ${urls.length} pages to ${dist}`);

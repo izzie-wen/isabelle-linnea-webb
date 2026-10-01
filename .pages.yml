@@ -266,6 +266,28 @@ content:
               - { name: q, label: Fråga, type: string }
               - { name: a, label: Svar, type: text }
 
+      - name: podd_settings
+        label: Podd – sidinställningar
+        type: file
+        path: content/podd.json
+        format: json
+        fields:
+          - name: hero
+            label: Banner
+            type: object
+            fields:
+              - { name: title, label: Rubrik, type: string }
+              - { name: subtitle, label: Underrubrik, type: text }
+              - { name: image, label: Bild, type: image }
+          - name: audio_base
+            label: Adress till mappen med ljudfiler
+            type: string
+            description: "T.ex. https://isabellelinnea.b-cdn.net/podd – filerna i mappen ska heta avsnitt-001.mp3, avsnitt-002.mp3 osv. Lämna tomt om du hellre klistrar in en länk per avsnitt."
+          - name: published_through
+            label: Publicerade avsnitt till och med nummer
+            type: number
+            description: "Avsnitt med lägre eller samma nummer får automatiskt en ljudfil från adressen ovan. 0 = inga."
+
   - name: stories
     label: Noveller
     type: collection
@@ -315,3 +337,45 @@ content:
       - { name: excerpt, label: Kort beskrivning, type: text }
       - { name: image, label: Bild, type: image }
       - { name: body, label: Inläggstext, type: text }
+
+  - name: podd_blocks
+    label: Podd – block och avsnitt
+    type: collection
+    path: content/podd
+    format: json
+    filename: "{primary}.json"
+    view:
+      primary: title
+      fields: [number, title, category]
+      sort: [number, title]
+      default:
+        sort: number
+        order: asc
+    fields:
+      - { name: number, label: Blocknummer, type: number, required: true }
+      - { name: title, label: Rubrik, type: string, required: true }
+      - name: category
+        label: Ämne (filterknapp)
+        type: select
+        options:
+          values: ["Grunder", "Karaktärer", "Struktur & plot", "Scener & känslor", "Dialog", "Språk & stil", "Genre & värld", "Redigering", "Skrivprocess"]
+      - { name: description, label: Beskrivning, type: text }
+      - { name: caption, label: Citat på den stora bilden, type: string }
+      - { name: image, label: Bild, type: image }
+      - name: episodes
+        label: Avsnitt
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{number}. {title}"
+        fields:
+          - { name: number, label: Avsnittsnummer, type: number, required: true }
+          - { name: title, label: Titel, type: string, required: true }
+          - { name: description, label: Kort beskrivning, type: text }
+          - name: audio
+            label: Ljudfil (länk)
+            type: string
+            description: "Direktlänk till mp3-filen. Behövs inte om adressen till ljudmappen är ifylld i Podd – sidinställningar."
+          - { name: duration, label: "Längd (t.ex. 12:14) – valfritt, räknas annars ut automatiskt", type: string }
+          - { name: notes, label: Anteckningar, type: text }

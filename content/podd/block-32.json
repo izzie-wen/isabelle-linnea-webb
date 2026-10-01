@@ -1,0 +1,90 @@
+{
+  "number": 32,
+  "title": "Genrespecifikt hantverk",
+  "category": "Genre & värld",
+  "description": "Deckare, thriller, romance, fantasy, science fiction, skräck och historisk fiktion – vad varje genre kräver av berättelsen.",
+  "caption": "Varje genre har sitt eget hantverk – och sina egna löften.",
+  "image": "/assets/images/podd/block-32.jpg",
+  "episodes": [
+    {
+      "number": 322,
+      "title": "Deckare – hur brottet skapar berättelsens struktur",
+      "description": "",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    },
+    {
+      "number": 323,
+      "title": "Mysterier – hur du ger ledtrådar utan att avslöja lösningen",
+      "description": "",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    },
+    {
+      "number": 324,
+      "title": "Thriller – hur tidspress, fara och eskalering skapar driv",
+      "description": "",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    },
+    {
+      "number": 325,
+      "title": "Romance – varför kärleksrelationen måste vara berättelsens kärna",
+      "description": "",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    },
+    {
+      "number": 326,
+      "title": "Fantasy – hur fantastiska världar blir begripliga utan långa förklaringar",
+      "description": "",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    },
+    {
+      "number": 327,
+      "title": "Science fiction – hur en idé om teknik eller samhälle blir mänsklig dramatik",
+      "description": "",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    },
+    {
+      "number": 328,
+      "title": "Skräck – hur hot, atmosfär och maktlöshet arbetar tillsammans",
+      "description": "",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    },
+    {
+      "number": 329,
+      "title": "Historisk fiktion – hur du kombinerar fakta med levande karaktärer",
+      "description": "",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    },
+    {
+      "number": 330,
+      "title": "Litterär fiktion – när språk, relationer och inre förändring bär berättelsen",
+      "description": "",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    },
+    {
+      "number": 331,
+      "title": "Genreblandning – så bestämmer du vilken genre som styr läsarens förväntningar",
+      "description": "",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    }
+  ]
+}

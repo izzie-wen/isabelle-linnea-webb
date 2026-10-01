@@ -1,0 +1,90 @@
+{
+  "number": 1,
+  "title": "Berättelsens motor",
+  "category": "Grunder",
+  "description": "Vi börjar med grunden. Vad är egentligen en berättelse, varifrån får man idéer och hur förvandlar man en tanke till en levande berättelse?",
+  "caption": "Varje stor berättelse börjar med en enda liten fråga: tänk om …?",
+  "image": "/assets/images/podd/block-01.jpg",
+  "episodes": [
+    {
+      "number": 1,
+      "title": "Vad är egentligen en berättelse?",
+      "description": "Idé, händelse och berättelse är inte samma sak.",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    },
+    {
+      "number": 2,
+      "title": "Varifrån kommer berättelseidéer?",
+      "description": "Hur författare hittar material överallt.",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    },
+    {
+      "number": 3,
+      "title": "”Tänk om...?” – frågan som skapar berättelser",
+      "description": "Hur en enkel fråga öppnar möjligheter.",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    },
+    {
+      "number": 4,
+      "title": "Från vag idé till konkret berättelse",
+      "description": "Hur man börjar forma råmaterialet.",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    },
+    {
+      "number": 5,
+      "title": "Idé kontra premiss",
+      "description": "När idén börjar få huvudperson, mål och konflikt.",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    },
+    {
+      "number": 6,
+      "title": "Story kontra plot",
+      "description": "Vad som händer kontra hur det berättas.",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    },
+    {
+      "number": 7,
+      "title": "Orsak och verkan",
+      "description": "Varför ”därför att” är starkare än ”och sedan”.",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    },
+    {
+      "number": 8,
+      "title": "Berättelsens centrala fråga",
+      "description": "Vad väntar läsaren egentligen på att få veta?",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    },
+    {
+      "number": 9,
+      "title": "Förändring – berättelsens osynliga ryggrad",
+      "description": "Varför något måste bli annorlunda.",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    },
+    {
+      "number": 10,
+      "title": "Vad får oss att bry oss?",
+      "description": "Skillnaden mellan stora händelser och emotionell betydelse.",
+      "audio": "",
+      "duration": "",
+      "notes": ""
+    }
+  ]
+}
