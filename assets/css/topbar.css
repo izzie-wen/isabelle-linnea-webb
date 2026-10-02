@@ -11,10 +11,10 @@
   --tb-serif: "Cormorant Garamond", "EB Garamond", Garamond, Georgia, serif;
   --tb-caps: "Cormorant SC", "Cormorant Garamond", Garamond, Georgia, serif;
   --tb-gutter: clamp(20px, 5vw, 60px);
-  --tb-ivy-right-w: clamp(150px, 16vw, 250px);
-  /* Löven på högra kvisten börjar ca 62 % av bildens bredd in från kanten –
+  --tb-ivy-right-w: clamp(86px, calc(19.8vw - 160px), 125px);
+  /* I menyradens höjd börjar löven på högra kvisten ca 50 % av bildens bredd in från kanten –
      så mycket plats lämnas till höger så att Instagram-ikonen hamnar bredvid kvisten */
-  --tb-right-space: calc(var(--tb-ivy-right-w) * .62 + 10px);
+  --tb-right-space: calc(var(--tb-ivy-right-w) * .5);
 }
 /* Murgrönan sticker ut lite utanför kanten – klipp den så att sidan inte kan scrollas i sidled */
 html, body { overflow-x: clip; }
@@ -27,7 +27,10 @@ body { position: relative; }
   max-width: none; height: auto; display: block;
   filter: drop-shadow(2px 4px 4px rgba(0,0,0,.2));
 }
-.topbar-ivy--left  { left: -14px;  width: clamp(180px, 20vw, 300px); }
+/* Kvistarna är höga (ca 1 : 1,8) – bredden styr hur långt ner de hänger.
+   Vänster kvist är så stor den kan vara utan att hänga över rubrikerna i sidornas banners
+   (de börjar nära vänsterkanten); uppmätt för alla sidor 320–1960 px. */
+.topbar-ivy--left  { left: -14px;  width: clamp(68px, calc(16.5vw - 134px), 104px); }
 .topbar-ivy--right { right: -14px; width: var(--tb-ivy-right-w); }
 
 /* ---------- Själva raden ---------- */
@@ -97,7 +100,8 @@ body { position: relative; }
 
 /* Under 1270px ryms inte menyn på en rad – visa hamburgermenyn */
 @media (max-width: 1269px) {
-  .topbar { padding-right: var(--tb-gutter); flex-wrap: wrap; gap: 12px; }
+  /* menyknappen hamnar till vänster om högra kvisten (som är bredast i knappens höjd) */
+  .topbar { padding-right: calc(var(--tb-ivy-right-w) - 4px); flex-wrap: wrap; gap: 12px; }
   .topbar-social { display: none; }
   .topbar-toggle {
     display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
@@ -113,8 +117,10 @@ body { position: relative; }
 
 /* Mobil */
 @media (max-width: 860px) {
-  .topbar { padding-left: clamp(80px, 22vw, 120px); }
+  .topbar { padding-left: clamp(80px, 22vw, 120px); padding-right: var(--tb-gutter); }
   .topbar-logo { white-space: normal; }
-  .topbar-ivy--left { width: 120px; }
   .topbar-ivy--right { display: none; } /* för trångt bredvid namnet på mobil */
+}
+@media (max-width: 520px) {
+  .topbar-ivy--left { width: 96px; }
 }

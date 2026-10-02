@@ -44,8 +44,8 @@ function topbar(active=''){
   youtube:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M22 8.2a3 3 0 0 0-2.1-2.1C18 5.6 12 5.6 12 5.6s-6 0-7.9.5A3 3 0 0 0 2 8.2 31 31 0 0 0 1.6 12c0 1.3.1 2.6.4 3.8a3 3 0 0 0 2.1 2.1c1.9.5 7.9.5 7.9.5s6 0 7.9-.5a3 3 0 0 0 2.1-2.1c.3-1.2.4-2.5.4-3.8s-.1-2.6-.4-3.8zM10 15.1V8.9l5.2 3.1L10 15.1z"/></svg>'
  };
  const socials=[['Instagram',site.instagram,'instagram']].filter(([,url])=>url).map(([label,url,id])=>`<a href="${esc(url)}" target="_blank" rel="noopener" aria-label="${label}">${icons[id]}</a>`).join('\n    ');
- return `<img class="topbar-ivy topbar-ivy--left" src="/assets/images/murgrona-topp-vanster.webp" alt="" aria-hidden="true">
-<img class="topbar-ivy topbar-ivy--right" src="/assets/images/murgrona-topp-hoger.webp" alt="" aria-hidden="true">
+ return `<img class="topbar-ivy topbar-ivy--left" src="/assets/images/murgrona-meny-vanster.webp" alt="" aria-hidden="true">
+<img class="topbar-ivy topbar-ivy--right" src="/assets/images/murgrona-meny-hoger.webp" alt="" aria-hidden="true">
 <header class="topbar">
   <a class="topbar-logo" href="/index.html">
     <span class="topbar-logo__name">${esc(site.author_name)}</span>
