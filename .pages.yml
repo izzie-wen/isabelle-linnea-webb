@@ -160,19 +160,13 @@ content:
               - { name: title, label: Rubrik, type: string }
               - { name: body, label: Text, type: text }
               - { name: image, label: Bild, type: image }
-          - { name: youtube_intro, label: YouTube-intro, type: text }
-          - name: videos
-            label: YouTube-videor
+          - name: podd
+            label: Podden
             type: object
-            list:
-              collapsible:
-                collapsed: true
-                summary: "{title}"
             fields:
-              - { name: title, label: Titel, type: string }
-              - { name: subtitle, label: Underrubrik, type: string }
-              - { name: image, label: Bild, type: image }
-              - { name: url, label: YouTube-länk, type: string }
+              - { name: title, label: Rubrik, type: string }
+              - { name: intro, label: Text, type: text }
+              - { name: blocks, label: "Block som visas (nummer, det första blir stort)", type: number, list: true }
           - { name: printables_intro, label: Printables-intro, type: text }
           - name: printables
             label: Printables
@@ -191,7 +185,16 @@ content:
                   categories: [document]
                   extensions: [pdf, docx, zip]
                   rename: true
+          - { name: tips_intro, label: "Skrivtips & guider – text (de fyra senaste blogginläggen visas)", type: text }
+          - { name: guide_title, label: Skrivguide rubrik, type: string }
           - { name: guide_steps, label: Skrivguide steg, type: string, list: true }
+          - name: guide_link
+            label: Skrivguide knapp
+            type: object
+            fields:
+              - { name: label, label: Text, type: string }
+              - { name: url, label: Länk, type: string }
+          - { name: quote, label: Citat, type: text }
 
       - name: other
         label: Annat

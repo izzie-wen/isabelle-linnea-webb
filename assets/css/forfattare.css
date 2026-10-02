@@ -1,0 +1,200 @@
+/* ==========================================================
+   För författare – banner med knappar, podden, printables, skrivtips & guider,
+   skrivguide och citat. Menyraden, nyhetsbrevet och sidfoten är samma som på övriga sidor.
+   ========================================================== */
+.ff-hero, .ff-page {
+  --ff-ink: #1f1d1a;
+  --ff-soft: #4f4840;
+  --ff-gold: #a88657;
+  --ff-brown: #6a4a2c;
+  --ff-green: #23352a;
+  --ff-line: #ddd3c4;
+  --ff-panel: #f8f4ec;
+  --ff-serif: "Cormorant Garamond", "EB Garamond", Garamond, Georgia, serif;
+  --ff-caps: "Cormorant SC", "Cormorant Garamond", Garamond, Georgia, serif;
+  --ff-gutter: clamp(16px, 4vw, 48px);
+}
+.ff-wrap { width: min(1180px, 100% - 2 * var(--ff-gutter)); margin-inline: auto; }
+.ff-arrow { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- Banner ---------- */
+.ff-hero {
+  position: relative;
+  display: flex; align-items: center;
+  min-height: clamp(440px, 38vw, 640px);
+  background: #efe9df var(--ff-hero, none) 70% 50% / cover no-repeat;
+  color: var(--ff-ink);
+  overflow: hidden;
+}
+/* ljus slöja över bildens pappersdel så att texten alltid går att läsa */
+.ff-hero::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(244,239,230,.82) 0%, rgba(244,239,230,.6) 30%, rgba(244,239,230,0) 48%);
+}
+/* Texten ligger på bildens pappersyta (vänstra ~40 % av bilden, bokstapeln börjar vid ~41 %),
+   så spalten räknas i procent av skärmbredden i stället för att centreras som sidans innehåll. */
+.ff-hero__inner {
+  position: relative; z-index: 1; box-sizing: border-box;
+  width: clamp(400px, 37vw, 720px);
+  padding: 56px 0 48px clamp(20px, 6vw, 120px);
+}
+.ff-hero__eyebrow { margin: 0 0 10px; font: 600 .95rem/1.2 var(--ff-caps); letter-spacing: .2em; text-transform: uppercase; color: var(--ff-ink); }
+.ff-hero h1 {
+  margin: 0;
+  font: 500 clamp(2.1rem, 3.1vw, 3.6rem)/1.05 var(--ff-serif);
+  letter-spacing: .04em; text-transform: uppercase; color: var(--ff-ink);
+}
+.ff-orn { display: flex; align-items: center; gap: 12px; width: 200px; margin: 16px 0 18px; color: var(--ff-gold); }
+.ff-orn::before, .ff-orn::after { content: ""; flex: 1; height: 1px; background: currentColor; opacity: .8; }
+.ff-orn span { font-size: .85rem; line-height: 1; }
+.ff-hero__body { margin: 0 0 24px; max-width: 32ch; font: 500 clamp(1.12rem, 1.45vw, 1.3rem)/1.45 var(--ff-serif); color: var(--ff-ink); }
+.ff-hero__actions { display: grid; gap: 10px; width: min(330px, 100%); }
+
+/* ---------- Knappar ---------- */
+.ff-btn {
+  display: flex; align-items: center; gap: 14px;
+  min-height: 48px; padding: 0 18px;
+  border: 1px solid #b7a68a; background: rgba(250,247,241,.88); color: var(--ff-ink);
+  font: 600 .92rem/1.1 var(--ff-caps); letter-spacing: .1em; text-transform: uppercase; text-decoration: none;
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+.ff-btn span { flex: 1; white-space: nowrap; }
+.ff-btn:hover { background: #fffdf8; border-color: var(--ff-brown); }
+.ff-btn--solid { background: var(--ff-green); border-color: var(--ff-green); color: #f3eee5; }
+.ff-btn--solid:hover { background: #31473a; border-color: #31473a; }
+.ff-btn__icon { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.ff-btn--small { display: inline-flex; min-height: 44px; padding: 0 22px; background: transparent; }
+.ff-btn--small span { flex: none; }
+
+/* ---------- Sektionerna ---------- */
+.ff-page { padding: clamp(28px, 3.5vw, 44px) 0 clamp(20px, 3vw, 36px); color: var(--ff-ink); font-family: var(--ff-serif); }
+.ff-section { position: relative; margin-bottom: 16px; padding: 22px clamp(18px, 2.2vw, 28px) 26px; border: 1px solid var(--ff-line); background: var(--ff-panel); }
+.ff-head { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.ff-head__icon { display: grid; place-items: center; color: var(--ff-brown); }
+.ff-head__icon > svg { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+.ff-round { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--ff-brown); color: #f6efe3; }
+.ff-round svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.ff-head h2 {
+  margin: 0; flex: none;
+  font: 500 clamp(1.4rem, 2.1vw, 1.85rem)/1.15 var(--ff-serif);
+  letter-spacing: .1em; text-transform: uppercase; color: var(--ff-ink);
+}
+/* linje – ◆ – lång linje fram till länken */
+.ff-line { flex: 1; display: flex; align-items: center; gap: 8px; min-width: 40px; color: var(--ff-gold); }
+.ff-line::before { content: ""; width: 26px; height: 1px; background: currentColor; opacity: .7; }
+.ff-line::after { content: ""; flex: 1; height: 1px; background: currentColor; opacity: .5; }
+.ff-line span { font-size: .7rem; line-height: 1; }
+.ff-head__link {
+  display: inline-flex; align-items: center; gap: 6px; flex: none;
+  font: 600 .85rem/1 var(--ff-caps); letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ff-ink); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 3px;
+}
+.ff-head__link:hover { color: var(--ff-brown); }
+.ff-head__link .ff-arrow { width: 14px; height: 14px; }
+
+.ff-split { display: grid; grid-template-columns: minmax(220px, 270px) minmax(0, 1fr); gap: clamp(20px, 3vw, 36px); align-items: start; }
+.ff-intro p { margin: 0 0 16px; font-size: 1.18rem; line-height: 1.5; color: var(--ff-ink); }
+.ff-meta { font: 600 .9rem/1.3 var(--ff-caps) !important; letter-spacing: .12em; text-transform: uppercase; color: var(--ff-soft) !important; }
+
+/* ---------- Podden ---------- */
+.ff-podd { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 12px; }
+.ff-podd__stack { display: grid; gap: 12px; }
+.ff-card { position: relative; display: block; min-height: 140px; overflow: hidden; color: #fff; text-decoration: none; background: #26302a; }
+.ff-card--big { min-height: 300px; }
+.ff-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+.ff-card:hover img { transform: scale(1.03); }
+.ff-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,12,10,.82) 0%, rgba(10,12,10,.35) 50%, rgba(10,12,10,.05) 100%); }
+.ff-card__text { position: absolute; left: 18px; right: 64px; bottom: 16px; z-index: 1; display: grid; gap: 4px; }
+.ff-card--big .ff-card__text { left: 26px; right: 26px; bottom: 22px; }
+.ff-card__title { font: 500 clamp(1.05rem, 1.4vw, 1.25rem)/1.15 var(--ff-serif); letter-spacing: .06em; text-transform: uppercase; text-shadow: 0 1px 6px rgba(0,0,0,.5); }
+.ff-card--big .ff-card__title { font-size: clamp(1.35rem, 2vw, 1.75rem); }
+.ff-card__sub { font: italic 500 1.02rem/1.3 var(--ff-serif); color: #efe8dc; text-shadow: 0 1px 6px rgba(0,0,0,.5); }
+.ff-play {
+  position: absolute; z-index: 1; right: 16px; top: 50%; transform: translateY(-50%);
+  display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,.9); background: rgba(10,12,10,.35);
+}
+.ff-play svg { width: 18px; height: 18px; margin-left: 2px; fill: #fff; }
+.ff-card--big .ff-play { right: auto; left: 50%; top: 42%; transform: translate(-50%, -50%); width: 66px; height: 66px; border-width: 2px; }
+.ff-card--big .ff-play svg { width: 28px; height: 28px; }
+
+/* ---------- Printables ---------- */
+.ff-printables { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.ff-printable { margin: 0; }
+.ff-printable img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; box-shadow: 0 2px 10px rgba(30,25,20,.18); }
+.ff-printable figcaption { margin-top: 8px; font-size: 1.02rem; line-height: 1.3; text-align: center; color: var(--ff-ink); }
+.ff-printable figcaption span { display: block; font-style: italic; font-size: .95rem; color: var(--ff-soft); }
+.ff-printable figcaption a { color: var(--ff-brown); }
+
+/* ---------- Skrivtips & guider ---------- */
+.ff-tips { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.ff-tip { display: grid; align-content: start; gap: 6px; color: var(--ff-ink); text-decoration: none; }
+.ff-tip img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; margin-bottom: 6px; }
+.ff-tip__title { font: 600 1.02rem/1.25 var(--ff-serif); letter-spacing: .05em; text-transform: uppercase; }
+.ff-tip:hover .ff-tip__title { color: var(--ff-brown); }
+.ff-tip__sub { font: italic 500 1rem/1.35 var(--ff-serif); color: var(--ff-soft); }
+.ff-tip time { font: 600 .82rem/1.2 var(--ff-caps); letter-spacing: .12em; text-transform: uppercase; color: var(--ff-soft); }
+
+/* ---------- Skrivguide och citat ---------- */
+.ff-bottom { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 16px; align-items: stretch; }
+.ff-bottom .ff-section { margin-bottom: 0; }
+.ff-guide .ff-head h2 { font-size: clamp(1.15rem, 1.5vw, 1.35rem); }
+.ff-steps { list-style: none; counter-reset: steg; margin: 0 0 20px; padding: 0; border: 1px solid var(--ff-line); background: rgba(255,255,255,.35); }
+.ff-steps li {
+  counter-increment: steg;
+  display: grid; grid-template-columns: 44px 1fr; align-items: center; column-gap: 14px;
+  padding-right: 14px; font-size: 1.12rem; border-top: 1px solid var(--ff-line);
+}
+.ff-steps li:first-child { border-top: 0; }
+.ff-steps li::before {
+  content: counter(steg);
+  display: grid; place-items: center; align-self: stretch; padding: 8px 0;
+  border-right: 1px solid var(--ff-line); font-size: 1.25rem; color: var(--ff-ink);
+}
+.ff-guide__btn { margin: 0 auto; display: flex; width: max-content; }
+
+.ff-quote {
+  position: relative; overflow: hidden; margin: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  min-height: 260px; padding: 40px clamp(24px, 4vw, 56px) 96px;
+  border: 1px solid var(--ff-line); background: linear-gradient(180deg, #f1ece4 0%, #e9e3d9 100%); text-align: center;
+}
+/* dimmig skog längst ner (samma trädsilhuett som i sidfoten, men ljus och tonad uppåt) */
+.ff-quote::after {
+  content: ""; position: absolute; left: -2%; right: -2%; bottom: -2px; height: 75%;
+  background: url("/assets/images/skog.webp") center bottom / 104% auto no-repeat;
+  opacity: .2; pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 45%);
+          mask-image: linear-gradient(to bottom, transparent 0%, #000 45%);
+}
+.ff-quote blockquote { position: relative; z-index: 1; margin: 0 0 14px; max-width: 26ch; font: italic 500 clamp(1.3rem, 2vw, 1.6rem)/1.35 var(--ff-serif); color: var(--ff-ink); }
+.ff-quote figcaption { position: relative; z-index: 1; font: 600 .9rem/1 var(--ff-caps); letter-spacing: .18em; text-transform: uppercase; color: var(--ff-soft); }
+.ff-quote__bird { position: absolute; z-index: 1; top: 18px; right: 22px; width: 64px; fill: #2b2f2c; opacity: .8; }
+
+/* ---------- Smalare skärmar ---------- */
+@media (max-width: 1020px) {
+  .ff-split { grid-template-columns: 1fr; }
+  .ff-tips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ff-bottom { grid-template-columns: 1fr; }
+}
+/* Smalare skärmar: pappersytan räcker inte till texten – en ljus slöja över hela bilden i stället */
+@media (max-width: 960px) {
+  .ff-hero { min-height: 0; background-position: 0% 50%; }
+  .ff-hero::before { background: rgba(244,239,230,.74); }
+  .ff-hero__inner { width: auto; padding: 44px var(--ff-gutter) 40px; }
+  .ff-hero h1 { font-size: clamp(2.1rem, 7vw, 3rem); }
+}
+@media (max-width: 760px) {
+  .ff-podd { grid-template-columns: 1fr; }
+  .ff-podd__stack { grid-template-columns: 1fr 1fr; }
+  .ff-card--big { min-height: 240px; }
+  .ff-printables { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ff-head { flex-wrap: wrap; row-gap: 8px; }
+  .ff-head .ff-line { display: none; }
+  .ff-head__link { margin-left: auto; }
+}
+@media (max-width: 480px) {
+  .ff-podd__stack { grid-template-columns: 1fr; }
+  .ff-tips { grid-template-columns: 1fr; }
+  .ff-hero__actions { width: 100%; }
+}

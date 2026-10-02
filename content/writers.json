@@ -3,29 +3,13 @@
     "eyebrow": "Resurser · inspiration · verktyg",
     "title": "För författare",
     "body": "Här hittar du resurser, tankar och verktyg för dig som vill utveckla ditt skrivande och bygga hållbara skrivvanor.",
-    "image": "/assets/images/writers-hero.jpg"
+    "image": "/assets/images/for-forfattare-banner.webp"
   },
-  "youtube_intro": "Videor om skrivprocessen, karaktärer, världsbygge, kreativitet och skrivlivet. Följ med bakom kulisserna och få konkreta tips som hjälper dig framåt i ditt skrivande.",
-  "videos": [
-    {
-      "title": "Så planerar jag ett längre skrivprojekt",
-      "subtitle": "Från idé till första utkast",
-      "image": "/assets/images/writer-video-main.jpg",
-      "url": "https://youtube.com/"
-    },
-    {
-      "title": "Hur jag bygger trovärdiga världar",
-      "subtitle": "Världsbygge steg för steg",
-      "image": "/assets/images/world-banner.jpg",
-      "url": "https://youtube.com/"
-    },
-    {
-      "title": "Min skrivrutin – från kaos till fokus",
-      "subtitle": "Små vanor som hjälper",
-      "image": "/assets/images/blog-note.jpg",
-      "url": "https://youtube.com/"
-    }
-  ],
+  "podd": {
+    "title": "Podden",
+    "intro": "En ljudkurs om skrivande i korta avsnitt – från idé och karaktärer till dialog, redigering och utgivning. Lyssna i din egen takt, var du än är.",
+    "blocks": [1, 14, 37]
+  },
   "printables_intro": "Ladda ner planeringsmallar, checklistor, karaktärsformulär, världsbyggemallar och övningar för ditt skrivande.",
   "printables": [
     {
@@ -49,10 +33,17 @@
       "file": ""
     }
   ],
+  "tips_intro": "Fördjupande artiklar, reflektioner och konkreta tips om skrivande, kreativitet och författarlivet.",
+  "guide_title": "Kom igång med ditt skrivande",
   "guide_steps": [
     "Hitta din idé",
     "Bygg dina karaktärer",
     "Skapa en skrivrutin",
     "Utveckla och redigera ditt manus"
-  ]
+  ],
+  "guide_link": {
+    "label": "Lyssna på podden",
+    "url": "/podd.html"
+  },
+  "quote": "Det finns alltid en ny berättelse som väntar. Och den börjar kanske med dina ord."
 }

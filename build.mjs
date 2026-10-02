@@ -104,7 +104,7 @@ function footer(){ return `${signup()}
     <a class="footer-top" href="#top" aria-label="Till sidans topp">⌃</a>
   </div>
   <div class="footer-extra">
-    <a href="/for-forfattare.html">För författare · Videor · Printables · Skrivtips</a>
+    <a href="/for-forfattare.html">För författare · Podd · Printables · Skrivtips</a>
     <a href="/annat.html">Annat · Printables · Projekt · Inspiration</a>
   </div>
 </footer>`; }
@@ -272,7 +272,7 @@ ${signup()}
 
   <div class="site-footer__bar">
     <nav aria-label="För författare">
-      <a href="/for-forfattare.html">För författare</a> · <a href="/for-forfattare.html#youtube">Videor</a> · <a href="/for-forfattare.html#printables">Printables</a> · <a href="/blog.html">Skrivtips</a>
+      <a href="/for-forfattare.html">För författare</a> · <a href="/podd.html">Podd</a> · <a href="/for-forfattare.html#printables">Printables</a> · <a href="/blog.html">Skrivtips</a>
     </nav>
     <nav aria-label="Övrigt">
       <a href="/annat.html">Annat</a> · <a href="/annat.html#printables">Printables</a> · <a href="/annat.html#projekt">Projekt</a> · <a href="/annat.html#inspiration">Inspiration</a>
@@ -323,13 +323,120 @@ function blogPage(){
 
 function postPage(p){return layout({title:p.title,description:p.excerpt,active:'blog',body:`<section class="banner-hero" style="background-image:url('${esc(p.image)}')"><div class="container"><div class="copy"><p class="eyebrow">${esc(p.category)} · ${esc(formatDate(p.date))}</p><h1 style="font-size:clamp(2.8rem,5vw,5rem)">${esc(p.title)}</h1><p>${esc(p.excerpt)}</p></div></div></section><section class="section paper"><article class="container story-text" style="max-width:760px"><div class="rule"></div>${paras(p.body)}<p style="margin-top:3rem"><a class="btn" href="/blog.html">Tillbaka till bloggen</a></p></article></section>`});}
 
+// För författare: banner med knappar, podden, printables, skrivtips & guider och en skrivguide med citat.
+// Stilar i /assets/css/forfattare.css. Texterna redigeras i content/writers.json (Pages CMS: För författare).
 function writersPage(){
- const [main,...small]=writers.videos;
- return layout({title:'För författare',description:'YouTube-videor, printables och skrivtips av '+site.author_name+'.',active:'writers',body:`
-<section class="resources-hero"><div class="copy"><p class="eyebrow">${esc(writers.hero.eyebrow)}</p><h1>${esc(writers.hero.title)}</h1><div class="rule"></div><p>${esc(writers.hero.body)}</p><div class="hero-actions"><a class="btn primary" href="#youtube">Se YouTube-videor</a><a class="btn" href="#printables">Printables</a><a class="btn" href="/podd.html">Lyssna på podden</a></div></div><div class="image" style="background-image:url('${esc(writers.hero.image)}')"></div></section>
-<section id="youtube" class="section paper"><div class="container resource-band"><div><p class="eyebrow">YouTube-videor</p><p>${esc(writers.youtube_intro)}</p><a class="btn small" href="${esc(site.youtube)}" target="_blank" rel="noopener">Till YouTube</a></div><div class="video-grid"><a class="video-main" href="${esc(main.url)}" target="_blank" rel="noopener" style="background-image:url('${esc(main.image)}')"><div><div class="meta">YouTube</div><h2>${esc(main.title)}</h2><p>${esc(main.subtitle)}</p></div></a><div class="stack">${small.map(v=>`<a class="video-small" href="${esc(v.url)}" target="_blank" rel="noopener" style="background-image:url('${esc(v.image)}')"><span><strong>${esc(v.title)}</strong><br><small>${esc(v.subtitle)}</small></span></a>`).join('')}</div></div></div></section>
-<section id="printables" class="section paper-alt"><div class="container resource-band"><div><p class="eyebrow">Printables</p><p>${esc(writers.printables_intro)}</p></div><div class="printables-grid">${writers.printables.map(p=>`<article class="printable-card">${img(p.image,p.title)}<h3>${esc(p.title)}</h3>${p.file?`<a class="btn small" href="${esc(p.file)}" download>Ladda ner</a>`:`<span class="meta">Fil kan läggas till i CMS</span>`}</article>`).join('')}</div></div></section>
-<section class="section paper"><div class="container resource-band"><div><p class="eyebrow">Kom igång med ditt skrivande</p><p>En enkel väg från idé till bearbetad text.</p></div><ol style="font-size:1.15rem;margin:0;padding-left:1.4rem">${writers.guide_steps.map(x=>`<li style="padding:.6rem 0;border-bottom:1px solid var(--line)">${esc(x)}</li>`).join('')}</ol></div></section>`});}
+ const w=writers, hero=w.hero||{}, podd=w.podd||{};
+ const svg=(paths,cls='')=>`<svg${cls?` class="${cls}"`:''} viewBox="0 0 24 24" aria-hidden="true">${paths}</svg>`;
+ const ic={
+  play:'<path d="M9 7v10l8-5z"/>',
+  arrow:'<path d="M5 12h13M13 6l6 6-6 6"/>',
+  headphones:'<path d="M4 15.5V12a8 8 0 0 1 16 0v3.5"/><rect x="3.5" y="14" width="4" height="6.5" rx="1.3"/><rect x="16.5" y="14" width="4" height="6.5" rx="1.3"/>',
+  doc:'<path d="M6 2.5h8l4.5 4.5v14.5H6z"/><path d="M14 2.5V7h4.5M9 11h6.5M9 14h6.5M9 17h4.5"/>',
+  book:'<path d="M3 6.2c3-1.2 6-1 9 .9 3-1.9 6-2.1 9-.9v12.4c-3-1.2-6-1-9 .9-3-1.9-6-2.1-9-.9z"/><path d="M12 7.1v12.4"/>',
+  quill:'<path d="M20.5 3.5C13 4 8.5 9 7 16.5L6 21"/><path d="M20.5 3.5c-1.2 6.8-5.3 10.8-12.2 11.8"/><path d="M11.8 12 15.5 8.3"/>',
+  star:'<path d="M12 2.5l1.7 7.8 7.8 1.7-7.8 1.7L12 21.5l-1.7-7.8L2.5 12l7.8-1.7z"/>'
+ };
+ const arrow=svg(ic.arrow,'ff-arrow');
+ const head=(icon,title,link)=>`<header class="ff-head">
+        <span class="ff-head__icon">${icon}</span>
+        <h2>${esc(title)}</h2>
+        <span class="ff-line" aria-hidden="true"><span>◆</span></span>
+        ${link?`<a class="ff-head__link" href="${esc(link.href)}">${esc(link.label)} ${arrow}</a>`:''}
+      </header>`;
+ // Podden: de valda blocken från content/podd (det första blir det stora kortet)
+ const total=poddBlocks.reduce((n,b)=>n+(b.episodes||[]).length,0);
+ const picked=(podd.blocks||[]).map(n=>poddBlocks.find(b=>b.number===Number(n))).filter(Boolean);
+ const pod=picked.length?picked:poddBlocks.slice(0,3);
+ const range=(b)=>{const e=b.episodes||[];return e.length?`${e.length} avsnitt · Avsnitt ${e[0].number}–${e[e.length-1].number}`:'';};
+ const podCard=(b,big)=>`<a class="ff-card${big?' ff-card--big':''}" href="/podd.html#block-${b.number}">
+            <img src="${esc(b.image)}" alt="" loading="lazy">
+            <span class="ff-card__text">
+              <span class="ff-card__title">Block ${b.number} – ${esc(b.title)}</span>
+              <span class="ff-card__sub">${esc(big&&b.caption?`”${b.caption}”`:range(b))}</span>
+            </span>
+            <span class="ff-play" aria-hidden="true">${svg(ic.play)}</span>
+          </a>`;
+ const tips=posts.slice(0,4);
+ return layout({title:'För författare',description:'Podd, printables och skrivtips för dig som skriver – av '+site.author_name+'.',active:'writers',
+  head:'<link rel="stylesheet" href="/assets/css/forfattare.css">',
+  body:`
+<section class="ff-hero"${hero.image?` style="--ff-hero:url('${esc(hero.image)}')"`:''}>
+  <div class="ff-hero__inner">
+    ${hero.eyebrow?`<p class="ff-hero__eyebrow">${esc(hero.eyebrow)}</p>`:''}
+    <h1>${esc(hero.title||'För författare')}</h1>
+    <span class="ff-orn" aria-hidden="true"><span>◆</span></span>
+    ${hero.body?`<p class="ff-hero__body">${esc(hero.body)}</p>`:''}
+    <div class="ff-hero__actions">
+      <a class="ff-btn ff-btn--solid" href="/podd.html">${svg(ic.headphones,'ff-btn__icon')}<span>Lyssna på podden</span>${arrow}</a>
+      <a class="ff-btn" href="#printables">${svg(ic.doc,'ff-btn__icon')}<span>Ladda ner printables</span>${arrow}</a>
+      <a class="ff-btn" href="#skrivtips">${svg(ic.book,'ff-btn__icon')}<span>Läs skrivtips</span>${arrow}</a>
+    </div>
+  </div>
+</section>
+<div class="ff-page">
+  <div class="ff-wrap">
+    <section class="ff-section" id="podden">
+      ${head(`<span class="ff-round">${svg(ic.headphones)}</span>`, podd.title||'Podden', {href:'/podd.html', label:'Alla avsnitt'})}
+      <div class="ff-split">
+        <div class="ff-intro">
+          ${podd.intro?`<p>${esc(podd.intro)}</p>`:''}
+          <p class="ff-meta">${total} avsnitt · ${poddBlocks.length} block</p>
+          <a class="ff-btn ff-btn--small" href="/podd.html"><span>Till podden</span>${arrow}</a>
+        </div>
+        <div class="ff-podd">
+          ${pod[0]?podCard(pod[0],true):''}
+          ${pod.length>1?`<div class="ff-podd__stack">
+          ${pod.slice(1,3).map(b=>podCard(b,false)).join('\n          ')}
+          </div>`:''}
+        </div>
+      </div>
+    </section>
+
+    <section class="ff-section" id="printables">
+      ${head(svg(ic.doc), 'Printables')}
+      <div class="ff-split">
+        <div class="ff-intro">${w.printables_intro?`<p>${esc(w.printables_intro)}</p>`:''}</div>
+        <div class="ff-printables">
+          ${(w.printables||[]).map(p=>`<figure class="ff-printable">
+            ${p.file?`<a href="${esc(p.file)}" download>`:''}<img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy">${p.file?'</a>':''}
+            <figcaption>${esc(p.title)}<span>${p.file?`<a href="${esc(p.file)}" download>Ladda ner</a>`:'Kommer snart'}</span></figcaption>
+          </figure>`).join('\n          ')}
+        </div>
+      </div>
+    </section>
+
+    <section class="ff-section" id="skrivtips">
+      ${head(svg(ic.quill), 'Skrivtips & guider', {href:'/blog.html', label:'Se alla inlägg'})}
+      <div class="ff-split">
+        <div class="ff-intro">${w.tips_intro?`<p>${esc(w.tips_intro)}</p>`:''}</div>
+        <div class="ff-tips">
+          ${tips.map(p=>`<a class="ff-tip" href="/blog/${esc(p.slug)}.html">
+            <img src="${esc(p.image)}" alt="" loading="lazy">
+            <span class="ff-tip__title">${esc(p.title)}</span>
+            ${p.excerpt?`<span class="ff-tip__sub">${esc(p.excerpt)}</span>`:''}
+            <time datetime="${esc(p.date)}">${esc(formatDate(p.date))}</time>
+          </a>`).join('\n          ')}
+        </div>
+      </div>
+    </section>
+
+    <div class="ff-bottom">
+      <section class="ff-section ff-guide">
+        ${head(svg(ic.star), w.guide_title||'Kom igång med ditt skrivande')}
+        <ol class="ff-steps">
+          ${(w.guide_steps||[]).map(s=>`<li>${esc(s)}</li>`).join('\n          ')}
+        </ol>
+        ${w.guide_link&&w.guide_link.url?`<a class="ff-btn ff-btn--small ff-guide__btn" href="${esc(w.guide_link.url)}"><span>${esc(w.guide_link.label||'Läs mer')}</span>${arrow}</a>`:''}
+      </section>
+      ${w.quote?`<figure class="ff-quote">
+        <svg class="ff-quote__bird" viewBox="0 0 80 44" aria-hidden="true"><path d="M2 25c7-3 13-3.5 19-1.5 4-6 10-11 18-14 6-2.3 12-3 19-2.2-6 1.6-10.5 4.4-13.6 8.4 5.5-1.5 11.5-1.4 18 .4-7.5.8-13.4 3-17.6 6.6 2.6.8 4.6 2.2 6 4.2-3.6-1.2-7-1.4-10.4-.6-2.4 4.4-6.4 7.6-12 9.6 2.6-2.6 4-5.2 4.4-7.8-5.2-.4-10.8-1.4-16.8-3.1-4-1.1-9-1.1-15 .6z"/><path d="M60 13.5c4.5-2 9-2.2 13.5-.7l4.3 1.4-4.6.4c-2.3.2-4.4.9-6.2 2.1z"/></svg>
+        <blockquote>”${esc(w.quote)}”</blockquote>
+        <figcaption>${esc(site.author_name)}</figcaption>
+      </figure>`:''}
+    </div>
+  </div>
+</div>`});}
 
 function otherPage(){return layout({title:'Annat',description:'Printables, projekt, inspirationsmaterial och annat av '+site.author_name+'.',active:'other',body:`
 <section class="resources-hero"><div class="copy"><p class="eyebrow">${esc(other.hero.eyebrow)}</p><h1>${esc(other.hero.title)}</h1><div class="rule"></div><p>${esc(other.hero.body)}</p></div><div class="image" style="background-image:url('${esc(other.hero.image)}')"></div></section>
