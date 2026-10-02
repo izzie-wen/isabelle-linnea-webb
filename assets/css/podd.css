@@ -108,13 +108,13 @@
 .pod-block[open] .pod-block__head {
   grid-template-columns: minmax(0, 1fr) auto 28px;
   grid-template-areas: "title meta chev" "desc meta chev";
-  padding-left: 52px;
+  padding-left: 66px;
 }
 .pod-block[open] .pod-block__thumb { display: none; }
-.pod-block[open]::before {
-  content: ""; position: absolute; z-index: 1; left: -14px; top: -12px;
-  width: 58px; height: 112px; pointer-events: none;
-  background: url("/assets/images/murgrona-hangande.webp") left top / 118px auto no-repeat;
+.pod-block[open]::before { /* hela kvisten syns (bilden är 1:2) */
+  content: ""; position: absolute; z-index: 1; left: -10px; top: -14px;
+  width: 64px; height: 128px; pointer-events: none;
+  background: url("/assets/images/murgrona-kvist.webp") left top / contain no-repeat;
 }
 
 .pod-block__body {

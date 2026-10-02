@@ -11,6 +11,8 @@ const readJSON = (p) => JSON.parse(fs.readFileSync(path.join(contentDir,p),'utf8
 const readCollection = (dir) => fs.readdirSync(path.join(contentDir,dir)).filter(f=>f.endsWith('.json')).map(f=>readJSON(path.join(dir,f)));
 const esc = (s='') => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const paras = (s='') => String(s).split(/\n\s*\n/).filter(Boolean).map(p=>`<p>${esc(p)}</p>`).join('\n');
+// Korta ord (i, på, en …) hålls ihop med ordet efter, så att de inte blir ensamma sist på en rad
+const keepShort = (s='') => String(s).replace(/(?<=^|\s)(\S{1,2})\s+(?=\S)/g, '$1 ');
 const img = (src, alt='', cls='') => `<img src="${esc(src)}" alt="${esc(alt)}"${cls?` class="${cls}"`:''}>`;
 const formatDate = (iso) => new Intl.DateTimeFormat('sv-SE',{day:'numeric',month:'short',year:'numeric'}).format(new Date(iso+'T12:00:00'));
 
@@ -585,7 +587,7 @@ function poddPage(){
   body:`${sprite}
 <section class="pod-hero"${hero.image?` style="--pod-hero:url('${esc(hero.image)}')"`:''}>
   <div class="pod-wrap pod-hero__inner">
-    <h1>${esc(hero.title||'Skrivkurs i audioform')}</h1>
+    <h1>${esc(keepShort(hero.title||'Skrivkurs i audioform'))}</h1>
     ${hero.subtitle?`<p>${esc(hero.subtitle)}</p>`:''}
   </div>
 </section>
