@@ -30,7 +30,7 @@ const poddBlocks = readCollection('podd').sort((a,b)=>a.number-b.number);
 
 // Menyvalen – samma på alla sidor
 const menuItems=[
-  ['Hem','/index.html','home'],['Om mig','/om-mig.html','about'],['Böcker','/books.html','books'],['Noveller','/noveller.html','stories'],['AI-research','/blog.html','blog'],['För författare','/for-forfattare.html','writers'],['Annat','/annat.html','other'],['Kontakt','/contact.html','contact']
+  ['Hem','/index.html','home'],['Om mig','/om-mig.html','about'],['Böcker','/books.html','books'],['Berättelser','/noveller.html','stories'],['AI-research','/blog.html','blog'],['För författare','/for-forfattare.html','writers'],['Annat','/annat.html','other'],['Kontakt','/contact.html','contact']
 ];
 
 // Menyraden med murgröna högst upp – gemensam för alla sidor (stilar i /assets/css/topbar.css)
@@ -192,8 +192,8 @@ ${topbar('home')}
       ${orn()}
       <p class="hero__body">${esc(home.hero.body)}</p>
       <div class="buttons">
-        <a class="btn btn--solid" href="/noveller.html">Läs noveller</a>
-        <a class="btn btn--outline" href="/blog.html">Besök bloggen</a>
+        <a class="btn btn--solid" href="/noveller.html">Läs berättelser</a>
+        <a class="btn btn--outline" href="/books.html">Böcker</a>
       </div>
       <a class="text-link" href="/om-mig.html">Om mig <span aria-hidden="true">›</span></a>
     </div>
@@ -304,9 +304,9 @@ function booksPage(){return layout({title:'Böcker',description:'Böcker och lä
 
 function novelsPage(){
  const genres=['Alla',...new Set(stories.map(s=>s.genre))];
- return layout({title:'Noveller',description:'Noveller av '+site.author_name+' i flera genrer.',active:'stories',body:`
-<section class="novels-hero" style="background-image:url('/assets/images/novels-hero.jpg')"><div class="container"><div class="copy"><p class="eyebrow">Noveller</p><h1>Noveller</h1><p class="section-subtitle">Stora världar ryms ibland i små berättelser.</p><p>Här samlar jag mina noveller – berättelser om människors liv, stora frågor och det oväntade som kan förändra allt.</p></div></div></section>
-<section class="section paper"><div class="container"><p class="eyebrow">Utforska noveller</p><div class="filters" role="group" aria-label="Filtrera noveller">${genres.map((g,i)=>`<button class="filter-btn${i===0?' active':''}" type="button" data-filter="${esc(g)}">${esc(g)}</button>`).join('')}</div><div class="story-grid">${stories.map(storyCard).join('')}</div><div class="empty-state" data-empty-state>Inga noveller finns i den här kategorin ännu.</div></div></section>`});
+ return layout({title:'Berättelser',description:'Berättelser av '+site.author_name+' i flera genrer.',active:'stories',body:`
+<section class="novels-hero" style="background-image:url('/assets/images/novels-hero.jpg')"><div class="container"><div class="copy"><p class="eyebrow">Berättelser</p><h1>Berättelser</h1><p class="section-subtitle">Stora världar ryms ibland i små berättelser.</p><p>Här samlar jag mina noveller – berättelser om människors liv, stora frågor och det oväntade som kan förändra allt.</p></div></div></section>
+<section class="section paper"><div class="container"><p class="eyebrow">Utforska berättelser</p><div class="filters" role="group" aria-label="Filtrera berättelser">${genres.map((g,i)=>`<button class="filter-btn${i===0?' active':''}" type="button" data-filter="${esc(g)}">${esc(g)}</button>`).join('')}</div><div class="story-grid">${stories.map(storyCard).join('')}</div><div class="empty-state" data-empty-state>Inga berättelser finns i den här kategorin ännu.</div></div></section>`});
 }
 
 function storyPage(s){

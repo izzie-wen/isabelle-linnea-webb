@@ -289,7 +289,7 @@ content:
             description: "Avsnitt med lägre eller samma nummer får automatiskt en ljudfil från adressen ovan. 0 = inga."
 
   - name: stories
-    label: Noveller
+    label: Berättelser
     type: collection
     path: content/stories
     format: json

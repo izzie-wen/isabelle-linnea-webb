@@ -48,7 +48,7 @@ Gå till `https://app.pagescms.org`, logga in med GitHub och ge Pages CMS åtkom
 - Framsida
 - Om mig
 - Böcker
-- Noveller
+- Berättelser
 - Blogginlägg
 - För författare
 - Annat
