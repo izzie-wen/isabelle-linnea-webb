@@ -88,15 +88,15 @@ body { position: relative; }
 }
 
 /* Mellanstora skärmar: tätare meny så att allt ryms på en rad */
-@media (max-width: 1519px) and (min-width: 1240px) {
+@media (max-width: 1599px) and (min-width: 1260px) {
   .topbar { gap: 1.25rem; }
-  .topbar-nav ul { gap: .9rem; }
-  .topbar-nav a { font-size: .92rem; letter-spacing: .07em; }
+  .topbar-nav ul { gap: .8rem; }
+  .topbar-nav a { font-size: .9rem; letter-spacing: .06em; }
   .topbar-logo__name { font-size: 1.8rem; }
 }
 
-/* Under 1240px ryms inte menyn på en rad – visa hamburgermenyn */
-@media (max-width: 1239px) {
+/* Under 1260px ryms inte menyn på en rad – visa hamburgermenyn */
+@media (max-width: 1259px) {
   .topbar { padding-right: var(--tb-gutter); flex-wrap: wrap; gap: 12px; }
   .topbar-social { display: none; }
   .topbar-toggle {
