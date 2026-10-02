@@ -312,6 +312,7 @@ content:
       - { name: read_time, label: Lästid, type: string }
       - { name: word_count, label: Ordantal, type: string }
       - { name: year, label: År, type: string }
+      - { name: date, label: Publicerad, type: date, description: "Styr vilka tre berättelser som visas som de senaste på framsidan (nyaste först). Utan datum används året." }
       - { name: themes, label: Teman, type: string }
       - { name: quote, label: Citat, type: text }
       - { name: body, label: Novelltext, type: text, required: true }

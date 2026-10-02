@@ -139,8 +139,8 @@ function signup(){
 // Menyraden högst upp är gemensam för alla sidor: topbar() + topbar.css.
 // Övriga sidor använder layout() och styles.css.
 function homePage(){
- const wanted=['bakom-kulisserna','platser-som-inspirerar','tema-och-budskap'];
- const latest=wanted.map(slug=>posts.find(p=>p.slug===slug)).filter(Boolean);
+ // De tre senaste berättelserna: nyast publiceringsdatum först, annars nyast år (lika år: samma ordning som på Berättelser-sidan)
+ const latest=[...stories].sort((a,b)=>String(b.date||b.year||'').localeCompare(String(a.date||a.year||''))).slice(0,3);
  const orn=(cls='')=>`<svg class="ornament${cls?' '+cls:''}"><use href="#ornament"/></svg>`;
  const icon=(id)=>`<svg><use href="#i-${id}"/></svg>`;
  const socials=[['Instagram',site.instagram,'instagram']].filter(([,url])=>url).map(([label,url,id])=>`<a href="${esc(url)}" target="_blank" rel="noopener" aria-label="${label}">${icon(id)}</a>`).join('\n    ');
@@ -235,15 +235,15 @@ ${topbar('home')}
 
   <section class="latest" id="nyheter">
     <div class="latest__blog">
-      <h2>Senaste från bloggen</h2>
+      <h2>Senaste berättelserna</h2>
       ${orn('ornament--left')}
 
       <div class="posts">
-        ${latest.map(p=>`<article class="post">
-          <a href="/blog/${esc(p.slug)}.html"><img src="${esc(p.image)}" alt="" loading="lazy"></a>
-          <h3><a href="/blog/${esc(p.slug)}.html">${esc(p.title)}</a></h3>
-          <p class="post__sub">${esc(p.excerpt)}</p>
-          <time datetime="${esc(p.date)}">${esc(formatDate(p.date))}</time>
+        ${latest.map(s=>`<article class="post">
+          <a href="/noveller/${esc(s.slug)}.html"><img src="${esc(s.image)}" alt="" loading="lazy"></a>
+          <h3><a href="/noveller/${esc(s.slug)}.html">${esc(s.title)}</a></h3>
+          <p class="post__sub">${esc(s.excerpt)}</p>
+          <p class="post__meta">${[s.genre, s.date?formatDate(s.date):''].filter(Boolean).map(esc).join(' · ')}</p>
         </article>`).join('\n        ')}
       </div>
     </div>
