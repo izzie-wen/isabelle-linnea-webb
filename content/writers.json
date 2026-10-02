@@ -6,7 +6,7 @@
     "image": "/assets/images/for-forfattare-banner.webp"
   },
   "podd": {
-    "title": "Podden",
+    "title": "Skrivkurs i audioform",
     "intro": "En ljudkurs om skrivande i korta avsnitt – från idé och karaktärer till dialog, redigering och utgivning. Lyssna i din egen takt, var du än är.",
     "blocks": [1, 14, 37]
   },
@@ -42,7 +42,7 @@
     "Utveckla och redigera ditt manus"
   ],
   "guide_link": {
-    "label": "Lyssna på podden",
+    "label": "Lyssna på skrivkursen",
     "url": "/podd.html"
   },
   "quote": "Det finns alltid en ny berättelse som väntar. Och den börjar kanske med dina ord."

@@ -104,7 +104,7 @@ function footer(){ return `${signup()}
     <a class="footer-top" href="#top" aria-label="Till sidans topp">⌃</a>
   </div>
   <div class="footer-extra">
-    <a href="/for-forfattare.html">För författare · Podd · Printables · Skrivtips</a>
+    <a href="/for-forfattare.html">För författare · Skrivkurs · Printables · Skrivtips</a>
     <a href="/annat.html">Annat · Printables · Projekt · Inspiration</a>
   </div>
 </footer>`; }
@@ -272,7 +272,7 @@ ${signup()}
 
   <div class="site-footer__bar">
     <nav aria-label="För författare">
-      <a href="/for-forfattare.html">För författare</a> · <a href="/podd.html">Podd</a> · <a href="/for-forfattare.html#printables">Printables</a> · <a href="/blog.html">Skrivtips</a>
+      <a href="/for-forfattare.html">För författare</a> · <a href="/podd.html">Skrivkurs</a> · <a href="/for-forfattare.html#printables">Printables</a> · <a href="/blog.html">Skrivtips</a>
     </nav>
     <nav aria-label="Övrigt">
       <a href="/annat.html">Annat</a> · <a href="/annat.html#printables">Printables</a> · <a href="/annat.html#projekt">Projekt</a> · <a href="/annat.html#inspiration">Inspiration</a>
@@ -358,7 +358,7 @@ function writersPage(){
             <span class="ff-play" aria-hidden="true">${svg(ic.play)}</span>
           </a>`;
  const tips=posts.slice(0,4);
- return layout({title:'För författare',description:'Podd, printables och skrivtips för dig som skriver – av '+site.author_name+'.',active:'writers',
+ return layout({title:'För författare',description:'Skrivkurs i audioform, printables och skrivtips för dig som skriver – av '+site.author_name+'.',active:'writers',
   head:'<link rel="stylesheet" href="/assets/css/forfattare.css">',
   body:`
 <section class="ff-hero"${hero.image?` style="--ff-hero:url('${esc(hero.image)}')"`:''}>
@@ -368,7 +368,7 @@ function writersPage(){
     <span class="ff-orn" aria-hidden="true"><span>◆</span></span>
     ${hero.body?`<p class="ff-hero__body">${esc(hero.body)}</p>`:''}
     <div class="ff-hero__actions">
-      <a class="ff-btn ff-btn--solid" href="/podd.html">${svg(ic.headphones,'ff-btn__icon')}<span>Lyssna på podden</span>${arrow}</a>
+      <a class="ff-btn ff-btn--solid" href="/podd.html">${svg(ic.headphones,'ff-btn__icon')}<span>Lyssna på skrivkursen</span>${arrow}</a>
       <a class="ff-btn" href="#printables">${svg(ic.doc,'ff-btn__icon')}<span>Ladda ner printables</span>${arrow}</a>
       <a class="ff-btn" href="#skrivtips">${svg(ic.book,'ff-btn__icon')}<span>Läs skrivtips</span>${arrow}</a>
     </div>
@@ -377,12 +377,12 @@ function writersPage(){
 <div class="ff-page">
   <div class="ff-wrap">
     <section class="ff-section" id="podden">
-      ${head(`<span class="ff-round">${svg(ic.headphones)}</span>`, podd.title||'Podden', {href:'/podd.html', label:'Alla avsnitt'})}
+      ${head(`<span class="ff-round">${svg(ic.headphones)}</span>`, podd.title||'Skrivkurs i audioform', {href:'/podd.html', label:'Alla avsnitt'})}
       <div class="ff-split">
         <div class="ff-intro">
           ${podd.intro?`<p>${esc(podd.intro)}</p>`:''}
           <p class="ff-meta">${total} avsnitt · ${poddBlocks.length} block</p>
-          <a class="ff-btn ff-btn--small" href="/podd.html"><span>Till podden</span>${arrow}</a>
+          <a class="ff-btn ff-btn--small" href="/podd.html"><span>Till skrivkursen</span>${arrow}</a>
         </div>
         <div class="ff-podd">
           ${pod[0]?podCard(pod[0],true):''}
@@ -578,14 +578,14 @@ function poddPage(){
   </details>`;
  };
  const hero=podd.hero||{};
- // Podden ligger inte i huvudmenyn – den nås via en knapp på För författare, som därför markeras i menyn
- return layout({title:'Podd',description:`${total} avsnitt om skrivande och berättande i ${poddBlocks.length} block – från idé och karaktärer till dialog, redigering och utgivning.`,active:'writers',
+ // Skrivkursen ligger inte i huvudmenyn – den nås via en knapp på För författare, som därför markeras i menyn
+ return layout({title:hero.title||'Skrivkurs i audioform',description:`${total} avsnitt om skrivande och berättande i ${poddBlocks.length} block – från idé och karaktärer till dialog, redigering och utgivning.`,active:'writers',
   head:'<link rel="stylesheet" href="/assets/css/podd.css">',
   scripts:'<script src="/assets/js/podd.js" defer></script>',
   body:`${sprite}
 <section class="pod-hero"${hero.image?` style="--pod-hero:url('${esc(hero.image)}')"`:''}>
   <div class="pod-wrap pod-hero__inner">
-    <h1>${esc(hero.title||'Podd')}</h1>
+    <h1>${esc(hero.title||'Skrivkurs i audioform')}</h1>
     ${hero.subtitle?`<p>${esc(hero.subtitle)}</p>`:''}
   </div>
 </section>

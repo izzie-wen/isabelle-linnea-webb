@@ -67,20 +67,20 @@ Kontaktformuläret och nyhetsbrevsformulären är märkta som Netlify Forms. Nä
 
 För ett riktigt utskicksbrev (kampanjer, automatiska mejl osv.) bör nyhetsbrevet senare kopplas till exempelvis Brevo eller Mailchimp. Formulären fungerar tills dess som insamling på Netlify.
 
-## Podden (`/podd.html`)
+## Skrivkurs i audioform (`/podd.html`)
 
 - `content/podd.json` – bannerns rubrik, text och bild, samt inställningar för ljudfilerna.
 - `content/podd/block-01.json` … `block-39.json` – ett block per fil med rubrik, ämne (filterknapp), beskrivning, citat på bilden, bild och avsnitt.
 - `assets/images/podd/` – bilderna till blocken och bannern.
 - `assets/css/podd.css` och `assets/js/podd.js` – utseende, sök/filter och ljudspelaren.
 
-I Pages CMS heter delarna **Podd – sidinställningar** och **Podd – block och avsnitt**.
+I Pages CMS heter delarna **Skrivkurs i audioform – sidinställningar** och **Skrivkurs i audioform – block och avsnitt**. Sidan länkas från *För författare* (den ligger inte i huvudmenyn).
 
 ### Ljudfiler
 
 Ljudfilerna ska **inte** ligga i det här repot eller på Netlify (de är för stora och varje lyssning skulle dra Netlify-krediter). Lägg dem hos en lagringstjänst för ljud/filer och länka dit. Två sätt:
 
-1. **En mapp för alla avsnitt (enklast).** Ladda upp filerna med namnen `avsnitt-001.mp3`, `avsnitt-002.mp3` … `avsnitt-398.mp3`. Fyll i mappens adress i *Podd – sidinställningar → Adress till mappen med ljudfiler* och ändra *Publicerade avsnitt till och med nummer* varje gång du släpper nya avsnitt.
+1. **En mapp för alla avsnitt (enklast).** Ladda upp filerna med namnen `avsnitt-001.mp3`, `avsnitt-002.mp3` … `avsnitt-398.mp3`. Fyll i mappens adress i *Skrivkurs i audioform – sidinställningar → Adress till mappen med ljudfiler* och ändra *Publicerade avsnitt till och med nummer* varje gång du släpper nya avsnitt.
 2. **En länk per avsnitt.** Klistra in direktlänken till mp3-filen i fältet *Ljudfil (länk)* på avsnittet. En länk i fältet går alltid före mappen.
 
 Avsnitt utan ljudfil visas med en grå spelknapp och texten ”kommer snart”. Längden på avsnitten räknas ut automatiskt när ljudfilen finns (fältet *Längd* behöver bara fyllas i om du vill skriva den själv).

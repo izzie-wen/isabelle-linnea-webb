@@ -161,7 +161,7 @@ content:
               - { name: body, label: Text, type: text }
               - { name: image, label: Bild, type: image }
           - name: podd
-            label: Podden
+            label: Skrivkurs i audioform
             type: object
             fields:
               - { name: title, label: Rubrik, type: string }
@@ -267,7 +267,7 @@ content:
               - { name: a, label: Svar, type: text }
 
       - name: podd_settings
-        label: Podd – sidinställningar
+        label: Skrivkurs i audioform – sidinställningar
         type: file
         path: content/podd.json
         format: json
@@ -339,7 +339,7 @@ content:
       - { name: body, label: Inläggstext, type: text }
 
   - name: podd_blocks
-    label: Podd – block och avsnitt
+    label: Skrivkurs i audioform – block och avsnitt
     type: collection
     path: content/podd
     format: json
@@ -376,6 +376,6 @@ content:
           - name: audio
             label: Ljudfil (länk)
             type: string
-            description: "Direktlänk till mp3-filen. Behövs inte om adressen till ljudmappen är ifylld i Podd – sidinställningar."
+            description: "Direktlänk till mp3-filen. Behövs inte om adressen till ljudmappen är ifylld i Skrivkurs i audioform – sidinställningar."
           - { name: duration, label: "Längd (t.ex. 12:14) – valfritt, räknas annars ut automatiskt", type: string }
           - { name: notes, label: Anteckningar, type: text }
