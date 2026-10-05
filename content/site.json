@@ -1,6 +1,18 @@
 {
   "author_name": "Isabelle Linnea",
+  "site_title": "För författare",
   "tagline": "BERÄTTELSER · BÖCKER · SKRIVANDE ",
+  "start_page": "writers",
+  "pages": {
+    "about": false,
+    "books": false,
+    "stories": false,
+    "blog": true,
+    "writers": true,
+    "podd": true,
+    "other": false,
+    "contact": true
+  },
   "email": "hej@isabellelinnea.se",
   "instagram": "https://instagram.com/",
   "facebook": "https://facebook.com/",

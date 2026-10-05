@@ -28,10 +28,20 @@ const posts = readCollection('posts').sort((a,b)=>b.date.localeCompare(a.date));
 const podd = readJSON('podd.json');
 const poddBlocks = readCollection('podd').sort((a,b)=>a.number-b.number);
 
-// Menyvalen – samma på alla sidor
-const menuItems=[
-  ['Hem','/index.html','home'],['Om mig','/om-mig.html','about'],['Böcker','/books.html','books'],['Berättelser','/noveller.html','stories'],['AI-research','/blog.html','blog'],['För författare','/for-forfattare.html','writers'],['Annat','/annat.html','other'],['Kontakt','/contact.html','contact']
+// Sidorna i menyordning: [nyckel, namn i menyn, fil].
+// Vilka som syns och vilken som är startsida väljs i Pages CMS (Webbplatsinställningar).
+// Dolda sidor byggs inte alls (innehållet finns kvar) och gamla länkar till dem skickas till startsidan.
+const allPages=[
+  ['home','Hem','index.html'],['about','Om mig','om-mig.html'],['books','Böcker','books.html'],['stories','Berättelser','noveller.html'],['blog','AI-research','blog.html'],['writers','För författare','for-forfattare.html'],['other','Annat','annat.html'],['contact','Kontakt','contact.html']
 ];
+const startPage=site.start_page==='writers'?'writers':'home';
+// Den gamla framsidan (home) finns bara när den är startsida
+const shown=(key)=>key===startPage||(key!=='home'&&(site.pages||{})[key]!==false);
+const pageUrl=(key)=>key===startPage?'/':key==='podd'?'/podd.html':'/'+allPages.find(p=>p[0]===key)[2];
+
+// Menyvalen – samma på alla sidor. Startsidan står först och heter "Hem".
+const menuItems=allPages.filter(([key])=>shown(key)).sort((a,b)=>(b[0]===startPage)-(a[0]===startPage))
+  .map(([key,label])=>[key===startPage?'Hem':label,pageUrl(key),key]);
 
 // Menyraden med murgröna högst upp – gemensam för alla sidor (stilar i /assets/css/topbar.css)
 const topbarHead=`<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,9 +56,9 @@ function topbar(active=''){
  const socials=[['Instagram',site.instagram,'instagram']].filter(([,url])=>url).map(([label,url,id])=>`<a href="${esc(url)}" target="_blank" rel="noopener" aria-label="${label}">${icons[id]}</a>`).join('\n    ');
  return `<img class="topbar-ivy topbar-ivy--left" src="/assets/images/murgrona-meny-vanster.webp" alt="" aria-hidden="true">
 <img class="topbar-ivy topbar-ivy--right" src="/assets/images/murgrona-meny-hoger.webp" alt="" aria-hidden="true">
-<header class="topbar">
-  <a class="topbar-logo" href="/index.html">
-    <span class="topbar-logo__name">${esc(site.author_name)}</span>
+<header class="topbar${menuItems.length<=4?' topbar--few':''}">
+  <a class="topbar-logo" href="/">
+    <span class="topbar-logo__name">${esc(site.site_title||site.author_name)}</span>
     <span class="topbar-logo__tag">${esc(site.tagline)}</span>
   </a>
   <button class="topbar-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="huvudmeny">
@@ -106,8 +116,8 @@ function footer(){ return `${signup()}
     <a class="footer-top" href="#top" aria-label="Till sidans topp">⌃</a>
   </div>
   <div class="footer-extra">
-    <a href="/for-forfattare.html">För författare · Skrivkurs · Printables · Skrivtips</a>
-    <a href="/annat.html">Annat · Printables · Projekt · Inspiration</a>
+    ${shown('writers')?`<a href="${pageUrl('writers')}">För författare · Skrivkurs · Printables · Skrivtips</a>`:''}
+    ${shown('other')?`<a href="${pageUrl('other')}">Annat · Printables · Projekt · Inspiration</a>`:''}
   </div>
 </footer>`; }
 // Nyhetsbrevet ovanför sidfoten – samma på alla sidor (stilar i /assets/css/signup.css, skickas av site.js).
@@ -320,7 +330,7 @@ function blogPage(){
  const cats=['Alla',...new Set(posts.map(p=>p.category))];
  return layout({title:'AI-research',description:'AI-research av '+site.author_name+'.',active:'blog',body:`
 <section class="blog-hero" style="background-image:url('${esc(home.hero.image)}')"><div class="container"><div class="copy"><p class="eyebrow">Nyheter & research</p><h1>AI-research</h1><p class="section-subtitle">Tankar, inspiration och inblickar bakom berättelserna.</p><p>Här delar jag med mig av skrivprocessen, research, karaktärer, platser och sådant som ryms mellan idé och färdig text.</p></div></div></section>
-<section class="section paper"><div class="container blog-layout"><div><div class="filters">${cats.map((c,i)=>`<button class="filter-btn${i===0?' active':''}" type="button" data-post-filter="${esc(c)}">${esc(c)}</button>`).join('')}</div><div class="blog-grid" data-post-grid>${posts.map(p=>`<div data-post-category="${esc(p.category)}">${postCard(p)}</div>`).join('')}</div></div><aside class="sidebar-panel"><p class="eyebrow">Välkommen hit</p><p>Här delar jag tankar, inspiration och glimtar bakom mina berättelser.</p><a class="btn small" href="/om-mig.html">Läs mer om mig</a><hr style="border:0;border-top:1px solid var(--line);margin:2rem 0"><p class="eyebrow">Kategorier</p><div class="category-list">${cats.filter(c=>c!=='Alla').map(c=>`<span>${esc(c)}</span>`).join('')}</div></aside></div></section>`,scripts:`<script>document.querySelectorAll('[data-post-filter]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-post-filter]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('[data-post-category]').forEach(x=>x.hidden=b.dataset.postFilter!=='Alla'&&x.dataset.postCategory!==b.dataset.postFilter)}));</script>`});
+<section class="section paper"><div class="container blog-layout"><div><div class="filters">${cats.map((c,i)=>`<button class="filter-btn${i===0?' active':''}" type="button" data-post-filter="${esc(c)}">${esc(c)}</button>`).join('')}</div><div class="blog-grid" data-post-grid>${posts.map(p=>`<div data-post-category="${esc(p.category)}">${postCard(p)}</div>`).join('')}</div></div><aside class="sidebar-panel"><p class="eyebrow">Välkommen hit</p><p>Här delar jag tankar, inspiration och glimtar bakom mina berättelser.</p>${shown('about')?`<a class="btn small" href="${pageUrl('about')}">Läs mer om mig</a>`:''}<hr style="border:0;border-top:1px solid var(--line);margin:2rem 0"><p class="eyebrow">Kategorier</p><div class="category-list">${cats.filter(c=>c!=='Alla').map(c=>`<span>${esc(c)}</span>`).join('')}</div></aside></div></section>`,scripts:`<script>document.querySelectorAll('[data-post-filter]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-post-filter]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('[data-post-category]').forEach(x=>x.hidden=b.dataset.postFilter!=='Alla'&&x.dataset.postCategory!==b.dataset.postFilter)}));</script>`});
 }
 
 function postPage(p){return layout({title:p.title,description:p.excerpt,active:'blog',body:`<section class="banner-hero" style="background-image:url('${esc(p.image)}')"><div class="container"><div class="copy"><p class="eyebrow">${esc(p.category)} · ${esc(formatDate(p.date))}</p><h1 style="font-size:clamp(2.8rem,5vw,5rem)">${esc(p.title)}</h1><p>${esc(p.excerpt)}</p></div></div></section><section class="section paper"><article class="container story-text" style="max-width:760px"><div class="rule"></div>${paras(p.body)}<p style="margin-top:3rem"><a class="btn" href="/blog.html">Tillbaka till AI-research</a></p></article></section>`});}
@@ -370,15 +380,15 @@ function writersPage(){
     <span class="ff-orn" aria-hidden="true"><span>◆</span></span>
     ${hero.body?`<p class="ff-hero__body">${esc(hero.body)}</p>`:''}
     <div class="ff-hero__actions">
-      <a class="ff-btn ff-btn--solid" href="/podd.html">${svg(ic.headphones,'ff-btn__icon')}<span>Lyssna på skrivkursen</span>${arrow}</a>
+      ${shown('podd')?`<a class="ff-btn ff-btn--solid" href="/podd.html">${svg(ic.headphones,'ff-btn__icon')}<span>Lyssna på skrivkursen</span>${arrow}</a>`:''}
       <a class="ff-btn" href="#printables">${svg(ic.doc,'ff-btn__icon')}<span>Ladda ner printables</span>${arrow}</a>
-      <a class="ff-btn" href="#skrivtips">${svg(ic.book,'ff-btn__icon')}<span>Läs skrivtips</span>${arrow}</a>
+      ${shown('blog')?`<a class="ff-btn" href="#skrivtips">${svg(ic.book,'ff-btn__icon')}<span>Läs skrivtips</span>${arrow}</a>`:''}
     </div>
   </div>
 </section>
 <div class="ff-page">
   <div class="ff-wrap">
-    <section class="ff-section" id="podden">
+    ${shown('podd')?`<section class="ff-section" id="podden">
       ${head(`<span class="ff-round">${svg(ic.headphones)}</span>`, podd.title||'Skrivkurs i audioform', {href:'/podd.html', label:'Alla avsnitt'})}
       <div class="ff-split">
         <div class="ff-intro">
@@ -393,7 +403,7 @@ function writersPage(){
           </div>`:''}
         </div>
       </div>
-    </section>
+    </section>`:''}
 
     <section class="ff-section" id="printables">
       ${head(svg(ic.doc), 'Printables')}
@@ -408,7 +418,7 @@ function writersPage(){
       </div>
     </section>
 
-    <section class="ff-section" id="skrivtips">
+    ${shown('blog')?`<section class="ff-section" id="skrivtips">
       ${head(svg(ic.quill), 'Skrivtips & guider', {href:'/blog.html', label:'Se alla inlägg'})}
       <div class="ff-split">
         <div class="ff-intro">${w.tips_intro?`<p>${esc(w.tips_intro)}</p>`:''}</div>
@@ -421,7 +431,7 @@ function writersPage(){
           </a>`).join('\n          ')}
         </div>
       </div>
-    </section>
+    </section>`:''}
 
     <div class="ff-bottom">
       <section class="ff-section ff-guide">
@@ -623,25 +633,27 @@ function poddPage(){
 <div class="pod-toast" data-pod-toast role="status" hidden></div>`});
 }
 
-function notFound(){return layout({title:'Sidan hittades inte',description:'Sidan kunde inte hittas.',body:`<section class="section paper"><div class="container" style="max-width:720px;text-align:center;padding-block:8rem"><p class="eyebrow">404</p><h1 class="section-title">Sidan hittades inte</h1><p>Den här länken leder inte till någon sida ännu.</p><a class="btn primary" href="/index.html">Till startsidan</a></div></section>`});}
+function notFound(){return layout({title:'Sidan hittades inte',description:'Sidan kunde inte hittas.',body:`<section class="section paper"><div class="container" style="max-width:720px;text-align:center;padding-block:8rem"><p class="eyebrow">404</p><h1 class="section-title">Sidan hittades inte</h1><p>Den här länken leder inte till någon sida ännu.</p><a class="btn primary" href="/">Till startsidan</a></div></section>`});}
 
 function write(rel, html){const p=path.join(dist,rel);fs.mkdirSync(path.dirname(p),{recursive:true});fs.writeFileSync(p,html,'utf8');}
 
 fs.rmSync(dist,{recursive:true,force:true});fs.mkdirSync(dist,{recursive:true});
 fs.cpSync(path.join(root,'assets'),path.join(dist,'assets'),{recursive:true});
-write('index.html',homePage());
-write('om-mig.html',aboutPage());
-write('books.html',booksPage());
-write('noveller.html',novelsPage());
-write('blog.html',blogPage());
-write('for-forfattare.html',writersPage());
-write('annat.html',otherPage());
-write('contact.html',contactPage());
-write('podd.html',poddPage());
+const render={home:homePage,about:aboutPage,books:booksPage,stories:novelsPage,blog:blogPage,writers:writersPage,other:otherPage,contact:contactPage};
+const urls=['/'];
+write('index.html',render[startPage]());
+for(const [key,,file] of allPages) if(key!==startPage&&shown(key)){write(file,render[key]());urls.push('/'+file);}
+if(shown('podd')){write('podd.html',poddPage());urls.push('/podd.html');}
 write('404.html',notFound());
-for(const s of stories){write(path.join('noveller',s.slug+'.html'),storyPage(s));if(s.slug==='implantatet') write('implantatet.html',storyPage(s));}
-for(const p of posts) write(path.join('blog',p.slug+'.html'),postPage(p));
+if(shown('stories')) for(const s of stories){write(path.join('noveller',s.slug+'.html'),storyPage(s));if(s.slug==='implantatet') write('implantatet.html',storyPage(s));urls.push('/noveller/'+s.slug+'.html');}
+if(shown('blog')) for(const p of posts){write(path.join('blog',p.slug+'.html'),postPage(p));urls.push('/blog/'+p.slug+'.html');}
+// Gamla adresser till dolda sidor – och startsidans egen filadress – skickas till startsidan (302 = tillfälligt,
+// så att sidorna kan slås på igen). Netlify använder bara en regel om det inte finns någon fil på adressen.
+const moved=allPages.filter(([key])=>key!=='home'&&(key===startPage||!shown(key))).map(p=>'/'+p[2]);
+if(!shown('podd')) moved.push('/podd.html');
+if(!shown('stories')) moved.push('/noveller/*','/implantatet.html');
+if(!shown('blog')) moved.push('/blog/*');
+write('_redirects',moved.map(u=>`${u}  /  302`).join('\n')+'\n');
 write('robots.txt','User-agent: *\nAllow: /\nSitemap: /sitemap.xml\n');
-const urls=['/','/om-mig.html','/books.html','/noveller.html','/blog.html','/for-forfattare.html','/podd.html','/annat.html','/contact.html',...stories.map(s=>'/noveller/'+s.slug+'.html'),...posts.map(p=>'/blog/'+p.slug+'.html')];
 write('sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map(u=>`<url><loc>${esc(u)}</loc></url>`).join('')}</urlset>`);
 console.log(`Built ${urls.length} pages to ${dist}`);

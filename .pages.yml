@@ -10,7 +10,29 @@ content:
     format: json
     fields:
       - { name: author_name, label: Författarnamn, type: string, required: true }
+      - { name: site_title, label: Rubrik högst upp i menyraden, type: string, description: "Tomt = författarnamnet" }
       - { name: tagline, label: Rad under namnet, type: string }
+      - name: start_page
+        label: Startsida
+        type: select
+        description: "Sidan som visas på webbplatsens huvudadress. Väljer du För författare visas inte den gamla framsidan."
+        options:
+          values:
+            - { value: writers, label: För författare }
+            - { value: home, label: Framsidan (Hem) }
+      - name: pages
+        label: Sidor som syns
+        type: object
+        description: "Stäng av en sida så publiceras den inte alls (innehållet sparas och kan slås på igen). Startsidan syns alltid."
+        fields:
+          - { name: about, label: Om mig, type: boolean }
+          - { name: books, label: Böcker, type: boolean }
+          - { name: stories, label: Berättelser, type: boolean }
+          - { name: blog, label: AI-research, type: boolean }
+          - { name: writers, label: För författare, type: boolean }
+          - { name: podd, label: Skrivkurs i audioform, type: boolean }
+          - { name: other, label: Annat, type: boolean }
+          - { name: contact, label: Kontakt, type: boolean }
       - { name: email, label: E-post, type: string }
       - { name: instagram, label: Instagram-länk, type: string }
       - { name: facebook, label: Facebook-länk, type: string }

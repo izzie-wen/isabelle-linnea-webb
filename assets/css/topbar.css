@@ -46,6 +46,8 @@ body { position: relative; }
   font-family: var(--tb-serif);
   line-height: 1.55;
 }
+/* Kort meny: lite mer plats till höger, Instagram-ikonen sitter lägre bredvid kvisten när raden är lägre */
+.topbar--few { padding-right: calc(var(--tb-ivy-right-w) * .7 + 8px); }
 .topbar > * { position: relative; z-index: 20; }
 .topbar a { color: inherit; text-decoration: none; }
 
@@ -90,29 +92,55 @@ body { position: relative; }
   clip: rect(0 0 0 0); white-space: nowrap;
 }
 
-/* Mellanstora skärmar: tätare meny så att allt ryms på en rad */
+/* Två varianter: den långa menyn (fem val eller fler) och den korta (.topbar--few, högst fyra val),
+   som ryms på en rad ner till mycket smalare skärmar. build.mjs sätter klassen. */
+
+/* Mellanstora skärmar: tätare lång meny så att allt ryms på en rad */
 @media (max-width: 1639px) and (min-width: 1270px) {
-  .topbar { gap: 1rem; }
-  .topbar-nav ul { gap: .65rem; }
-  .topbar-nav a { font-size: .9rem; letter-spacing: .04em; }
-  .topbar-logo__name { font-size: 1.8rem; }
+  .topbar:not(.topbar--few) { gap: 1rem; }
+  .topbar:not(.topbar--few) .topbar-nav ul { gap: .65rem; }
+  .topbar:not(.topbar--few) .topbar-nav a { font-size: .9rem; letter-spacing: .04em; }
+  .topbar:not(.topbar--few) .topbar-logo__name { font-size: 1.8rem; }
 }
 
-/* Under 1270px ryms inte menyn på en rad – visa hamburgermenyn */
+/* Hamburgermenyn – lång meny under 1270px (samma regler för den korta menyn längre ner) */
 @media (max-width: 1269px) {
-  /* menyknappen hamnar till vänster om högra kvisten (som är bredast i knappens höjd) */
-  .topbar { padding-right: calc(var(--tb-ivy-right-w) - 4px); flex-wrap: wrap; gap: 12px; }
-  .topbar-social { display: none; }
-  .topbar-toggle {
+  .topbar:not(.topbar--few) { flex-wrap: wrap; gap: 12px; }
+  .topbar:not(.topbar--few) .topbar-social { display: none; }
+  .topbar:not(.topbar--few) .topbar-toggle {
     display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
     margin-left: auto; width: 44px; height: 44px; padding: 10px;
     background: none; border: 0; cursor: pointer;
   }
-  .topbar-toggle span:not(.visually-hidden) { display: block; height: 1.5px; background: var(--tb-ink); }
-  .topbar-nav { display: none; width: 100%; margin: 0; }
-  .topbar-nav.open { display: block; }
-  .topbar-nav ul { flex-direction: column; gap: 0; padding: 8px 0 12px; }
-  .topbar-nav a { display: block; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,.06); }
+  .topbar:not(.topbar--few) .topbar-toggle span:not(.visually-hidden) { display: block; height: 1.5px; background: var(--tb-ink); }
+  .topbar:not(.topbar--few) .topbar-nav { display: none; width: 100%; margin: 0; }
+  .topbar:not(.topbar--few) .topbar-nav.open { display: block; }
+  .topbar:not(.topbar--few) .topbar-nav ul { flex-direction: column; gap: 0; padding: 8px 0 12px; }
+  .topbar:not(.topbar--few) .topbar-nav a { display: block; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,.06); }
+}
+@media (max-width: 1269px) and (min-width: 861px) {
+  /* menyknappen hamnar till vänster om högra kvisten (som är bredast i knappens höjd) */
+  .topbar:not(.topbar--few) { padding-right: calc(var(--tb-ivy-right-w) - 4px); }
+}
+/* Kort meny: tätare på mellanstora skärmar, hamburgermeny först på mobil */
+@media (max-width: 1099px) {
+  .topbar--few { gap: 1.25rem; }
+  .topbar--few .topbar-nav ul { gap: 1rem; }
+  .topbar--few .topbar-nav a { font-size: .9rem; letter-spacing: .06em; }
+}
+@media (max-width: 699px) {
+  .topbar--few { flex-wrap: wrap; gap: 12px; }
+  .topbar--few .topbar-social { display: none; }
+  .topbar--few .topbar-toggle {
+    display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
+    margin-left: auto; width: 44px; height: 44px; padding: 10px;
+    background: none; border: 0; cursor: pointer;
+  }
+  .topbar--few .topbar-toggle span:not(.visually-hidden) { display: block; height: 1.5px; background: var(--tb-ink); }
+  .topbar--few .topbar-nav { display: none; width: 100%; margin: 0; }
+  .topbar--few .topbar-nav.open { display: block; }
+  .topbar--few .topbar-nav ul { flex-direction: column; gap: 0; padding: 8px 0 12px; }
+  .topbar--few .topbar-nav a { display: block; padding: 10px 0; font-size: 1rem; letter-spacing: .12em; border-bottom: 1px solid rgba(0,0,0,.06); }
 }
 
 /* Mobil */
